@@ -5,7 +5,7 @@ import RenderIcon from "@/icons/RenderIcon";
 
 import AuthContext from "@/context/AuthContext";
 
-const MainSideBar = () => {
+const MainSideBar = ({ showClose = false, onClick }) => {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [selectedLink, setSelectedLink] = useState("");
   const [isImageLoaded, setIsImageLoaded] = useState(false);
@@ -34,19 +34,28 @@ const MainSideBar = () => {
 
   return (
     <div className="fixed w-[270px] h-full bg-gradient-to-b from-[#016B6C] to-[#000] bg-[length:100%_150%] bg-top font-poppins overflow-y-auto pb-[50px] z-20 overflow-element">
-      <div className="flex gap-3 ml-[10px] mt-[30px]">
-        <div
-          className="w-[140px] h-[30px] bg-gray-300 animate-pulse"
-          style={{ display: isImageLoaded ? "none" : "block" }}
-        />
-        <img
-          src="https://firebasestorage.googleapis.com/v0/b/famtowebsite.appspot.com/o/images%2FWhite.svg?alt=media&token=3d91a036-029f-4d67-816e-19b1f8dd3f6e"
-          alt="Logo"
-          className="w-[140px] h-[30px]"
-          style={{ display: isImageLoaded ? "block" : "none" }}
-          onLoad={() => setIsImageLoaded(true)}
-        />
+      <div className="flex items-center justify-between mx-[10px] mt-[30px]">
+        <div>
+          <div
+            className="w-[140px] h-[30px] bg-gray-300 animate-pulse"
+            style={{ display: isImageLoaded ? "none" : "block" }}
+          />
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/famtowebsite.appspot.com/o/images%2FWhite.svg?alt=media&token=3d91a036-029f-4d67-816e-19b1f8dd3f6e"
+            alt="Logo"
+            className="w-[140px] h-[30px]"
+            style={{ display: isImageLoaded ? "block" : "none" }}
+            onLoad={() => setIsImageLoaded(true)}
+          />
+        </div>
+
+        {showClose && (
+          <Button onClick={onClick} className="text-white border-2">
+            <RenderIcon iconName="MenuIcon" size={24} loading={6} />
+          </Button>
+        )}
       </div>
+
       <div className="dropside ">General</div>
 
       <ul className="ul-side">
@@ -64,7 +73,9 @@ const MainSideBar = () => {
         </Link>
         <Link
           to="/order"
-          className={`ps-4 side ${selectedLink.startsWith("/order") ? "selected-link" : ""}`}
+          className={`ps-4 side ${
+            selectedLink.startsWith("/order") ? "selected-link" : ""
+          }`}
           key="order"
         >
           <span className="m-2">
@@ -76,7 +87,9 @@ const MainSideBar = () => {
         {role === "Admin" && (
           <Link
             to={"/merchant"}
-            className={`ps-4 side ${selectedLink.startsWith("/merchant") ? "selected-link" : ""}`}
+            className={`ps-4 side ${
+              selectedLink.startsWith("/merchant") ? "selected-link" : ""
+            }`}
             key="merchant"
           >
             <span className="m-2">
@@ -88,7 +101,9 @@ const MainSideBar = () => {
         )}
         <Link
           to="/product"
-          className={`ps-4 side ${selectedLink.startsWith("/product") ? "selected-link" : ""}`}
+          className={`ps-4 side ${
+            selectedLink.startsWith("/product") ? "selected-link" : ""
+          }`}
           key="product"
         >
           <span className="m-2">
@@ -99,7 +114,9 @@ const MainSideBar = () => {
         </Link>
         <Link
           to="/customer"
-          className={`ps-4 side ${selectedLink.startsWith("/customer") ? "selected-link" : ""}`}
+          className={`ps-4 side ${
+            selectedLink.startsWith("/customer") ? "selected-link" : ""
+          }`}
           key="customer"
         >
           <span className="m-2">
@@ -113,7 +130,9 @@ const MainSideBar = () => {
           <>
             <Link
               to="/agent"
-              className={`ps-4 side ${selectedLink.startsWith("/agent") ? "selected-link" : ""}`}
+              className={`ps-4 side ${
+                selectedLink.startsWith("/agent") ? "selected-link" : ""
+              }`}
               key="agent"
             >
               <span className="m-2">
@@ -125,7 +144,11 @@ const MainSideBar = () => {
 
             <Link
               to="/delivery-management"
-              className={`ps-4 side ${selectedLink.startsWith("/delivery-management") ? "selected-link" : ""}`}
+              className={`ps-4 side ${
+                selectedLink.startsWith("/delivery-management")
+                  ? "selected-link"
+                  : ""
+              }`}
               key="delivery-management"
             >
               <span className="m-2">
@@ -139,7 +162,9 @@ const MainSideBar = () => {
 
         <Link
           to="/comm-and-subs"
-          className={`ps-4 side ${selectedLink.startsWith("/comm-and-subs") ? "selected-link" : ""}`}
+          className={`ps-4 side ${
+            selectedLink.startsWith("/comm-and-subs") ? "selected-link" : ""
+          }`}
           key="comm"
         >
           <span className="m-2">
@@ -151,7 +176,9 @@ const MainSideBar = () => {
         {role === "Admin" && (
           <Link
             to="/chat"
-            className={`ps-4 side ${selectedLink.startsWith("/chat") ? "selected-link" : ""}`}
+            className={`ps-4 side ${
+              selectedLink.startsWith("/chat") ? "selected-link" : ""
+            }`}
             key="chat"
           >
             <span className="m-2">

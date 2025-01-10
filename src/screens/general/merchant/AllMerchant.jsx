@@ -97,29 +97,29 @@ const AllMerchant = () => {
   const showError = geofenceError || categoryError;
 
   return (
-    <div className="bg-gray-100 min-h-full">
+    <div className="bg-gray-100 min-h-full min-w-full">
       <GlobalSearch />
 
       <div className="flex justify-between items-center px-[30px] mt-5">
-        <h1 className="text-[18px] font-semibold">Merchants</h1>
+        <h1 className="text-[16px] lg:text-[18px] font-semibold">Merchants</h1>
         <div className="flex space-x-3 justify-end ">
           <button
             className="bg-cyan-100 text-black rounded-md px-4 py-2 font-semibold flex items-center gap-2"
             onClick={() => toggleModal("csv")}
           >
             <RenderIcon iconName="DownloadIcon" size={16} loading={6} />
-            <span>CSV</span>
+            <span className="text-[14px] lg:text-[16px]">CSV</span>
           </button>
 
           <Link
             to={"/merchant/payout"}
-            className="bg-teal-800 text-white rounded-md px-4 py-2 font-semibold  flex items-center"
+            className="bg-teal-800 text-white rounded-md px-4 py-2 font-semibold flex items-center text-[14px] lg:text-[16px]"
           >
             <p>Merchant payout</p>
           </Link>
 
           <button
-            className="bg-teal-800 text-white rounded-md px-4 py-2 font-semibold  flex items-center gap-2"
+            className="bg-teal-800 text-white rounded-md px-4 py-2 font-semibold flex items-center text-[14px] lg:text-[16px] gap-2"
             onClick={() => toggleModal("add")}
           >
             <RenderIcon iconName="PlusIcon" size={16} loading={6} />
