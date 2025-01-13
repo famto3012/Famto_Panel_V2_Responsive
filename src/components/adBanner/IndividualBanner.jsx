@@ -96,14 +96,14 @@ const IndividualBanner = () => {
 
   return (
     <>
-      <div className="flex items-center justify-between mx-10 mt-10">
-        <div className="flex items-center gap-4">
-          <h1 className="text-lg font-bold outline-none focus:outline-none">
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mx-4 lg:mx-10 mt-10 space-y-4 lg:space-y-0">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center gap-4">
+          <h1 className="text-base lg:text-lg font-bold outline-none focus:outline-none">
             Individual Merchant Ad Banner
           </h1>
 
           <Select
-            className="w-[200px]"
+            className="w-full lg:w-[200px]"
             value={merchantOptions?.find(
               (option) => option.value === selectedMerchant
             )}
@@ -115,18 +115,18 @@ const IndividualBanner = () => {
           />
         </div>
 
-        <div>
+        <div className="flex justify-center lg:justify-end">
           <button
-            className="bg-teal-800 text-white rounded-md flex items-center px-9 py-2 mb-7"
+            className="bg-teal-800 text-white rounded-md flex items-center px-5 lg:px-9 py-2"
             onClick={() => toggleModal("add")}
           >
             <RenderIcon iconName="PlusIcon" size={18} loading={6} />
-            <span>Add</span>
+            <span className="ml-2">Add</span>
           </button>
         </div>
       </div>
 
-      <div className="mt-5 max-h-[30rem] overflow-y-auto">
+      <div className="mt-5 max-h-[30rem] overflow-y-auto overflow-x-auto">
         <Table.Root striped interactive stickyHeader>
           <Table.Header>
             <Table.Row className="bg-teal-700 h-14">

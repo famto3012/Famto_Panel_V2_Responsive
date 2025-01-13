@@ -71,22 +71,22 @@ const AppAdBanner = () => {
 
   return (
     <>
-      <div className="flex items-center justify-between mx-10 mt-5">
-        <h1 className="text-lg font-bold outline-none focus:outline-none">
+      <div className="flex flex-wrap items-center justify-between mx-4 sm:mx-10 mt-5">
+        <h1 className="text-base sm:text-lg font-bold outline-none focus:outline-none">
           App Ad Banner
         </h1>
-        <div>
+        <div className="mt-3 sm:mt-0">
           <button
-            className="bg-teal-800 text-white rounded-md flex items-center px-9 py-2 mb-7"
+            className="bg-teal-800 text-white rounded-md flex items-center px-6 py-2 text-sm sm:px-9 sm:text-base"
             onClick={() => toggleModal("add")}
           >
-            <RenderIcon iconName="PlusIcon" size={16} loading={6} />
-            <span>Add</span>
+            <RenderIcon iconName="PlusIcon" size={14} smSize={16} loading={6} />
+            <span className="ml-2">Add</span>
           </button>
         </div>
       </div>
 
-      <div className="mt-5 max-h-[30rem] overflow-y-auto">
+      <div className="mt-5 max-h-[30rem] overflow-y-auto overflow-x-auto">
         <Table.Root striped interactive stickyHeader>
           <Table.Header>
             <Table.Row className="bg-teal-700 h-14">
