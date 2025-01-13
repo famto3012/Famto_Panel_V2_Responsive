@@ -89,7 +89,7 @@ const ConfigureMerchant = ({ detail, onDataChange }) => {
         <h3 className="text-gray-700 font-bold mb-2">Configuration</h3>
 
         {role === "Admin" && (
-          <div className="mb-4 flex w-[800px]">
+          <div className="mb-4 flex flex-col md:flex-row gap-[15px] md:gap-0 md:w-[800px]">
             <label className="block mt-3 text-gray-700 w-1/3">
               Business category
             </label>
@@ -112,7 +112,7 @@ const ConfigureMerchant = ({ detail, onDataChange }) => {
         )}
 
         {showOption && (
-          <div className="mb-4 flex w-[800px]">
+          <div className="mb-4 flex flex-col md:flex-row gap-[15px] md:gap-0 md:w-[800px]">
             <label className="block text-gray-700 w-1/3">If food, then</label>
 
             <RadioGroup
@@ -146,7 +146,7 @@ const ConfigureMerchant = ({ detail, onDataChange }) => {
           </div>
         )}
 
-        <div className="mb-4 flex w-[800px]">
+        <div className="mb-4 flex flex-col md:flex-row gap-[15px] md:gap-0 md:w-[800px]">
           <label className="block text-gray-700 w-1/3">Delivery option</label>
 
           <RadioGroup
@@ -185,7 +185,7 @@ const ConfigureMerchant = ({ detail, onDataChange }) => {
           </RadioGroup>
         </div>
 
-        <div className="mb-4 flex items-start w-[800px]">
+        <div className="mb-4 flex flex-col md:flex-row gap-[15px] md:gap-0 items-start md:w-[800px]">
           <label className="block text-gray-700 w-1/3">
             Select Delivery time
           </label>
@@ -209,8 +209,8 @@ const ConfigureMerchant = ({ detail, onDataChange }) => {
           />
         </div>
 
-        <div className="mb-4 flex w-[800px]">
-          <span className="w-1/3"></span>
+        <div className="mb-4 flex md:w-[800px]">
+          <span className="hidden md:w-1/3"></span>
           <p className="text-gray-500 w-2/5 text-sm mt-2">
             Note: Enter here the default time taken for the Delivery of an
             order. If a merchant is handling their delivery by itself then he
@@ -218,7 +218,7 @@ const ConfigureMerchant = ({ detail, onDataChange }) => {
           </p>
         </div>
 
-        <div className="mb-4 flex w-[800px]">
+        <div className="mb-4 flex md:w-[800px]">
           <label className="block w-1/3 text-gray-700">
             Pre Order Sales Status
           </label>
@@ -235,7 +235,7 @@ const ConfigureMerchant = ({ detail, onDataChange }) => {
         </div>
       </div>
 
-      <div className="mb-6 flex w-[800px]">
+      <div className="mb-6 flex flex-col md:flex-row gap-[15px] md:gap-0 md:w-[800px]">
         <h3 className="text-gray-700 mb-2 w-1/3">Serving Area</h3>
 
         <div className="mb-4 w3/5">

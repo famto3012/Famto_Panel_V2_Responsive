@@ -71,7 +71,7 @@ const AllCustomer = () => {
   const showError = geofenceError || isError;
 
   return (
-    <div className="bg-gray-100 h-full">
+    <div className="bg-gray-100 min-h-full min-w-full">
       <GlobalSearch />
       <>
         <div className="flex items-center justify-between mx-8 mt-5">
@@ -87,7 +87,7 @@ const AllCustomer = () => {
           )}
         </div>
 
-        <div className="mx-8 rounded-lg mt-5 flex p-6 bg-white justify-between">
+        <div className="mx-8 rounded-lg mt-5 flex flex-col lg:flex-row p-6 gap-[20px] lg:gap-0 bg-white justify-between">
           <Select
             options={geofenceOptions}
             value={geofenceOptions?.find(
@@ -111,7 +111,7 @@ const AllCustomer = () => {
             }}
           />
 
-          <div className="ms-auto">
+          <div className=" mx-auto lg:ms-auto">
             <div>
               <input
                 type="search"
@@ -124,89 +124,91 @@ const AllCustomer = () => {
           </div>
         </div>
 
-        <Table.Root className="mt-5 z-10 max-h-[30rem]" striped interactive>
-          <Table.Header>
-            <Table.Row className="bg-teal-700 h-14">
-              {[
-                "ID",
-                "Name",
-                "Email",
-                "Phone",
-                "Last Platform Used",
-                "Registration Date",
-                "Rating",
-              ].map((header) => (
-                <Table.ColumnHeader
-                  key={header}
-                  color="white"
-                  textAlign="center"
-                >
-                  {header}
-                </Table.ColumnHeader>
-              ))}
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            {showTableLoading ? (
-              <Table.Row className="h-[70px]">
-                <Table.Cell colSpan={7} textAlign="center">
-                  <ShowSpinner /> Loading...
-                </Table.Cell>
+        <div className=" overflow-x-auto">
+          <Table.Root className="mt-5 z-10 max-h-[30rem]" striped interactive>
+            <Table.Header>
+              <Table.Row className="bg-teal-700 h-14">
+                {[
+                  "ID",
+                  "Name",
+                  "Email",
+                  "Phone",
+                  "Last Platform Used",
+                  "Registration Date",
+                  "Rating",
+                ].map((header) => (
+                  <Table.ColumnHeader
+                    key={header}
+                    color="white"
+                    textAlign="center"
+                  >
+                    {header}
+                  </Table.ColumnHeader>
+                ))}
               </Table.Row>
-            ) : data?.data?.length === 0 ? (
-              <Table.Row className="h-[70px]">
-                <Table.Cell colSpan={7} textAlign="center">
-                  No Customers Available
-                </Table.Cell>
-              </Table.Row>
-            ) : showError ? (
-              <Table.Row className="h-[70px]">
-                <Table.Cell colSpan={7} textAlign="center">
-                  Error in fetching customers.
-                </Table.Cell>
-              </Table.Row>
-            ) : (
-              data?.data?.map((customer) => (
-                <Table.Row key={customer.customerId} className={`h-[70px]`}>
-                  <Table.Cell textAlign="center">
-                    {role === "Admin" ? (
-                      <Link
-                        to={`/customer/${customer.customerId}`}
-                        className=" underline underline-offset-2"
-                      >
-                        {customer.customerId}
-                      </Link>
-                    ) : (
-                      customer.customerId
-                    )}
-                  </Table.Cell>
-                  <Table.Cell textAlign="center">
-                    {customer.fullName}
-                  </Table.Cell>
-                  <Table.Cell textAlign="center">{customer.email}</Table.Cell>
-                  <Table.Cell textAlign="center">
-                    {customer.phoneNumber}
-                  </Table.Cell>
-                  <Table.Cell textAlign="center">
-                    {customer.lastPlatformUsed}
-                  </Table.Cell>
-                  <Table.Cell textAlign="center">
-                    {customer.registrationDate}
-                  </Table.Cell>
-                  <Table.Cell textAlign="center">
-                    <Rating
-                      readOnly
-                      allowHalf
-                      defaultValue={customer.rating}
-                      size="sm"
-                      colorPalette="yellow"
-                    />
+            </Table.Header>
+            <Table.Body>
+              {showTableLoading ? (
+                <Table.Row className="h-[70px]">
+                  <Table.Cell colSpan={7} textAlign="center">
+                    <ShowSpinner /> Loading...
                   </Table.Cell>
                 </Table.Row>
-              ))
-            )}
-          </Table.Body>
-        </Table.Root>
+              ) : data?.data?.length === 0 ? (
+                <Table.Row className="h-[70px]">
+                  <Table.Cell colSpan={7} textAlign="center">
+                    No Customers Available
+                  </Table.Cell>
+                </Table.Row>
+              ) : showError ? (
+                <Table.Row className="h-[70px]">
+                  <Table.Cell colSpan={7} textAlign="center">
+                    Error in fetching customers.
+                  </Table.Cell>
+                </Table.Row>
+              ) : (
+                data?.data?.map((customer) => (
+                  <Table.Row key={customer.customerId} className={`h-[70px]`}>
+                    <Table.Cell textAlign="center">
+                      {role === "Admin" ? (
+                        <Link
+                          to={`/customer/${customer.customerId}`}
+                          className=" underline underline-offset-2"
+                        >
+                          {customer.customerId}
+                        </Link>
+                      ) : (
+                        customer.customerId
+                      )}
+                    </Table.Cell>
+                    <Table.Cell textAlign="center">
+                      {customer.fullName}
+                    </Table.Cell>
+                    <Table.Cell textAlign="center">{customer.email}</Table.Cell>
+                    <Table.Cell textAlign="center">
+                      {customer.phoneNumber}
+                    </Table.Cell>
+                    <Table.Cell textAlign="center">
+                      {customer.lastPlatformUsed}
+                    </Table.Cell>
+                    <Table.Cell textAlign="center">
+                      {customer.registrationDate}
+                    </Table.Cell>
+                    <Table.Cell textAlign="center">
+                      <Rating
+                        readOnly
+                        allowHalf
+                        defaultValue={customer.rating}
+                        size="sm"
+                        colorPalette="yellow"
+                      />
+                    </Table.Cell>
+                  </Table.Row>
+                ))
+              )}
+            </Table.Body>
+          </Table.Root>
+        </div>
 
         {data?.total && (
           <PaginationRoot

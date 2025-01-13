@@ -60,17 +60,19 @@ const AdminCommission = () => {
   if (isError) return <Error />;
 
   return (
-    <div className="bg-white rounded w-[40%] p-5 ms-[30px] mt-[50px]">
+    <div className="bg-white rounded  lg:w-[40%] p-5 mx-[20px] lg:ms-[30px] mt-[50px]">
       <div className="flex flex-col gap-8">
-        <div className="flex items-center">
-          <label className="w-1/3 text-gray-600">Commission setup</label>
+        <div className="flex flex-col lg:flex-row items-center gap-[20px] lg:gap-0">
+          <label className="w-full lg:w-1/3 text-gray-600">
+            Commission setup
+          </label>
 
           <RadioGroup
             value={formData.commissionType}
             onValueChange={(e) =>
               setFormData({ ...formData, commissionType: e.value })
             }
-            className="w-2/3"
+            className="w-full lg:w-2/3"
             size="sm"
             colorPalette="teal"
             variant="solid"
@@ -86,13 +88,11 @@ const AdminCommission = () => {
           </RadioGroup>
         </div>
 
-        <div className="flex items-center">
-          <label htmlFor="merchantId" className="w-1/3 text-gray-600">
-            Merchant ID
-          </label>
+        <div className="flex flex-col lg:flex-row items-center gap-[20px] lg:gap-0">
+          <label className="w-full lg:w-1/3 text-gray-600">Merchant ID</label>
 
           <Select
-            className="w-2/3 outline-none focus:outline-none"
+            className="w-full lg:w-2/3 outline-none focus:outline-none"
             value={
               formData.merchantId
                 ? merchantOptions?.find(
@@ -112,8 +112,8 @@ const AdminCommission = () => {
           />
         </div>
 
-        <div className="flex items-center">
-          <label htmlFor="commissionValue" className="w-1/3 text-gray-600">
+        <div className="flex flex-col lg:flex-row items-center gap-[20px] lg:gap-0">
+          <label className="w-full lg:w-1/3 text-gray-600">
             Commission Value
           </label>
           <input
@@ -124,7 +124,7 @@ const AdminCommission = () => {
             onChange={(e) =>
               setFormData({ ...formData, commissionValue: e.target.value })
             }
-            className="w-2/3 p-2 border border-gray-300 rounded outline-none focus:outline-none"
+            className="w-full lg:w-2/3 p-2 border border-gray-300 rounded outline-none focus:outline-none"
             placeholder="Enter value"
           />
         </div>
@@ -133,7 +133,7 @@ const AdminCommission = () => {
           <button
             onClick={() => handleApplyCommission.mutate()}
             disabled={handleApplyCommission.isPending}
-            className="w-2/3 bg-teal-700 text-white py-2 rounded outline-none focus:outline-none"
+            className="w-full lg:w-2/3 bg-teal-700 text-white py-2 rounded outline-none focus:outline-none"
           >
             {handleApplyCommission.isPending ? `Applying...` : `Apply`}
           </button>

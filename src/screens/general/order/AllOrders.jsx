@@ -26,6 +26,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import AllOrdersTable from "@/components/order/detail/AllOrdersTable";
 
 import { downloadOrderCSV } from "@/hooks/order/useOrder";
+import FilterWrapper from "@/components/SideFilters/FilterWrapper";
+import OrderFilter from "@/components/SideFilters/OrderFilter";
 
 const AllOrders = () => {
   const [filter, setFilter] = useState({
@@ -38,6 +40,7 @@ const AllOrders = () => {
     orderId: "",
   });
   const [debounceId, setDebounceId] = useState("");
+  const [filterOpen, setFilterOpen] = useState(false);
 
   const navigate = useNavigate();
   const { role } = useContext(AuthContext);
@@ -49,6 +52,10 @@ const AllOrders = () => {
             option.value !== "Pick and Drop" && option.value !== "Custom Order"
         )
       : deliveryModeOption;
+
+  const handleDrawerFilterChange = (type, value) => {
+    setFilter({ ...filter, [type]: value });
+  };
 
   const { data: allMerchants } = useQuery({
     queryKey: ["merchant-dropdown"],
@@ -122,10 +129,10 @@ const AllOrders = () => {
   };
 
   return (
-    <div className="bg-gray-100 h-full">
+    <div className="bg-gray-100 h-full w-full">
       <GlobalSearch />
 
-      <div className="mx-[20px] mt-[20px] flex justify-between items-center">
+      <div className="mx-[20px] mt-[20px] flex flex-col lg:flex-row gap-[30px] lg:gap-0 justify-between items-center">
         <div className="w-fit border border-gray-700 rounded-full">
           <div className="flex items-center gap-[1px] p-1 ">
             <p
@@ -176,7 +183,7 @@ const AllOrders = () => {
       </div>
 
       <div className="flex items-center bg-white p-3 py-[20px] mx-5 rounded-lg justify-between mt-[20px] px-[30px]">
-        <div className="flex items-center gap-[20px]">
+        <div className="hidden lg:flex items-center gap-[20px]">
           <Select
             options={orderStatusOption}
             value={orderStatusOption.find(
@@ -270,8 +277,8 @@ const AllOrders = () => {
           )}
         </div>
 
-        <div className="flex items-center gap-[20px]">
-          <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between lg:justify-end gap-[20px] w-full">
+          <div className="hidden lg:flex items-center gap-2">
             {Array.isArray(filter.date) && filter.date.some((data) => data) && (
               <span
                 onClick={() => setFilter({ ...filter, date: [null, null] })}
@@ -280,6 +287,7 @@ const AllOrders = () => {
                 <RenderIcon iconName="CancelIcon" size={20} loading={6} />
               </span>
             )}
+
             <DatePicker
               selectsRange={true}
               startDate={filter.date[0]}
@@ -297,7 +305,7 @@ const AllOrders = () => {
             />
           </div>
 
-          <div>
+          <div className="order-1">
             <input
               value={debounceId}
               type="search"
@@ -306,6 +314,22 @@ const AllOrders = () => {
               onChange={(e) => setDebounceId(e.target.value)}
             />
           </div>
+
+          <span
+            onClick={() => setFilterOpen(true)}
+            className="text-gray-400 order-3 p-3 lg:hidden"
+          >
+            <RenderIcon iconName="FilterIcon" size={20} loading={6} />
+          </span>
+
+          <FilterWrapper filterOpen={filterOpen} setFilterOpen={setFilterOpen}>
+            <OrderFilter
+              currentValue={filter}
+              onFilterChange={handleDrawerFilterChange}
+              filteredOptions={filteredOptions}
+              merchantOptions={merchantOptions}
+            />
+          </FilterWrapper>
         </div>
       </div>
 

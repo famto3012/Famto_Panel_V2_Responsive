@@ -120,10 +120,12 @@ const CustomerSubscriptionPlans = () => {
       </h1>
 
       <div className="flex item-center p-5 rounded-lg bg-white my-4 mx-5">
-        <label className="w-1/3">Customer Subscription Setup</label>
+        <label className="hidden lg:block w-1/3">
+          Customer Subscription Setup
+        </label>
 
         <button
-          className="flex items-center gap-2 bg-zinc-200 p-2 rounded-lg"
+          className="flex items-center gap-2 bg-zinc-200 p-2 rounded-lg w-full lg:w-fit justify-center lg:justify-start"
           onClick={() => toggleModal("add")}
         >
           <RenderIcon iconName="PlusIcon" size={16} loading={6} />
@@ -133,9 +135,12 @@ const CustomerSubscriptionPlans = () => {
 
       <div className="bg-white mx-5 p-5 pb-10 rounded-lg">
         <h1 className="text-[16px] font-[600]">Apply Subscription</h1>
-        <div className="flex mt-10">
-          <label className="w-1/3">Available Subscription Plans</label>
-          <div className="w-fit grid xl:grid-cols-2 grid-cols-1 gap-5">
+
+        <div className="flex flex-col lg:flex-row mt-10">
+          <label className="w-full lg:w-1/3 mb-[20px] lg:mb-0">
+            Available Subscription Plans
+          </label>
+          <div className="w-full lg:w-fit grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 cursor-pointer">
             {isLoading ? (
               <div className="flex items-center gap-2">
                 <ShowSpinner /> <p> Loading...</p>
@@ -226,14 +231,14 @@ const CustomerSubscriptionPlans = () => {
           </div>
         </div>
 
-        <div className="flex mt-5 items-center">
+        <div className="flex gap-[20px] md:gap-0 mt-5 items-center">
           <label className="w-1/3 text-gray-800">Customer Id</label>
           <input
             type="text"
             name="userId"
             value={formData.userId}
             placeholder="Enter customer ID"
-            className="border-2 border-gray-200 rounded p-2 w-1/3 focus:outline-none"
+            className="border-2 border-gray-200 rounded p-2 w-full md:w-1/3 focus:outline-none"
             onChange={(e) =>
               setFormData({ ...formData, userId: e.target.value })
             }
@@ -265,7 +270,7 @@ const CustomerSubscriptionPlans = () => {
 
         <button
           disabled={handlePayment.isPending}
-          className="bg-teal-800 w-1/3 p-2 text-white rounded-lg mt-5 ml-[33%]"
+          className="bg-teal-800 w-full lg:w-1/3 p-2 text-white rounded-lg mt-5 lg:ml-[33%]"
           onClick={() => handlePayment.mutate()}
         >
           {handlePayment.isPending ? `Applying...` : `Apply`}

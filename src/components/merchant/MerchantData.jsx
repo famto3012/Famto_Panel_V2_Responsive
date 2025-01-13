@@ -266,9 +266,9 @@ const MerchantData = ({ detail, onDataChange }) => {
         </div>
       </div>
 
-      <div className=" w-[830px] mt-14 mb-[50px]">
+      <div className=" md:w-[830px] mt-14 mb-[50px]">
         <div className="mb-[20px] flex items-center justify-between gap-[30px]">
-          <label className="text-gray-700 text-[16px] w-1/3">
+          <label className="text-gray-700 text-[16px] md:w-1/3">
             Short Description <br /> (Max 10 characters)
           </label>
           <input
@@ -276,14 +276,16 @@ const MerchantData = ({ detail, onDataChange }) => {
             name="description"
             placeholder="Description"
             value={detail?.merchantDetail?.description}
-            className=" border rounded-md p-2 outline-none focus:outline-none w-2/3  me-[95px] "
+            className=" border rounded-md p-2 outline-none focus:outline-none w-2/3  md:me-[95px] "
             onChange={handleInputChange}
           />
         </div>
 
         {role === "Admin" && (
           <div className="mb-[20px] flex items-center justify-between gap-[30px]">
-            <label className="text-gray-700 text-[16px] w-1/3">Geofence</label>
+            <label className="text-gray-700 text-[16px] md:w-1/3">
+              Geofence
+            </label>
 
             <Select
               options={geofenceOptions}
@@ -291,7 +293,7 @@ const MerchantData = ({ detail, onDataChange }) => {
                 (option) => option.value === detail?.merchantDetail?.geofenceId
               )}
               onChange={handleSelectChange}
-              className="mt-2 w-2/3 border rounded-md outline-none focus:outline-none me-[95px] "
+              className="mt-2 w-2/3 border rounded-md outline-none focus:outline-none md:me-[95px] "
               placeholder="Select geofence"
               isSearchable={true}
               isMulti={false}
@@ -310,10 +312,10 @@ const MerchantData = ({ detail, onDataChange }) => {
         )}
 
         <div className="mb-[20px] flex items-center justify-between gap-[30px]">
-          <label className="text-gray-700 text-[16px] w-1/3">Pricing</label>
+          <label className="text-gray-700 text-[16px] md:w-1/3">Pricing</label>
 
           {detail?.merchantDetail?.pricing?.modelType ? (
-            <p className="w-2/3 bg-transparent rounded-md p-2 text-left  me-[95px]">
+            <p className="w-2/3 bg-transparent rounded-md py-2 md:p-2 text-left md:me-[95px]">
               {detail?.merchantDetail?.pricing?.modelType} |{" "}
               {detail?.merchantDetail?.pricing?.detail?.type === "Percentage"
                 ? `${detail?.merchantDetail?.pricing?.detail?.value} %`
@@ -326,10 +328,11 @@ const MerchantData = ({ detail, onDataChange }) => {
           )}
         </div>
 
-        <div className="mb-[20px] flex items-center justify-start">
-          <label className="text-gray-700 w-1/3">Location</label>
-          <div className="flex flex-col gap-5">
-            <div className="flex gap-3 w-2/3">
+        <div className="mb-[20px] flex items-start justify-start">
+          <label className="text-gray-700 md:w-1/3">Location</label>
+
+          <div className="flex flex-col gap-5 ms-auto md:ms-0">
+            <div className="flex gap-3 md:w-2/3">
               <input
                 type="text"
                 className="h-10 ps-3 text-sm border-2 outline-none focus:outline-none rounded-md flex-1"
@@ -370,6 +373,7 @@ const MerchantData = ({ detail, onDataChange }) => {
                   }
                 }}
               />
+
               <input
                 type="text"
                 className="h-10 ps-3 text-sm border-2 outline-none focus:outline-none rounded-md flex-1"
@@ -411,6 +415,7 @@ const MerchantData = ({ detail, onDataChange }) => {
                 }}
               />
             </div>
+
             <div className="flex items-center justify-start gap-[30px]">
               <button
                 type="button"
@@ -454,11 +459,12 @@ const MerchantData = ({ detail, onDataChange }) => {
           </div>
         </div>
 
-        <div className="mb-[20px] flex items-center justify-start gap-[30px]  me-[95px]">
+        <div className="mb-[20px] flex items-center justify-start gap-[30px] md:me-[95px]">
           <label className="text-gray-700 w-1/3">Ratings</label>
+
           <button
             onClick={() => toggleModal("rating")}
-            className="bg-teal-700 text-white p-2 rounded-md w-2/3"
+            className="bg-teal-700 text-white py-2 md:p-2 rounded-md w-2/3"
           >
             Show ratings and reviews
           </button>

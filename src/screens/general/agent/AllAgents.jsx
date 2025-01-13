@@ -25,6 +25,8 @@ import {
 import AddAgent from "@/models/general/agent/AddAgent";
 import ApproveAgent from "@/models/general/agent/ApproveAgent";
 import RejectAgent from "@/models/general/agent/RejectAgent";
+import FilterWrapper from "@/components/SideFilters/FilterWrapper";
+import AgentFilters from "@/components/SideFilters/AgentFilters";
 
 const AllAgents = () => {
   const [filter, setFilter] = useState({
@@ -40,6 +42,7 @@ const AllAgents = () => {
     approve: false,
     reject: false,
   });
+  const [filterOpen, setFilterOpen] = useState(false);
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -148,6 +151,10 @@ const AllAgents = () => {
     });
   };
 
+  const handleFilterChange = (type, value) => {
+    setFilter({ ...filter, [type]: value });
+  };
+
   const showTableLoading = geofenceLoading || agentLoading;
   const showTableError = geofenceError || agentError;
 
@@ -165,11 +172,12 @@ const AllAgents = () => {
   }, [debouncedName]);
 
   return (
-    <div className="bg-gray-100 h-full">
+    <div className="bg-gray-100 min-h-full w-full">
       <GlobalSearch />
 
-      <div className="flex justify-between mt-[30px] items-center px-[30px]">
+      <div className="flex flex-col lg:flex-row justify-between mt-[30px] items-center px-[30px] gap-[20px] lg:gap-0">
         <h1 className="text-[18px] font-semibold">Delivery Agent</h1>
+
         <div className="flex gap-x-2 justify-end ">
           <button
             className="bg-cyan-100 text-black rounded-md px-4 py-2 font-semibold flex items-center gap-2"
@@ -182,7 +190,8 @@ const AllAgents = () => {
           <Link to="/agent/payout">
             <button className="bg-teal-800 text-white rounded-md px-4 py-2 font-semibold flex items-center gap-2">
               <RenderIcon iconName="PricingIcon" size={16} loading={6} />
-              <span>Agent Payout</span>
+              <span className="hidden lg:block">Agent Payout</span>
+              <span className="block lg:hidden">Payout</span>
             </button>
           </Link>
 
@@ -192,14 +201,15 @@ const AllAgents = () => {
               onClick={() => toggleModal("add")}
             >
               <RenderIcon iconName="PlusIcon" size={16} loading={6} />
-              <span>Add Agent</span>
+              <span className="hidden lg:block">Add Agent</span>
+              <span className="block lg:hidden">Add</span>
             </button>
           </div>
         </div>
       </div>
 
-      <div className="flex items-center justify-between mt-10 px-[10px] bg-white rounded-lg mx-5">
-        <div className="flex items-center justify-evenly gap-3 bg-white rounded-lg p-6">
+      <div className="flex items-center justify-between mt-[20px] lg:mt-10 px-[10px] bg-white rounded-lg mx-5 p-6">
+        <div className="hidden lg:flex items-center justify-evenly gap-3 bg-white rounded-lg ">
           <Select
             options={agentStatusOptions}
             value={agentStatusOptions.find(
@@ -273,7 +283,7 @@ const AllAgents = () => {
           />
         </div>
 
-        <div className="flex items-center gap-[30px]">
+        <div className="flex items-center justify-between lg:justify-end gap-[30px] w-full">
           <input
             type="search"
             placeholder="Search agent"
@@ -281,106 +291,126 @@ const AllAgents = () => {
             value={debouncedName}
             onChange={(e) => setDebouncedName(e.target.value)}
           />
+
+          <span onClick={() => setFilterOpen(true)} className="text-gray-400">
+            <RenderIcon iconName="FilterIcon" size={20} loading={6} />
+          </span>
+
+          <FilterWrapper filterOpen={filterOpen} setFilterOpen={setFilterOpen}>
+            <AgentFilters
+              currentValue={filter}
+              geofenceOptions={geofenceOptions}
+              onFilterChange={handleFilterChange}
+            />
+          </FilterWrapper>
         </div>
       </div>
 
-      <Table.Root className="mt-5 z-10 max-h-[30rem]" striped interactive>
-        <Table.Header>
-          <Table.Row className="bg-teal-700 h-14">
-            {[
-              "Agent ID",
-              "Full Name",
-              "Email",
-              "Phone",
-              "Manager",
-              "Geofence",
-              "Online Status",
-              "Registration Approval",
-            ].map((header) => (
-              <Table.ColumnHeader key={header} color="white" textAlign="center">
-                {header}
-              </Table.ColumnHeader>
-            ))}
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {showTableLoading ? (
-            <Table.Row className="h-[70px]">
-              <Table.Cell colSpan={8} textAlign="center">
-                <ShowSpinner /> Loading...
-              </Table.Cell>
+      <div className=" overflow-x-auto">
+        <Table.Root className="mt-5 z-10 max-h-[30rem]" striped interactive>
+          <Table.Header>
+            <Table.Row className="bg-teal-700 h-14">
+              {[
+                "Agent ID",
+                "Full Name",
+                "Email",
+                "Phone",
+                "Manager",
+                "Geofence",
+                "Online Status",
+                "Registration Approval",
+              ].map((header) => (
+                <Table.ColumnHeader
+                  key={header}
+                  color="white"
+                  textAlign="center"
+                >
+                  {header}
+                </Table.ColumnHeader>
+              ))}
             </Table.Row>
-          ) : allAgents?.length === 0 ? (
-            <Table.Row className="h-[70px]">
-              <Table.Cell colSpan={8} textAlign="center">
-                No Agents Available
-              </Table.Cell>
-            </Table.Row>
-          ) : showTableError ? (
-            <Table.Row className="h-[70px]">
-              <Table.Cell colSpan={8} textAlign="center">
-                Error in fetching agents.
-              </Table.Cell>
-            </Table.Row>
-          ) : (
-            allAgents?.map((agent) => (
-              <Table.Row key={agent._id} className={`h-[70px]`}>
-                <Table.Cell textAlign="center">
-                  <Link
-                    to={`/agent/${agent._id}`}
-                    className=" underline underline-offset-2"
-                  >
-                    {agent._id}
-                  </Link>
-                </Table.Cell>
-                <Table.Cell textAlign="center">{agent.fullName}</Table.Cell>
-                <Table.Cell textAlign="center">{agent.email}</Table.Cell>
-                <Table.Cell textAlign="center">{agent.phoneNumber}</Table.Cell>
-                <Table.Cell textAlign="center">{agent.manager}</Table.Cell>
-                <Table.Cell textAlign="center">{agent.geofence}</Table.Cell>
-                <Table.Cell textAlign="center">
-                  <Switch
-                    colorPalette="teal"
-                    disabled={toggleStatus.isPending}
-                    checked={agent.status}
-                    onChange={() => toggleStatus.mutate(agent._id)}
-                  />
-                </Table.Cell>
-                <Table.Cell textAlign="center">
-                  {agent.isApproved === "Approved" && (
-                    <p className="text-green-500">Approved</p>
-                  )}
-
-                  {agent.isApproved === "Pending" && (
-                    <div className="flex items-center justify-center gap-x-5">
-                      <span
-                        onClick={() => toggleModal("approve", agent._id)}
-                        className="text-green-500"
-                      >
-                        <RenderIcon
-                          iconName="CheckIcon"
-                          size={28}
-                          loading={6}
-                        />
-                      </span>
-                      <span
-                        onClick={() => toggleModal("reject", agent._id)}
-                        className="text-red-500"
-                      >
-                        <RenderIcon
-                          iconName="CancelIcon"
-                          size={28}
-                          loading={6}
-                        />
-                      </span>
-                    </div>
-                  )}
+          </Table.Header>
+          <Table.Body>
+            {showTableLoading ? (
+              <Table.Row className="h-[70px]">
+                <Table.Cell colSpan={8} textAlign="center">
+                  <ShowSpinner /> Loading...
                 </Table.Cell>
               </Table.Row>
-            ))
-          )}
-        </Table.Body>
-      </Table.Root>
+            ) : allAgents?.length === 0 ? (
+              <Table.Row className="h-[70px]">
+                <Table.Cell colSpan={8} textAlign="center">
+                  No Agents Available
+                </Table.Cell>
+              </Table.Row>
+            ) : showTableError ? (
+              <Table.Row className="h-[70px]">
+                <Table.Cell colSpan={8} textAlign="center">
+                  Error in fetching agents.
+                </Table.Cell>
+              </Table.Row>
+            ) : (
+              allAgents?.map((agent) => (
+                <Table.Row key={agent._id} className={`h-[70px]`}>
+                  <Table.Cell textAlign="center">
+                    <Link
+                      to={`/agent/${agent._id}`}
+                      className=" underline underline-offset-2"
+                    >
+                      {agent._id}
+                    </Link>
+                  </Table.Cell>
+                  <Table.Cell textAlign="center">{agent.fullName}</Table.Cell>
+                  <Table.Cell textAlign="center">{agent.email}</Table.Cell>
+                  <Table.Cell textAlign="center">
+                    {agent.phoneNumber}
+                  </Table.Cell>
+                  <Table.Cell textAlign="center">{agent.manager}</Table.Cell>
+                  <Table.Cell textAlign="center">{agent.geofence}</Table.Cell>
+                  <Table.Cell textAlign="center">
+                    <Switch
+                      colorPalette="teal"
+                      disabled={toggleStatus.isPending}
+                      checked={agent.status}
+                      onChange={() => toggleStatus.mutate(agent._id)}
+                    />
+                  </Table.Cell>
+                  <Table.Cell textAlign="center">
+                    {agent.isApproved === "Approved" && (
+                      <p className="text-green-500">Approved</p>
+                    )}
+
+                    {agent.isApproved === "Pending" && (
+                      <div className="flex items-center justify-center gap-x-5">
+                        <span
+                          onClick={() => toggleModal("approve", agent._id)}
+                          className="text-green-500"
+                        >
+                          <RenderIcon
+                            iconName="CheckIcon"
+                            size={28}
+                            loading={6}
+                          />
+                        </span>
+                        <span
+                          onClick={() => toggleModal("reject", agent._id)}
+                          className="text-red-500"
+                        >
+                          <RenderIcon
+                            iconName="CancelIcon"
+                            size={28}
+                            loading={6}
+                          />
+                        </span>
+                      </div>
+                    )}
+                  </Table.Cell>
+                </Table.Row>
+              ))
+            )}
+          </Table.Body>
+        </Table.Root>
+      </div>
 
       <AddAgent isOpen={modal.add} onClose={closeModal} />
       <ApproveAgent

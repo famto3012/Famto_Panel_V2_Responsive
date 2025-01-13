@@ -144,10 +144,10 @@ const MerchantDetail = () => {
   if (isError) return <Error />;
 
   return (
-    <div className="bg-gray-100 min-h-full">
+    <div className="bg-gray-100 min-h-full min-w-full">
       <GlobalSearch />
 
-      <div className="flex justify-between my-[15px] mt-8 mx-[30px]">
+      <div className="flex flex-col md:flex-row justify-between gap-[20px] md:gap-0 my-[15px] mt-8 mx-[30px]">
         <div className="flex items-center gap-2">
           <span onClick={() => navigate("/merchant")}>
             <RenderIcon iconName="LeftArrowIcon" size={16} loading={6} />

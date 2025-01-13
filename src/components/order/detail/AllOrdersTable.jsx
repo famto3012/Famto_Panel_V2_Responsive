@@ -146,7 +146,7 @@ const AllOrdersTable = ({ filter }) => {
   };
 
   return (
-    <div>
+    <div className=" overflow-x-auto">
       <Table.Root className="mt-5 z-10">
         <Table.Header>
           <Table.Row className="bg-teal-700 h-14">

@@ -83,11 +83,11 @@ const SubscriptionLog = () => {
   }, [merchantDebounce]);
 
   return (
-    <div className="bg-gray-100 h-full">
+    <div className="bg-gray-100 h-full min-w-full">
       <GlobalSearch />
 
-      <div className="flex justify-between items-center mx-[30px]">
-        <div className="flex items-center">
+      <div className="flex justify-between items-center mx-[20px] lg:mx-[30px]">
+        <div className="flex items-center mt-[20px] lg:mt-0">
           <span onClick={() => navigate("/comm-and-subs")}>
             <RenderIcon iconName="LeftArrowIcon" size={16} loading={6} />
           </span>
@@ -96,17 +96,17 @@ const SubscriptionLog = () => {
         </div>
       </div>
 
-      <div className="mx-[30px] my-5">
+      <div className="mx-[20px] lg:mx-[30px] my-5">
         <div
-          className={`flex items-center bg-white p-4 rounded-md ${
+          className={`flex flex-col lg:flex-row gap-[20px] lg:gap-0 items-center bg-white p-4 rounded-md ${
             role === "Admin" ? "justify-between" : "justify-end pe-4"
           }`}
         >
           {role === "Admin" && (
-            <label className="flex outline-none cursor-pointer bg-transparent border border-black p-1 rounded-full">
+            <label className="flex outline-none cursor-pointer bg-transparent border border-black p-1 rounded-full w-full lg:w-fit">
               <span
                 onClick={() => setSelected("Merchant")}
-                className={`px-4 py-2 transition-colors duration-300 rounded-full ${
+                className={`px-4 py-2 transition-colors duration-300 rounded-full flex-1 text-center ${
                   selected === "Merchant" && "bg-teal-700 text-white"
                 }`}
               >
@@ -115,7 +115,7 @@ const SubscriptionLog = () => {
 
               <span
                 onClick={() => setSelected("Customer")}
-                className={`px-4 py-2 transition-colors duration-300 rounded-full ${
+                className={`px-4 py-2 transition-colors duration-300 rounded-full flex-1 text-center ${
                   selected === "Customer" && "bg-teal-700 text-white"
                 }`}
               >
@@ -125,7 +125,7 @@ const SubscriptionLog = () => {
           )}
 
           {selected === "Customer" ? (
-            <div className="flex items-center gap-[30px]">
+            <div className="flex items-center justify-between lg:justify-end lg:gap-[30px] w-full">
               <DatePicker
                 selected={customerFilter.date}
                 onChange={(date) =>
@@ -133,7 +133,7 @@ const SubscriptionLog = () => {
                 }
                 dateFormat="yyyy/MM/dd"
                 withPortal
-                className="cursor-pointer "
+                className="cursor-pointer order-2 lg:order-1"
                 customInput={
                   <span className="text-gray-400">
                     <RenderIcon iconName="CalendarIcon" size={24} loading={2} />
@@ -141,7 +141,7 @@ const SubscriptionLog = () => {
                 }
               />
 
-              <div className="flex justify-end">
+              <div className="flex justify-end order-1 lg:order-2">
                 <input
                   type="search"
                   placeholder="Search customer name"
@@ -152,10 +152,10 @@ const SubscriptionLog = () => {
               </div>
             </div>
           ) : (
-            <div className="flex items-center gap-[30px]">
+            <div className="flex flex-col lg:flex-row items-center justify-between lg:justify-end gap:[25px] lg:gap-[30px]">
               {role === "Admin" && (
                 <Select
-                  className="w-[200px]"
+                  className="w-[200px] hidden lg:block"
                   value={merchantOptions?.find(
                     (option) => option.value === merchantFilter
                   )}
@@ -178,7 +178,7 @@ const SubscriptionLog = () => {
                 }
                 dateFormat="yyyy/MM/dd"
                 withPortal
-                className="cursor-pointer "
+                className="cursor-pointer order-2"
                 customInput={
                   <span className="text-gray-400">
                     <RenderIcon iconName="CalendarIcon" size={24} loading={2} />
@@ -190,7 +190,7 @@ const SubscriptionLog = () => {
                 <input
                   type="search"
                   placeholder="Search merchant name"
-                  className="bg-white border p-3 rounded-full w-[200px] text-sm focus:outline-none "
+                  className="bg-white border p-3 rounded-full w-[200px] text-sm focus:outline-none order-1"
                   value={merchantDebounce}
                   onChange={(e) => setMerchantDebounce(e.target.value)}
                 />

@@ -31,13 +31,14 @@ const WalletTransaction = ({ data, customerId }) => {
     <>
       <div className="flex items-center justify-between ms-11 me-7 mt-10 pt-[30px]">
         <h1 className="text-md font-semibold">Wallet</h1>
+
         <div className="flex gap-[30px] justify-end ">
           <button
             className="bg-red-100 text-red-500 rounded-md px-4 py-2 font-semibold flex items-center gap-2"
             onClick={() => toggleModal("deduct")}
           >
             <RenderIcon iconName="MinusIcon" size={18} loading={6} />
-            <span>Money to Wallet</span>
+            <span className="hidden md:block">Money to Wallet</span>
           </button>
 
           <div>
@@ -46,13 +47,13 @@ const WalletTransaction = ({ data, customerId }) => {
               onClick={() => toggleModal("add")}
             >
               <RenderIcon iconName="PlusIcon" size={18} loading={6} />
-              <span>Money to Wallet</span>
+              <span className="hidden md:block">Money to Wallet</span>
             </button>
           </div>
         </div>
       </div>
 
-      <div className="mt-5 max-h-[20rem] overflow-auto">
+      <div className="mt-5 max-h-[20rem] overflow-x-auto">
         <Table.Root striped interactive stickyHeader>
           <Table.Header>
             <Table.Row className="bg-teal-700 h-14">

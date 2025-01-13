@@ -26,6 +26,7 @@ import Error from "@/components/others/Error";
 
 import "react-datepicker/dist/react-datepicker.css";
 import ConfirmCommissionPayment from "@/models/general/commAndSubs/ConfirmCommissionPayment";
+import FilterWrapper from "@/components/SideFilters/FilterWrapper";
 
 const CommissionLog = () => {
   const [filter, setFilter] = useState({
@@ -39,6 +40,7 @@ const CommissionLog = () => {
   const [allLogs, setAllLogs] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
+  const [filterOpen, setFilterOpen] = useState(false);
 
   const limit = 50;
 
@@ -108,10 +110,10 @@ const CommissionLog = () => {
   const showError = logsError || merchantError;
 
   return (
-    <div className="bg-gray-100 h-full">
+    <div className="bg-gray-100 h-full min-w-full">
       <GlobalSearch />
 
-      <>
+      <div className="mt-[30px]">
         <div className="flex items-center ms-[30px]">
           <span
             onClick={() => navigate("/comm-and-subs")}
@@ -124,13 +126,13 @@ const CommissionLog = () => {
         </div>
 
         <div
-          className={`mx-[30px] rounded-lg mt-[30px] flex items-center ${
+          className={`mx-[20px] rounded-lg mt-[30px] flex items-center bg-white p-5 ${
             role === "Admin" ? "justify-between" : "justify-end"
           } `}
         >
           {role === "Admin" && (
             <Select
-              className="w-[200px] px-2 py-2 rounded-lg outline-none focus:outline-none "
+              className="w-[200px] px-2 py-2 rounded-lg outline-none focus:outline-none hidden lg:block"
               value={merchantOptions?.find(
                 (option) => option.value === filter.merchantId
               )}
@@ -142,13 +144,13 @@ const CommissionLog = () => {
             />
           )}
 
-          <div className="flex items-center gap-[30px]">
+          <div className="flex items-center justify-between lg:justify-end lg:gap-[30px] w-full">
             <DatePicker
               selected={filter.date}
               onChange={(date) => setFilter({ ...filter, date: date })}
               dateFormat="yyyy/MM/dd"
               withPortal
-              className="cursor-pointer "
+              className="cursor-pointer hidden lg:block"
               maxDate={new Date()}
               customInput={
                 <span className="text-gray-400">
@@ -162,15 +164,21 @@ const CommissionLog = () => {
                 type="search"
                 name="search"
                 placeholder="Search merchant name"
-                className="bg-white p-3 rounded-3xl focus:outline-none outline-none text-[14px] ps-[20px]"
+                className="bg-gray-100 p-3 rounded-3xl focus:outline-none outline-none text-[14px] lg:ps-[20px]"
                 value={debouncedName}
                 onChange={(e) => setDebouncedName(e.target.value)}
               />
             )}
+
+            <span className="text-gray-400 ms-auto">
+              <RenderIcon iconName="FilterIcon" size={20} loading={6} />
+            </span>
+
+            <FilterWrapper></FilterWrapper>
           </div>
         </div>
 
-        <div className="mt-[40px]">
+        <div className="mt-[40px] overflow-x-auto">
           <Table.Root striped interactive>
             <Table.Header>
               <Table.Row className="bg-teal-700 h-14">
@@ -281,7 +289,7 @@ const CommissionLog = () => {
           onClose={closeModal}
           logId={selectedId}
         />
-      </>
+      </div>
     </div>
   );
 };

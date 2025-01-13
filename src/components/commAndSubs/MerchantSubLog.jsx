@@ -45,7 +45,7 @@ const MerchantSubLog = ({ selected, filter }) => {
   };
 
   return (
-    <>
+    <div className=" overflow-x-auto">
       <Table.Root striped interactive>
         <Table.Header>
           <Table.Row className="bg-teal-700 h-14">
@@ -131,7 +131,7 @@ const MerchantSubLog = ({ selected, filter }) => {
         onClose={closeModal}
         logId={selectedId}
       />
-    </>
+    </div>
   );
 };
 

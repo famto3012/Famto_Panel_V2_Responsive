@@ -3,12 +3,16 @@ import { Link, useLocation } from "react-router-dom";
 
 import RenderIcon from "@/icons/RenderIcon";
 
+import { Button } from "@/components/ui/button";
+
 import AuthContext from "@/context/AuthContext";
+import Logout from "@/models/auth/Logout";
 
 const MainSideBar = ({ showClose = false, onClick }) => {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [selectedLink, setSelectedLink] = useState("");
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const location = useLocation();
   const { role } = useContext(AuthContext);
@@ -550,6 +554,18 @@ const MainSideBar = ({ showClose = false, onClick }) => {
             </span>
             <span className="font-[poppins]">Settings</span>
           </Link>
+
+          <span
+            onClick={() => setShowModal(true)}
+            className={`ps-4 side lg:hidden`}
+          >
+            <span className="m-2">
+              <RenderIcon iconName="LogoutIcon" size={24} loading={6} />
+            </span>
+            <span className="font-[poppins]">Logout</span>
+          </span>
+
+          <Logout isOpen={showModal} onClose={() => setShowModal(!showModal)} />
         </ul>
       )}
     </div>
