@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 import RenderIcon from "@/icons/RenderIcon";
-import { Button } from "@chakra-ui/react";
 
 import { Button } from "@/components/ui/button";
 
