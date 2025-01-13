@@ -89,7 +89,7 @@ const Setting = () => {
     );
 
   return (
-    <div className="bg-gray-100 h-full">
+    <div className="bg-gray-100 min-h-full min-w-full">
       <GlobalSearch />
 
       <div className="flex items-center justify-between mx-11 mt-[50px]">
@@ -103,18 +103,17 @@ const Setting = () => {
         </button>
       </div>
 
-      <div className="bg-white p-12 rounded-lg  mt-[40px] mx-11">
+      <div className="bg-white p-5 md:p-12 rounded-lg  mt-[40px] md:mx-11">
         <div className="flex flex-col gap-4 ">
-          <div className="flex items-center">
-            <label className="w-1/3 text-gray-500" htmlFor="id">
+          <div className="flex items-center justify-between">
+            <label className="w-1/3 text-gray-500 " htmlFor="id">
               ID
             </label>
             <input
-              className=" rounded p-2 w-[45%] outline-none focus:outline-none uppercase"
+              className="rounded p-2 w-full outline-none focus:outline-none uppercase text-start"
               type="text"
               placeholder="ID"
               value={settingsData._id}
-              name="id"
               disabled
             />
           </div>
@@ -123,7 +122,7 @@ const Setting = () => {
               Name
             </label>
             <input
-              className="border-2 border-gray-300 rounded p-2 w-[45%] outline-none focus:outline-none"
+              className="border-2 border-gray-300 rounded p-2 w-full outline-none focus:outline-none"
               type="text"
               placeholder="Name"
               value={settingsData.fullName}
@@ -136,7 +135,7 @@ const Setting = () => {
               Email
             </label>
             <input
-              className="border-2 border-gray-300 rounded p-2 w-[45%] outline-none focus:outline-none"
+              className="border-2 border-gray-300 rounded p-2 w-full outline-none focus:outline-none"
               type="email"
               placeholder="Email"
               value={settingsData.email}
@@ -149,7 +148,7 @@ const Setting = () => {
               Phone
             </label>
             <input
-              className="border-2 border-gray-300 rounded p-2 w-[45%] outline-none focus:outline-none"
+              className="border-2 border-gray-300 rounded p-2 w-full outline-none focus:outline-none"
               type="tel"
               placeholder="Phone"
               value={settingsData.phoneNumber}
