@@ -121,11 +121,12 @@ const NotificationLog = () => {
         <nav className="p-5">
           <GlobalSearch />
         </nav>
-        <div>
-          <h1 className="text-lg font-bold mt-2 mb-[30px] mx-11 flex">
+        <div className="px-4 lg:px-11 mt-2">
+          <h1 className="text-base lg:text-lg font-bold mb-4 lg:mb-[30px] flex">
             Notification Log
           </h1>
         </div>
+
         <div className="overflow-x-auto">
           <Table.Root striped interactive>
             <Table.Header>
