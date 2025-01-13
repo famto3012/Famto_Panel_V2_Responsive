@@ -99,7 +99,7 @@ const MerchantAvailability = ({ detail, onDataChange }) => {
   return (
     <>
       <>
-        <div className="mb-6 flex mt-10 w-[1200px]">
+        <div className="mb-6 flex flex-col lg:flex-row gap-[20px] lg:gap-0 mt-10 w-[1200px]">
           <h3 className="text-gray-700 font-bold mb-2 w-1/3">
             Time wise availability
           </h3>

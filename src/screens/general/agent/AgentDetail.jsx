@@ -83,10 +83,10 @@ const AgentDetail = () => {
   if (isError) return <Error />;
 
   return (
-    <div className="bg-gray-100 min-h-[100%]">
+    <div className="bg-gray-100 min-h-full min-w-full">
       <GlobalSearch />
 
-      <div className="flex items-center justify-between my-[30px] mx-5">
+      <div className="flex flex-col md:flex-row md:items-center justify-between my-[30px] mx-5 gap-[20px] md:gap-0">
         <Link
           to="/agent"
           className="font-[600] text-[18px] flex items-center gap-3"
@@ -95,7 +95,7 @@ const AgentDetail = () => {
           Agent ID <span className="text-red-600">#{data.agentId}</span>
         </Link>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center justify-between md:justify-start gap-3">
           {!data?.isBlocked && (
             <button
               className="bg-yellow-100 py-2 px-5 p-1 rounded-xl flex items-center gap-2"
@@ -121,8 +121,8 @@ const AgentDetail = () => {
       </div>
 
       <div className="bg-white rounded-lg mx-5 mt-5 p-5">
-        <div className="flex gap-10 justify-between">
-          <div className="w-1/2 ">
+        <div className="flex flex-col md:flex-row gap-10 justify-between">
+          <div className="md:w-1/2 ">
             <div className="flex items-center">
               <label className="w-1/3 text-gray-400">Full name</label>
               <p className="w-2/3 font-[500]">{data.fullName}</p>
@@ -132,7 +132,8 @@ const AgentDetail = () => {
               <p className="w-2/3 font-[500]">{data.email}</p>
             </div>
           </div>
-          <div className=" w-1/2">
+
+          <div className="md:w-1/2">
             <div className="flex items-center gap-2 ">
               <label className="w-2/3 text-gray-400">Phone Number</label>
               <p className="w-2/3 font-[500]">{data.phoneNumber}</p>
@@ -150,6 +151,7 @@ const AgentDetail = () => {
               </p>
             </div>
           </div>
+
           <div>
             <figure
               className="h-20 w-20"
@@ -164,7 +166,7 @@ const AgentDetail = () => {
 
           <div>
             <button
-              className="bg-gray-100 text-black py-2 px-3 focus:outline-none rounded-lg flex items-center gap-2"
+              className="bg-gray-100 text-black py-2 px-3 focus:outline-none rounded-lg flex items-center gap-2 w-full md:w-fit justify-center "
               onClick={() => toggleModal("edit")}
             >
               <RenderIcon iconName="EditIcon" size={16} loading={6} />
@@ -173,7 +175,7 @@ const AgentDetail = () => {
           </div>
         </div>
 
-        <div className="mb-[20px] w-[600px] flex items-center justify-between mt-9 gap-[30px]">
+        <div className="mb-[20px] lg:w-[600px] flex items-center justify-between mt-9 gap-[30px]">
           <label className="text-gray-700 font-semibold text-[18px]">
             Ratings
           </label>
@@ -190,231 +192,251 @@ const AgentDetail = () => {
 
       <h1 className="font-semibold text-[18px] ml-5 my-5">Vehicle Details</h1>
 
-      <Table.Root striped interactive stickyHeader>
-        <Table.Header>
-          <Table.Row className="bg-teal-700 h-14">
-            {[
-              "License Plate",
-              "Vehicle Model",
-              "Type of Vehicle",
-              "RC front",
-              "Rc back",
-              "Action",
-            ].map((header, index) => (
-              <Table.ColumnHeader key={index} color="white" textAlign="center">
-                {header}
-              </Table.ColumnHeader>
-            ))}
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {data?.vehicleDetail?.map((item) => (
-            <Table.Row key={item.vehicleId} className={`h-[70px]`}>
-              <Table.Cell textAlign="center">{item.licensePlate}</Table.Cell>
-              <Table.Cell textAlign="center">{item.model}</Table.Cell>
-              <Table.Cell textAlign="center">{item.type}</Table.Cell>
-              <Table.Cell textAlign="center">
-                <div className="w-full flex justify-center">
-                  <figure
-                    onClick={() =>
-                      toggleModal("enlarge", undefined, item.rcFrontImage)
-                    }
-                    className="h-24 w-24"
-                  >
-                    <img
-                      src={item.rcFrontImage}
-                      alt="RC Front image"
-                      className="w-full h-full object-contain"
-                    />
-                  </figure>
-                </div>
-              </Table.Cell>
-              <Table.Cell textAlign="center">
-                <div className="w-full flex justify-center">
-                  <figure
-                    onClick={() =>
-                      toggleModal("enlarge", undefined, item.rcBackImage)
-                    }
-                    className="h-24 w-24"
-                  >
-                    <img
-                      src={item.rcBackImage}
-                      alt="RC Back image"
-                      className="w-full h-full object-contain"
-                    />
-                  </figure>
-                </div>
-              </Table.Cell>
-              <Table.Cell textAlign="center">
-                <span
-                  onClick={() => toggleModal("vehicle", item)}
-                  className="flex items-center justify-center text-gray-500"
+      <div className="overflow-x-auto">
+        <Table.Root striped interactive stickyHeader>
+          <Table.Header>
+            <Table.Row className="bg-teal-700 h-14">
+              {[
+                "License Plate",
+                "Vehicle Model",
+                "Type of Vehicle",
+                "RC front",
+                "Rc back",
+                "Action",
+              ].map((header, index) => (
+                <Table.ColumnHeader
+                  key={index}
+                  color="white"
+                  textAlign="center"
                 >
-                  <RenderIcon iconName="EditIcon" size={24} loading={6} />
-                </span>
-              </Table.Cell>
+                  {header}
+                </Table.ColumnHeader>
+              ))}
             </Table.Row>
-          ))}
-        </Table.Body>
-      </Table.Root>
+          </Table.Header>
+          <Table.Body>
+            {data?.vehicleDetail?.map((item) => (
+              <Table.Row key={item.vehicleId} className={`h-[70px]`}>
+                <Table.Cell textAlign="center">{item.licensePlate}</Table.Cell>
+                <Table.Cell textAlign="center">{item.model}</Table.Cell>
+                <Table.Cell textAlign="center">{item.type}</Table.Cell>
+                <Table.Cell textAlign="center">
+                  <div className="w-full flex justify-center">
+                    <figure
+                      onClick={() =>
+                        toggleModal("enlarge", undefined, item.rcFrontImage)
+                      }
+                      className="h-24 w-24"
+                    >
+                      <img
+                        src={item.rcFrontImage}
+                        alt="RC Front image"
+                        className="w-full h-full object-contain"
+                      />
+                    </figure>
+                  </div>
+                </Table.Cell>
+                <Table.Cell textAlign="center">
+                  <div className="w-full flex justify-center">
+                    <figure
+                      onClick={() =>
+                        toggleModal("enlarge", undefined, item.rcBackImage)
+                      }
+                      className="h-24 w-24"
+                    >
+                      <img
+                        src={item.rcBackImage}
+                        alt="RC Back image"
+                        className="w-full h-full object-contain"
+                      />
+                    </figure>
+                  </div>
+                </Table.Cell>
+                <Table.Cell textAlign="center">
+                  <span
+                    onClick={() => toggleModal("vehicle", item)}
+                    className="flex items-center justify-center text-gray-500"
+                  >
+                    <RenderIcon iconName="EditIcon" size={24} loading={6} />
+                  </span>
+                </Table.Cell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table.Root>
+      </div>
 
       <h1 className="font-semibold text-[18px] ml-5 my-5">
         Government Certificates
       </h1>
 
-      <Table.Root>
-        <Table.Header>
-          <Table.Row className="bg-teal-700 h-14">
-            {[
-              "Aadhar Number",
-              "Aadhar Front Side",
-              "Aadhar Back Side",
-              "Driving License Number",
-              "License Front Side",
-              "License Back Side",
-            ].map((header, index) => (
-              <Table.ColumnHeader key={index} color="white" textAlign="center">
-                {header}
-              </Table.ColumnHeader>
-            ))}
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          <Table.Row className={`h-[70px]`}>
-            <Table.Cell textAlign="center">
-              {data?.governmentCertificateDetail?.aadharNumber}
-            </Table.Cell>
-            <Table.Cell textAlign="center">
-              <div className="w-full flex justify-center">
-                <figure
-                  onClick={() =>
-                    toggleModal(
-                      "enlarge",
-                      undefined,
-                      data?.governmentCertificateDetail?.aadharFrontImage
-                    )
-                  }
-                  className="h-24 w-24"
+      <div className="overflow-x-auto">
+        <Table.Root>
+          <Table.Header>
+            <Table.Row className="bg-teal-700 h-14">
+              {[
+                "Aadhar Number",
+                "Aadhar Front Side",
+                "Aadhar Back Side",
+                "Driving License Number",
+                "License Front Side",
+                "License Back Side",
+              ].map((header, index) => (
+                <Table.ColumnHeader
+                  key={index}
+                  color="white"
+                  textAlign="center"
                 >
-                  <img
-                    src={data?.governmentCertificateDetail?.aadharFrontImage}
-                    alt="Aadhar Front"
-                    className="w-full h-full object-contain"
-                  />
-                </figure>
-              </div>
-            </Table.Cell>
-            <Table.Cell textAlign="center">
-              <div className="w-full flex justify-center">
-                <figure
-                  onClick={() =>
-                    toggleModal(
-                      "enlarge",
-                      undefined,
-                      data?.governmentCertificateDetail?.aadharBackImage
-                    )
-                  }
-                  className="h-24 w-24"
-                >
-                  <img
-                    src={data?.governmentCertificateDetail?.aadharBackImage}
-                    alt="Aadhar Back"
-                    className="w-full h-full object-contain"
-                  />
-                </figure>
-              </div>
-            </Table.Cell>
-            <Table.Cell textAlign="center">
-              {data?.governmentCertificateDetail?.drivingLicenseNumber}
-            </Table.Cell>
-            <Table.Cell textAlign="center">
-              <div className="w-full flex justify-center">
-                <figure
-                  onClick={() =>
-                    toggleModal(
-                      "enlarge",
-                      undefined,
-                      data?.governmentCertificateDetail
-                        ?.drivingLicenseFrontImage
-                    )
-                  }
-                  className="h-24 w-24"
-                >
-                  <img
-                    src={
-                      data?.governmentCertificateDetail
-                        ?.drivingLicenseFrontImage
+                  {header}
+                </Table.ColumnHeader>
+              ))}
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            <Table.Row className={`h-[70px]`}>
+              <Table.Cell textAlign="center">
+                {data?.governmentCertificateDetail?.aadharNumber}
+              </Table.Cell>
+              <Table.Cell textAlign="center">
+                <div className="w-full flex justify-center">
+                  <figure
+                    onClick={() =>
+                      toggleModal(
+                        "enlarge",
+                        undefined,
+                        data?.governmentCertificateDetail?.aadharFrontImage
+                      )
                     }
-                    alt="Driving License Front"
-                    className="w-full h-full object-contain"
-                  />
-                </figure>
-              </div>
-            </Table.Cell>
-            <Table.Cell textAlign="center">
-              <div className="w-full flex items-center">
-                <figure
-                  onClick={() =>
-                    toggleModal(
-                      "enlarge",
-                      undefined,
-                      data?.governmentCertificateDetail?.drivingLicenseBackImage
-                    )
-                  }
-                  className="h-24 w-24"
-                >
-                  <img
-                    src={
-                      data?.governmentCertificateDetail?.drivingLicenseBackImage
+                    className="h-24 w-24"
+                  >
+                    <img
+                      src={data?.governmentCertificateDetail?.aadharFrontImage}
+                      alt="Aadhar Front"
+                      className="w-full h-full object-contain"
+                    />
+                  </figure>
+                </div>
+              </Table.Cell>
+              <Table.Cell textAlign="center">
+                <div className="w-full flex justify-center">
+                  <figure
+                    onClick={() =>
+                      toggleModal(
+                        "enlarge",
+                        undefined,
+                        data?.governmentCertificateDetail?.aadharBackImage
+                      )
                     }
-                    alt="Driving License Back"
-                    className="w-full h-full object-contain"
-                  />
-                </figure>
-              </div>
-            </Table.Cell>
-          </Table.Row>
-        </Table.Body>
-      </Table.Root>
+                    className="h-24 w-24"
+                  >
+                    <img
+                      src={data?.governmentCertificateDetail?.aadharBackImage}
+                      alt="Aadhar Back"
+                      className="w-full h-full object-contain"
+                    />
+                  </figure>
+                </div>
+              </Table.Cell>
+              <Table.Cell textAlign="center">
+                {data?.governmentCertificateDetail?.drivingLicenseNumber}
+              </Table.Cell>
+              <Table.Cell textAlign="center">
+                <div className="w-full flex justify-center">
+                  <figure
+                    onClick={() =>
+                      toggleModal(
+                        "enlarge",
+                        undefined,
+                        data?.governmentCertificateDetail
+                          ?.drivingLicenseFrontImage
+                      )
+                    }
+                    className="h-24 w-24"
+                  >
+                    <img
+                      src={
+                        data?.governmentCertificateDetail
+                          ?.drivingLicenseFrontImage
+                      }
+                      alt="Driving License Front"
+                      className="w-full h-full object-contain"
+                    />
+                  </figure>
+                </div>
+              </Table.Cell>
+              <Table.Cell textAlign="center">
+                <div className="w-full flex items-center">
+                  <figure
+                    onClick={() =>
+                      toggleModal(
+                        "enlarge",
+                        undefined,
+                        data?.governmentCertificateDetail
+                          ?.drivingLicenseBackImage
+                      )
+                    }
+                    className="h-24 w-24"
+                  >
+                    <img
+                      src={
+                        data?.governmentCertificateDetail
+                          ?.drivingLicenseBackImage
+                      }
+                      alt="Driving License Back"
+                      className="w-full h-full object-contain"
+                    />
+                  </figure>
+                </div>
+              </Table.Cell>
+            </Table.Row>
+          </Table.Body>
+        </Table.Root>
+      </div>
 
       <h1 className="font-semibold text-[18px] ml-5 my-5">Bank Details</h1>
 
-      <Table.Root>
-        <Table.Header>
-          <Table.Row className="bg-teal-700 h-14">
-            {[
-              "Account Holder Name",
-              "Account Number",
-              "IFSC code",
-              "UPI ID",
-            ].map((header, index) => (
-              <Table.ColumnHeader key={index} color="white" textAlign="center">
-                {header}
-              </Table.ColumnHeader>
-            ))}
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          <Table.Row className={`h-[70px]`}>
-            <Table.Cell textAlign="center">
-              {data?.bankDetail?.accountHolderName}
-            </Table.Cell>
-            <Table.Cell textAlign="center">
-              {data?.bankDetail?.accountNumber}
-            </Table.Cell>
-            <Table.Cell textAlign="center">
-              {data?.bankDetail?.IFSCCode}
-            </Table.Cell>
-            <Table.Cell textAlign="center">
-              {data?.bankDetail?.UPIId}
-            </Table.Cell>
-          </Table.Row>
-        </Table.Body>
-      </Table.Root>
+      <div className="overflow-x-auto">
+        <Table.Root>
+          <Table.Header>
+            <Table.Row className="bg-teal-700 h-14">
+              {[
+                "Account Holder Name",
+                "Account Number",
+                "IFSC code",
+                "UPI ID",
+              ].map((header, index) => (
+                <Table.ColumnHeader
+                  key={index}
+                  color="white"
+                  textAlign="center"
+                >
+                  {header}
+                </Table.ColumnHeader>
+              ))}
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            <Table.Row className={`h-[70px]`}>
+              <Table.Cell textAlign="center">
+                {data?.bankDetail?.accountHolderName}
+              </Table.Cell>
+              <Table.Cell textAlign="center">
+                {data?.bankDetail?.accountNumber}
+              </Table.Cell>
+              <Table.Cell textAlign="center">
+                {data?.bankDetail?.IFSCCode}
+              </Table.Cell>
+              <Table.Cell textAlign="center">
+                {data?.bankDetail?.UPIId}
+              </Table.Cell>
+            </Table.Row>
+          </Table.Body>
+        </Table.Root>
+      </div>
 
       <h1 className="font-semibold text-[18px] ml-5 my-5">Work Structure</h1>
 
-      <div className="mb-[100px]">
+      <div className="mb-[100px] overflow-x-auto">
         <Table.Root>
           <Table.Header>
             <Table.Row className="bg-teal-700 h-14">
@@ -456,6 +478,7 @@ const AgentDetail = () => {
         onClose={closeModal}
         agentId={agentId}
       />
+
       <EditAgent isOpen={modal.edit} onClose={closeModal} data={data} />
       <BlockAgent isOpen={modal.block} onClose={closeModal} agentId={agentId} />
       <EditAgentVehicle

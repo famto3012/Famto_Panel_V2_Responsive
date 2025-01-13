@@ -148,11 +148,13 @@ const MerchantSubscriptionPlans = () => {
     <>
       {role === "Admin" && (
         <div className="bg-white mx-5 p-5 rounded-lg my-5">
-          <div className="flex items-center">
-            <label className="w-1/3">Merchant Subscription Setup</label>
+          <div className="flex flex-col lg:flex-row items-center">
+            <label className="hidden lg:block w-1/3">
+              Merchant Subscription Setup
+            </label>
 
             <button
-              className="flex items-center gap-2 bg-zinc-200 p-2 rounded-lg"
+              className="flex items-center gap-2 bg-zinc-200 p-2 rounded-lg w-full lg:w-fit justify-center lg:justify-start"
               onClick={() => toggleModal("add")}
             >
               <RenderIcon iconName="PlusIcon" size={16} loading={6} />
@@ -174,7 +176,7 @@ const MerchantSubscriptionPlans = () => {
         </div>
 
         {role === "Merchant" && (
-          <div className="mt-[20px] flex items-center">
+          <div className="mt-[20px] flex flex-col lg:flex-row items-center">
             <label className="w-1/3">Current Subscription Plan</label>
 
             <div className="border w-fit p-3 pe-[20px] rounded-md flex items-center gap-x-5">
@@ -203,9 +205,11 @@ const MerchantSubscriptionPlans = () => {
           </div>
         )}
 
-        <div className="flex mt-10">
-          <label className="w-1/3">Available Subscription Plans</label>
-          <div className="w-fit grid xl:grid-cols-2 grid-cols-1 gap-5 cursor-pointer">
+        <div className="flex flex-col lg:flex-row mt-10">
+          <label className="w-full lg:w-1/3 mb-[20px] lg:mb-0">
+            Available Subscription Plans
+          </label>
+          <div className="w-full lg:w-fit grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 cursor-pointer">
             {isLoading ? (
               <div className="flex items-center gap-2">
                 <ShowSpinner /> <p> Loading...</p>
@@ -304,7 +308,7 @@ const MerchantSubscriptionPlans = () => {
         </div>
 
         {role === "Admin" && (
-          <div className="flex mt-5 items-center">
+          <div className="flex gap-[20px] md:gap-0 mt-5 items-center">
             <label className="w-1/3 text-gray-800">Merchant Id</label>
 
             <Select
@@ -315,7 +319,7 @@ const MerchantSubscriptionPlans = () => {
               onChange={(option) =>
                 setFormData({ ...formData, userId: option.value })
               }
-              className="rounded w-1/3 focus:outline-none"
+              className="rounded w-full md:w-1/3 focus:outline-none"
               placeholder="Select merchant"
               menuPlacement="top"
               isSearchable={true}
@@ -361,7 +365,7 @@ const MerchantSubscriptionPlans = () => {
 
         <button
           disabled={handlePayment.isPending}
-          className="bg-teal-800 w-1/3 p-2 text-white rounded-lg mt-5 ml-[33%]"
+          className="bg-teal-800 w-full lg:w-1/3 p-2 text-white rounded-lg mt-5 lg:ml-[33%]"
           onClick={() => handlePayment.mutate()}
         >
           {handlePayment.isPending ? `Applying...` : `Apply`}

@@ -28,7 +28,7 @@ const CustomerSubLog = ({ selected, filter }) => {
   });
 
   return (
-    <>
+    <div className="overflow-x-auto">
       <Table.Root striped interactive stickyHeader>
         <Table.Header>
           <Table.Row className="bg-teal-700 h-14">
@@ -99,7 +99,7 @@ const CustomerSubLog = ({ selected, filter }) => {
           </HStack>
         </PaginationRoot>
       )}
-    </>
+    </div>
   );
 };
 

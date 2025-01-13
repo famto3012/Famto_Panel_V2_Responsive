@@ -15,6 +15,7 @@ import {
   FaUsers as UsersIcon,
   FaCalendar as CalendarIcon,
   FaApple as AppleIcon,
+  FaFilter as FilterIcon,
 } from "react-icons/fa";
 import {
   LuBellRing as PushNotificationIcon,
@@ -68,6 +69,7 @@ import { GrUserManager as ManagerIcon } from "react-icons/gr";
 import {
   IoMenu as MenuIcon,
   IoSettingsOutline as SettingsIcon,
+  IoClose as CloseIcon,
 } from "react-icons/io5";
 import { SlCloudUpload as UploadIcon } from "react-icons/sl";
 import { AiOutlineEllipsis as ThreeDots } from "react-icons/ai";
@@ -93,6 +95,7 @@ export {
   CalendarIcon,
   CheckIcon,
   ChevronRightIcon,
+  CloseIcon,
   CustomizationIcon,
   DeleteIcon,
   DownloadIcon,
@@ -100,6 +103,7 @@ export {
   EyeCloseIcon,
   EyeOpenIcon,
   FaceBookIcon,
+  FilterIcon,
   GiftIcon,
   GeofenceIcon,
   GoogleIcon,

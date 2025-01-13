@@ -15,6 +15,8 @@ import AddMerchant from "@/models/general/merchant/AddMerchant";
 import { getAllGeofence } from "@/hooks/geofence/useGeofence";
 import { getAllBusinessCategory } from "@/hooks/customerAppCustomization/useBusinessCategory";
 import CSVOperation from "@/models/general/merchant/CSVOperation";
+import MerchantFIlters from "@/components/SideFilters/MerchantFIlters";
+import FilterWrapper from "@/components/SideFilters/FilterWrapper";
 
 const AllMerchant = () => {
   const [filter, setFilter] = useState({
@@ -28,6 +30,7 @@ const AllMerchant = () => {
     add: null,
     csv: null,
   });
+  const [filterOpen, setFilterOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -96,6 +99,10 @@ const AllMerchant = () => {
   const showLoading = geofenceLoading || categoryLoading;
   const showError = geofenceError || categoryError;
 
+  const setFilerFromDrawer = (type, value) => {
+    setFilter({ ...filter, [type]: value });
+  };
+
   return (
     <div className="bg-gray-100 min-h-full min-w-full">
       <GlobalSearch />
@@ -115,7 +122,9 @@ const AllMerchant = () => {
             to={"/merchant/payout"}
             className="bg-teal-800 text-white rounded-md px-4 py-2 font-semibold flex items-center text-[14px] lg:text-[16px]"
           >
-            <p>Merchant payout</p>
+            <p className="hidden lg:block">Merchant payout</p>
+            <p className="block md:hidden">₹</p>
+            <p className="hidden md:block lg:hidden">Payout</p>
           </Link>
 
           <button
@@ -123,13 +132,13 @@ const AllMerchant = () => {
             onClick={() => toggleModal("add")}
           >
             <RenderIcon iconName="PlusIcon" size={16} loading={6} />
-            <span>Add Merchant</span>
+            <span className="hidden lg:block">Add Merchant</span>
           </button>
         </div>
       </div>
 
       <div className="flex items-center bg-white p-5 mx-5 rounded-lg justify-between mt-[20px] px-[30px]">
-        <div className="flex items-center gap-[20px]">
+        <div className="hidden lg:flex items-center gap-[20px]">
           <Select
             options={serviceableOptions}
             value={serviceableOptions?.find(
@@ -183,7 +192,7 @@ const AllMerchant = () => {
               setFilter({ ...filter, businessCategory: option.value })
             }
             className=" bg-cyan-50 min-w-[10rem]"
-            placeholder="Business category"
+            placeholder="Category"
             styles={{
               control: (provided) => ({
                 ...provided,
@@ -197,7 +206,7 @@ const AllMerchant = () => {
           />
         </div>
 
-        <div>
+        <div className="flex items-center justify-between lg:justify-end w-full relative">
           <input
             type="search"
             value={debounceName}
@@ -205,6 +214,23 @@ const AllMerchant = () => {
             placeholder="Search merchant"
             onChange={(e) => setDebounceName(e.target.value)}
           />
+
+          <span
+            onClick={() => setFilterOpen(true)}
+            className="block lg:hidden text-gray-400 cursor-pointer"
+          >
+            <RenderIcon iconName="FilterIcon" size={16} loading={6} />
+          </span>
+
+          <FilterWrapper filterOpen={filterOpen} setFilterOpen={setFilterOpen}>
+            <MerchantFIlters
+              geofenceOptions={geofenceOptions}
+              categoryOptions={categoryOptions}
+              onFilterChange={setFilerFromDrawer}
+              currentValue={filter}
+              onClose={() => setFilterOpen(false)}
+            />
+          </FilterWrapper>
         </div>
       </div>
 

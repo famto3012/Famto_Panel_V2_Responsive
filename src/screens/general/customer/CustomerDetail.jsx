@@ -164,11 +164,11 @@ const CustomerDetail = () => {
 
   return (
     <>
-      <div className="bg-gray-100 h-full">
+      <div className="bg-gray-100 min-h-full">
         <GlobalSearch />
 
         <div className="flex items-center justify-between mx-11 mt-5">
-          <h1 className="text-lg font-bold">
+          <h1 className=" text-[16px] lg:text-lg font-bold">
             Customer ID <span className="text-red-600">#{customer._id}</span>
           </h1>
           {!customer?.isBlocked && (
@@ -179,16 +179,16 @@ const CustomerDetail = () => {
               <span className="text-red-500">
                 <RenderIcon iconName="BlockIcon" size={18} loading={6} />
               </span>
-              Block
+              <span className="text-[16px]">Block</span>
             </button>
           )}
         </div>
 
-        <div className="bg-white mx-7 py-2 mt-5 ">
+        <div className="bg-white mx-7 py-2 mt-5">
           <div className="grid grid-cols-2 xl:grid-cols-6 mt-4">
-            <div className="col-span-4 rounded-lg mx-6 ">
+            <div className=" col-span-2 lg:col-span-4 rounded-lg mx-6 ">
               <form>
-                <div className="flex gap-6">
+                <div className="flex flex-col md:flex-row lg:gap-6">
                   <div className="p-3 flex flex-col w-full gap-3">
                     <div className="flex items-center ">
                       <label htmlFor="fullName" className="w-1/3 text-sm">
@@ -291,7 +291,7 @@ const CustomerDetail = () => {
               </form>
             </div>
 
-            <figure className="h-16 w-16 ms-[10rem] xl:ms-0 mt-[30px] xl:mt-0 cursor-pointer">
+            <figure className="h-16 w-16 ms-[20px] lg:ms-[10rem] xl:ms-0 mt-[30px] xl:mt-0 cursor-pointer">
               {customer?.customerDetail?.customerImageURL ? (
                 <img
                   onClick={() =>
@@ -333,20 +333,22 @@ const CustomerDetail = () => {
             </div>
           </div>
 
-          <div className="w-[600px] flex items-center justify-between gap-[30px] mt-10">
-            <label className="text-gray-700 mx-11 font-bold">Ratings</label>
+          <div className="lg:w-[600px] flex flex-col md:flex-row md:items-center justify-start lg:justify-between gap-[30px] mt-10 mx-[20px]">
+            <label className="text-gray-700 md:mx-11 font-bold">Ratings</label>
 
             <button
               type="button"
               onClick={() => toggleModal("rating")}
-              className="bg-teal-700 text-white p-2 rounded-md w-[20rem]"
+              className="bg-teal-700 text-white p-2 rounded-md md:w-[20rem]"
             >
               Show ratings and reviews
             </button>
           </div>
 
           <div className="mt-10">
-            <h4 className="text-gray-700 mx-11 font-bold">Address</h4>
+            <h4 className="text-gray-700 mx-[20px] lg:mx-11 font-bold">
+              Address
+            </h4>
 
             <div
               className={`flex gap-[30px] ms-11 my-5 max-w-[800px] overflow-x-auto overflow-element ${

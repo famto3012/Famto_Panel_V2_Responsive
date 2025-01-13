@@ -224,7 +224,8 @@ const GlobalSearch = () => {
               </Float>
             )}
           </Avatar.Root>
-          <div className="relative me-4">
+
+          <div className="hidden md:block relative me-4">
             <input
               type="search"
               name="search"
@@ -240,7 +241,7 @@ const GlobalSearch = () => {
 
           <span
             onClick={() => setShowModal(!showModal)}
-            className="cursor-pointer"
+            className="cursor-pointer hidden lg:block"
           >
             <RenderIcon iconName="LogoutIcon" size={24} loading={6} />
           </span>
