@@ -86,12 +86,14 @@ const MerchantDiscount = ({ selectedMerchant }) => {
   return (
     <>
       <div className="flex items-center justify-between mt-[30px] mx-5">
-        <h1 className="font-bold text-[20px]">Merchant Discount</h1>
+        <h1 className="font-bold text-[16px] sm:text-[20px]">
+          Merchant Discount
+        </h1>
         <button
           onClick={() => toggleModal("add")}
-          className="flex items-center gap-2 bg-teal-800 text-white px-5 rounded-lg p-2"
+          className="flex items-center gap-1.5 bg-teal-800 text-white px-3 py-1.5 rounded-md text-xs sm:gap-2 sm:px-5 sm:py-3 sm:rounded-lg sm:text-sm"
         >
-          <RenderIcon iconName="PlusIcon" size={16} loading={6} />
+          <RenderIcon iconName="PlusIcon" size={14} loading={6} />
           <span>Add Discount</span>
         </button>
       </div>
