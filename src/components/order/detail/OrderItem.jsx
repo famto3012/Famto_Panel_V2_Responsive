@@ -7,7 +7,7 @@ const OrderItems = ({ data }) => {
     <>
       <h1 className="text-[18px] font-semibold m-5">Order Details</h1>
 
-      <div className=" max-w-[96%] mx-auto">
+      <div className="max-w-[96%] mx-auto overflow-x-auto">
         {/* Pick and Drop */}
         {deliveryMode === "Pick and Drop" && (
           <Table.Root size="lg">

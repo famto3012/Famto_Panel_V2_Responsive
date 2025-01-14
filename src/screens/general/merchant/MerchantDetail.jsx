@@ -144,20 +144,21 @@ const MerchantDetail = () => {
   if (isError) return <Error />;
 
   return (
-    <div className="bg-gray-100 min-h-full min-w-full">
+    <div className="bg-gray-100 min-h-full ">
       <GlobalSearch />
 
-      <div className="flex flex-col md:flex-row justify-between gap-[20px] md:gap-0 my-[15px] mt-8 mx-[30px]">
+      <div className="flex flex-col md:flex-row justify-between gap-y-[20px] md:gap-0 my-[15px] mt-8 mx-[20px]">
         <div className="flex items-center gap-2">
           <span onClick={() => navigate("/merchant")}>
             <RenderIcon iconName="LeftArrowIcon" size={16} loading={6} />
           </span>
+
           <h3 className="font-[600] text-[18px]">
             {formData?.merchantDetail?.merchantName}
           </h3>
         </div>
 
-        <div className="flex items-center gap-[15px] ">
+        <div className="flex items-center justify-between lg:justify-end md:gap-[15px]">
           {role === "Admin" && !formData.isBlocked && (
             <Link
               onClick={() => toggleModal("block")}
@@ -176,7 +177,9 @@ const MerchantDetail = () => {
               className="bg-teal-600 text-white flex items-center gap-[10px] py-2 px-1.5 rounded"
             >
               <RenderIcon iconName="EditIcon" size={16} loading={6} />
-              {role === "Admin" ? `Edit Merchant` : `Change password`}
+              <p className="hidden sm:block">
+                {role === "Admin" ? `Edit Merchant` : `Change password`}
+              </p>
             </button>
 
             {role === "Admin" && (
@@ -205,7 +208,7 @@ const MerchantDetail = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-lg mx-3 p-5">
+      <div className="bg-white rounded-lg p-5">
         <MerchantData
           detail={formData}
           onDataChange={handleMerchantDataChange}

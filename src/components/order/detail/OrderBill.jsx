@@ -7,7 +7,7 @@ const OrderBill = ({ data }) => {
     <div className={`${orderId.charAt(0) === "O" ? "" : "mb-5"}`}>
       <h1 className="text-[18px] font-semibold m-5">Bill Summary</h1>
 
-      <div className=" max-w-[96%] mx-auto pb-[20px]">
+      <div className=" max-w-[96%] mx-auto pb-[20px] overflow-x-auto">
         <Table.Root size="lg">
           <Table.Body>
             <Table.Row className="h-[70px]">

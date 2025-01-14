@@ -333,3 +333,22 @@ export const markScheduledOrderAsViewed = async (orderId, userId, navigate) => {
     );
   }
 };
+
+export const markOrderAsCompletedForAdmin = async (orderId, navigate) => {
+  try {
+    const api = useApiClient(navigate);
+    const res = await api.patch(
+      `/orders/admin/mark-as-completed/${orderId}`,
+      {}
+    );
+
+    return res.status === 200 ? res.data.message : null;
+  } catch (err) {
+    console.log(err);
+    throw (
+      err.response?.data?.message || {
+        message: "Error in updating order status",
+      }
+    );
+  }
+};

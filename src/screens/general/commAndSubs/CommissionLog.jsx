@@ -27,6 +27,7 @@ import Error from "@/components/others/Error";
 import "react-datepicker/dist/react-datepicker.css";
 import ConfirmCommissionPayment from "@/models/general/commAndSubs/ConfirmCommissionPayment";
 import FilterWrapper from "@/components/SideFilters/FilterWrapper";
+import CommissionLogFilters from "@/components/SideFilters/CommissionLogFilters";
 
 const CommissionLog = () => {
   const [filter, setFilter] = useState({
@@ -106,6 +107,10 @@ const CommissionLog = () => {
     setShowModal(false);
   };
 
+  const handleFilterChange = (type, value) => {
+    setFilter({ ...filter, [type]: value });
+  };
+
   const showLoading = logsLoading || merchantLoading;
   const showError = logsError || merchantError;
 
@@ -170,11 +175,24 @@ const CommissionLog = () => {
               />
             )}
 
-            <span className="text-gray-400 ms-auto">
+            <span
+              onClick={() => setFilterOpen(true)}
+              className="text-gray-400 ms-auto"
+            >
               <RenderIcon iconName="FilterIcon" size={20} loading={6} />
             </span>
 
-            <FilterWrapper></FilterWrapper>
+            <FilterWrapper
+              filterOpen={filterOpen}
+              setFilterOpen={setFilterOpen}
+            >
+              <CommissionLogFilters
+                currentValue={filter}
+                role={role}
+                merchantOptions={merchantOptions}
+                onFilterChange={handleFilterChange}
+              />
+            </FilterWrapper>
           </div>
         </div>
 

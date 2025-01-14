@@ -6,7 +6,7 @@ import {
   StepsNextTrigger,
   StepsRoot,
 } from "@/components/ui/steps";
-import { getAuthTokenForDeliveryManagementMap } from "@/hooks/deliveryManagement/useDeliveryManagement";
+import { getAuthTokenForDeliveryManagementMap } from "@/hooks/deliverymanagement/useDeliveryManagement";
 import { fetchPolylineFromPickupToDelivery } from "@/hooks/order/useOrder";
 
 import { formatDate, formatTime } from "@/utils/formatter";
@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 
 const mapplsObject = new mappls();
 const mapplsClassObject = new mappls();
+
 const OrderActivity = ({ orderDetail }) => {
   const { _id: orderId } = orderDetail;
   const mapContainerRef = useRef(null);
@@ -430,8 +431,8 @@ const OrderActivity = ({ orderDetail }) => {
 
   return (
     <>
-      <div className="flex m-5 mx-10 ">
-        <div className="w-1/2 ">
+      <div className="flex flex-col lg:flex-row m-5 mx-10 ">
+        <div className=" w-full lg:w-1/2 order-2 lg:order-1">
           {activeStepIndex !== null && (
             <StepsRoot
               count={steps?.length}
@@ -467,7 +468,8 @@ const OrderActivity = ({ orderDetail }) => {
             </StepsRoot>
           )}
         </div>
-        <div className="w-3/4 bg-white h-[820px]">
+
+        <div className="w-full lg:w-3/4 bg-white h-[820px] order-1 lg:order-2">
           <div
             id="map"
             ref={mapContainerRef}

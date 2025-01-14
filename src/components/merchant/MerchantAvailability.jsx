@@ -99,7 +99,7 @@ const MerchantAvailability = ({ detail, onDataChange }) => {
   return (
     <>
       <>
-        <div className="mb-6 flex flex-col lg:flex-row gap-[20px] lg:gap-0 mt-10 w-[1200px]">
+        <div className="mb-6 flex flex-col lg:flex-row gap-[20px] lg:gap-0 mt-10 lg:w-[1200px]">
           <h3 className="text-gray-700 font-bold mb-2 w-1/3">
             Time wise availability
           </h3>
@@ -161,7 +161,7 @@ const MerchantAvailability = ({ detail, onDataChange }) => {
                         onChange={() =>
                           handleSpecificDayChange(day, "openAllDay", true)
                         }
-                        className="mr-2 cursor-pointer"
+                        className="mr-2 cursor-pointer w-fit"
                       />
                     </Table.Cell>
 
@@ -176,7 +176,7 @@ const MerchantAvailability = ({ detail, onDataChange }) => {
                         onChange={() =>
                           handleSpecificDayChange(day, "closedAllDay", true)
                         }
-                        className="mr-2 cursor-pointer"
+                        className="mr-2 cursor-pointer w-fit"
                       />
                     </Table.Cell>
 
@@ -191,7 +191,7 @@ const MerchantAvailability = ({ detail, onDataChange }) => {
                         onChange={() =>
                           handleSpecificDayChange(day, "specificTime", true)
                         }
-                        className="mr-2 cursor-pointer"
+                        className="mr-2 cursor-pointer w-fit"
                       />
                     </Table.Cell>
 
@@ -229,7 +229,7 @@ const MerchantAvailability = ({ detail, onDataChange }) => {
                         timeCaption="Time"
                         dateFormat="h:mm aa"
                         placeholderText="Start time"
-                        className="border-2 p-2 rounded-lg cursor-pointer outline-none focus:outline-none w-full"
+                        className="border-2 p-2 rounded-lg cursor-pointer outline-none focus:outline-none w-fit"
                       />
                     </Table.Cell>
 

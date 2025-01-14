@@ -22,16 +22,16 @@ const SponsorshipDetail = ({ detail }) => {
 
   return (
     <>
-      <div className="mb-6 flex lg:w-[1200px]">
-        <div className="flex flex-col lg:fle-row justify-between rounded">
-          <h3 className="text-gray-700 mb-2 mt-3 w-1/3 order-1">
+      <div className="mb-6 flex w-fit lg:w-[1200px]">
+        <div className="flex flex-col lg:flex-row items-start justify-between rounded">
+          <h3 className="text-gray-700 mb-2 mt-3 lg:mt-0 md:w-1/3 order-1">
             Sponsorship Status
           </h3>
 
           <div
             className={`${
               detail?.currentPlan ? `visible` : ` invisible`
-            } mb-4 w-[30rem] p-5 justify-center text-center mx-[3.5rem] shadow-lg order-3 lg:order-2`}
+            } mb-4 lg:w-[30rem] p-5 justify-center text-center mx-[3.5rem] shadow-lg order-3 lg:order-2`}
           >
             <label className="block text-teal-700 font-[600] mb-[10px] text-[16px]">
               Current Chosen Plan
@@ -55,10 +55,10 @@ const SponsorshipDetail = ({ detail }) => {
 
       {haveSponsorship && (
         <div className="mb-6 flex flex-col md:flex-row md:w-[800px]">
-          <h3 className="text-gray-700 mb-2 w-1/3">Choose or Renew Plan</h3>
+          <h3 className="text-gray-700 mb-2 md:w-1/3">Choose or Renew Plan</h3>
 
-          <div className="w-4/5">
-            <div className="">
+          <div className="md:w-4/5">
+            <div className="overflow-auto my-2">
               <RadioCardRoot colorPalette="teal" defaultValue={selectedPlan}>
                 <HStack align="stretch">
                   {[
@@ -88,7 +88,7 @@ const SponsorshipDetail = ({ detail }) => {
                 Pay
               </button>
 
-              <p className="w-[25rem] text-[14px] text-gray-700">
+              <p className="md:w-[25rem] text-[14px] text-gray-700">
                 Note: Choose the date range for showing your shop on top of the
                 sheet and reach your customers more easily.
               </p>

@@ -21,6 +21,7 @@ import RenderIcon from "@/icons/RenderIcon";
 import {
   downloadOrderBill,
   getOrderDetail,
+  markOrderAsCompletedForAdmin,
   markScheduledOrderAsViewed,
 } from "@/hooks/order/useOrder";
 
@@ -47,6 +48,25 @@ const OrderDetail = () => {
   const markScheduledOrderAsViewedForMerchant = useMutation({
     mutationKey: ["mark-scheduled-order-viewed-for-merchant"],
     mutationFn: () => markScheduledOrderAsViewed(orderId, userId, navigate),
+  });
+
+  const markOrderAsCompleted = useMutation({
+    mutationKey: ["mark-as-completed"],
+    mutationFn: () => markOrderAsCompletedForAdmin(orderId, navigate),
+    onSuccess: () => {
+      toaster.create({
+        title: "Success",
+        description: "Order marked as completed",
+        type: "success",
+      });
+    },
+    onError: (message) => {
+      toaster.create({
+        title: "Error",
+        description: message,
+        type: "error",
+      });
+    },
   });
 
   const handleDownloadBill = () => {
@@ -94,10 +114,10 @@ const OrderDetail = () => {
   if (isError) return <Error />;
 
   return (
-    <div className="bg-gray-100 h-full">
+    <div className="bg-gray-100 min-h-full min-w-full">
       <GlobalSearch />
 
-      <div className="flex justify-between mx-5 mt-[20px]">
+      <div className="flex flex-col md:flex-row justify-between gap-[20px] md:gap-0 mx-5 mt-[20px]">
         <p className="flex items-center gap-[10px] mb-0">
           <span onClick={() => navigate("/order")} className="cursor-pointer">
             <RenderIcon iconName="LeftArrowIcon" size={24} loading={6} />
@@ -116,21 +136,32 @@ const OrderDetail = () => {
           </p>
         </p>
 
-        {orderId.charAt(0) === "O" && (
-          <Button
-            onClick={handleDownloadBill}
-            className="bg-blue-100 px-4 p-2 rounded-md cursor-pointer"
-          >
-            <span>
-              <RenderIcon iconName="DownloadIcon" size={24} loading={6} />
-            </span>
-            Bill
-          </Button>
-        )}
+        <div className="flex gap-[20px] justify-center md:justify-end">
+          {orderId.charAt(0) === "O" && role === "Admin" && (
+            <Button
+              className="bg-teal-700 text-white p-2 rounded-md"
+              onClick={() => markOrderAsCompleted.mutate()}
+            >
+              Mark as Completed
+            </Button>
+          )}
+
+          {orderId.charAt(0) === "O" && (
+            <Button
+              onClick={handleDownloadBill}
+              className="bg-blue-100 px-4 p-2 rounded-md cursor-pointer"
+            >
+              <span>
+                <RenderIcon iconName="DownloadIcon" size={24} loading={6} />
+              </span>
+              Bill
+            </Button>
+          )}
+        </div>
       </div>
 
-      <div className="flex bg-white mx-5 rounded-lg mt-5 gap-16 p-5">
-        <div className="w-1/3">
+      <div className="flex flex-col lg:flex-row bg-white mx-5 rounded-lg mt-5 lg:gap-16 p-5">
+        <div className="w-full lg:w-1/3">
           <div className="flex justify-between mb-[10px]">
             <label className="text-[14px] text-gray-500 w-3/5">
               Order Status
@@ -165,9 +196,9 @@ const OrderDetail = () => {
           </div>
         </div>
 
-        <div className="h-[7rem] w-[2px] bg-gray-300 rounded-full"></div>
+        <div className="hidden lg:block h-[7rem] w-[2px] bg-gray-300 rounded-full"></div>
 
-        <div className="w-1/3">
+        <div className="w-full lg:w-1/3">
           <div className="flex justify-between mb-[10px]">
             <label className="text-[14px] text-gray-500 w-3/5">
               Delivery option
