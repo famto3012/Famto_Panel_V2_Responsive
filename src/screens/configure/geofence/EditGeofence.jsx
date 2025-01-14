@@ -286,11 +286,12 @@ const EditGeofence = () => {
                   lat,
                   lng,
                 ]);
-
-              setGeofence((prevState) => ({
-                ...prevState,
-                coordinates: formattedCoordinates,
-              }));
+              if (formattedCoordinates.length != 0) {
+                setGeofence((prevState) => ({
+                  ...prevState,
+                  coordinates: formattedCoordinates,
+                }));
+              }
             }
           );
         });
