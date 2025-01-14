@@ -267,16 +267,17 @@ const MerchantData = ({ detail, onDataChange }) => {
       </div>
 
       <div className=" md:w-[830px] mt-14 mb-[50px]">
-        <div className="mb-[20px] flex items-center justify-between gap-[30px]">
+        <div className="mb-[20px] flex flex-col md:flex-row md:items-center md:justify-between gap-[30px]">
           <label className="text-gray-700 text-[16px] md:w-1/3">
-            Short Description <br /> (Max 10 characters)
+            Short Description (Max 10 characters)
           </label>
+
           <input
             type="text"
             name="description"
             placeholder="Description"
             value={detail?.merchantDetail?.description}
-            className=" border rounded-md p-2 outline-none focus:outline-none w-2/3  md:me-[95px] "
+            className=" border rounded-md p-2 outline-none focus:outline-none w-full md:w-2/3  md:me-[95px] "
             onChange={handleInputChange}
           />
         </div>
@@ -331,11 +332,11 @@ const MerchantData = ({ detail, onDataChange }) => {
         <div className="mb-[20px] flex items-start justify-start">
           <label className="text-gray-700 md:w-1/3">Location</label>
 
-          <div className="flex flex-col gap-5 ms-auto md:ms-0">
-            <div className="flex gap-3 md:w-2/3">
+          <div className="flex flex-col gap-5 ms-auto md:ms-0 ">
+            <div className="flex flex-col gap-3 md:w-2/3">
               <input
                 type="text"
-                className="h-10 ps-3 text-sm border-2 outline-none focus:outline-none rounded-md flex-1"
+                className="h-10 ps-3 py-2 text-sm border-2 outline-none focus:outline-none rounded-md flex-1"
                 placeholder="Latitude"
                 name="latitude"
                 value={detail?.merchantDetail?.location[0] || ""}
@@ -376,7 +377,7 @@ const MerchantData = ({ detail, onDataChange }) => {
 
               <input
                 type="text"
-                className="h-10 ps-3 text-sm border-2 outline-none focus:outline-none rounded-md flex-1"
+                className="h-10 ps-3 py-2 text-sm border-2 outline-none focus:outline-none rounded-md flex-1"
                 placeholder="Longitude"
                 name="longitude"
                 value={detail?.merchantDetail?.location[1] || ""}

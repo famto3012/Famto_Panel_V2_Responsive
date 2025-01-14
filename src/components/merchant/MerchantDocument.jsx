@@ -60,16 +60,20 @@ const MerchantDocument = ({ detail, onDataChange }) => {
       <div className="mb-[50px] w-full">
         <h3 className="text-gray-700 font-bold mb-2">Documents provided</h3>
 
-        <div className="flex justify-between items-center my-[20px] max-w-[900px]">
-          <label className=" text-gray-700 text-[16px] w-1/4">Pan card</label>
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center my-[20px] md:max-w-[900px] gap-y-[20px] md:gap-0">
+          <div className="flex items-center flex-1">
+            <label className=" text-gray-700 text-[16px] md:w-1/4">
+              Pan card
+            </label>
 
-          <input
-            type="text"
-            name="pancardNumber"
-            value={detail?.merchantDetail?.pancardNumber}
-            onChange={handleInputChange}
-            className="p-2 border border-gray-400 rounded-md w-[20rem] mx-[40px] outline-none focus:outline-none flex-grow uppercase"
-          />
+            <input
+              type="text"
+              name="pancardNumber"
+              value={detail?.merchantDetail?.pancardNumber}
+              onChange={handleInputChange}
+              className="p-2 border border-gray-400 rounded-md w-[20rem] mx-[40px] outline-none focus:outline-none flex-grow uppercase"
+            />
+          </div>
 
           <div className="flex items-center gap-[30px]">
             {!previewURL?.pancardImage &&
@@ -114,15 +118,19 @@ const MerchantDocument = ({ detail, onDataChange }) => {
           </div>
         </div>
 
-        <div className="flex justify-between items-center my-[20px] max-w-[900px]">
-          <label className="text-gray-700 text-[16px] w-1/4">GSTIN</label>
-          <input
-            type="text"
-            name="GSTINNumber"
-            value={detail?.merchantDetail?.GSTINNumber}
-            onChange={handleInputChange}
-            className="p-2 border border-gray-400 rounded-md w-[20rem] mx-[40px] outline-none focus:outline-none flex-grow uppercase"
-          />
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center my-[20px] md:max-w-[900px] gap-y-[20px] md:gap-0">
+          <div className="flex items-center flex-1">
+            <label className="text-gray-700 text-[16px] md:w-1/4">GSTIN</label>
+
+            <input
+              type="text"
+              name="GSTINNumber"
+              value={detail?.merchantDetail?.GSTINNumber}
+              onChange={handleInputChange}
+              className="p-2 border border-gray-400 rounded-md w-[20rem] mx-[40px] outline-none focus:outline-none flex-grow uppercase"
+            />
+          </div>
+
           <div className="flex items-center gap-[30px]">
             {!previewURL?.gstinImage && !detail?.merchantDetail?.gstinImage ? (
               <div className="bg-gray-400 w-[65px] h-[65px] rounded-md" />
@@ -163,15 +171,17 @@ const MerchantDocument = ({ detail, onDataChange }) => {
           </div>
         </div>
 
-        <div className="flex justify-between items-center my-[20px] max-w-[900px]">
-          <label className=" text-gray-700 text-[16px] w-1/4">FSSAI</label>
-          <input
-            type="text"
-            name="FSSAINumber"
-            value={detail?.merchantDetail?.FSSAINumber}
-            onChange={handleInputChange}
-            className="p-2 border border-gray-400 rounded-md w-[20rem] mx-[40px] outline-none focus:outline-none flex-grow uppercase"
-          />
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center my-[20px] md:max-w-[900px] gap-y-[20px] md:gap-0">
+          <div className="flex items-center flex-1">
+            <label className=" text-gray-700 text-[16px] w-1/4">FSSAI</label>
+            <input
+              type="text"
+              name="FSSAINumber"
+              value={detail?.merchantDetail?.FSSAINumber}
+              onChange={handleInputChange}
+              className="p-2 border border-gray-400 rounded-md w-[20rem] mx-[40px] outline-none focus:outline-none flex-grow uppercase"
+            />
+          </div>
           <div className=" flex items-center gap-[30px]">
             {!previewURL?.fssaiImage && !detail?.merchantDetail?.fssaiImage ? (
               <div className="bg-gray-400 w-[65px] h-[65px] rounded-md" />
@@ -212,26 +222,29 @@ const MerchantDocument = ({ detail, onDataChange }) => {
           </div>
         </div>
 
-        <div className="flex justify-between items-center my-[20px] max-w-[900px]">
-          <label className=" text-gray-700 text-[16px] w-1/4">
-            Adhaar Number
-          </label>
-          <input
-            type="text"
-            onKeyDown={(e) => {
-              if (
-                !/^[0-9]$/.test(e.key) &&
-                e.key !== "Backspace" &&
-                e.key !== "Tab"
-              ) {
-                e.preventDefault();
-              }
-            }}
-            name="aadharNumber"
-            value={detail?.merchantDetail?.aadharNumber}
-            onChange={handleInputChange}
-            className="p-2 border border-gray-400 rounded-md w-[20rem] mx-[40px] outline-none focus:outline-none flex-grow uppercase"
-          />
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center my-[20px] md:max-w-[900px] gap-y-[20px] md:gap-0">
+          <div className="flex items-center flex-1">
+            <label className=" text-gray-700 text-[16px] w-1/4">
+              Adhaar Number
+            </label>
+            <input
+              type="text"
+              onKeyDown={(e) => {
+                if (
+                  !/^[0-9]$/.test(e.key) &&
+                  e.key !== "Backspace" &&
+                  e.key !== "Tab"
+                ) {
+                  e.preventDefault();
+                }
+              }}
+              name="aadharNumber"
+              value={detail?.merchantDetail?.aadharNumber}
+              onChange={handleInputChange}
+              className="p-2 border border-gray-400 rounded-md w-[20rem] mx-[40px] outline-none focus:outline-none flex-grow uppercase"
+            />
+          </div>
+
           <div className=" flex items-center gap-[30px]">
             {!previewURL?.aadharImage &&
             !detail?.merchantDetail?.aadharImage ? (
@@ -279,8 +292,8 @@ const MerchantDocument = ({ detail, onDataChange }) => {
       <div className="mb-[50px] w-full">
         <h3 className="text-gray-700 font-bold mb-2">Bank Details</h3>
 
-        <div className="flex justify-between items-center my-[20px] max-w-[900px]">
-          <label className=" text-gray-700 text-[16px] w-1/4">
+        <div className="flex flex-col lg:flex-row justify-start lg:items-center gap-[20px] lg:gap-0 my-[20px] lg::max-w-[900px]">
+          <label className=" text-gray-700 text-[16px] lg:w-[15%]">
             Account Holder Name
           </label>
 
@@ -298,12 +311,12 @@ const MerchantDocument = ({ detail, onDataChange }) => {
                 e.preventDefault();
               }
             }}
-            className="p-2 border border-gray-400 rounded-md w-[20rem] mx-[40px] outline-none focus:outline-none flex-grow uppercase"
+            className="p-2 border border-gray-400 rounded-md w-full lg:max-w-[40%] lg:mx-[40px] outline-none focus:outline-none flex-grow uppercase"
           />
         </div>
 
-        <div className="flex justify-between items-center my-[20px] max-w-[900px]">
-          <label className=" text-gray-700 text-[16px] w-1/4">
+        <div className="flex flex-col lg:flex-row justify-start lg:items-center gap-[20px] lg:gap-0 my-[20px] lg::max-w-[900px]">
+          <label className=" text-gray-700 text-[16px] lg:w-[15%]">
             Account number
           </label>
 
@@ -321,31 +334,35 @@ const MerchantDocument = ({ detail, onDataChange }) => {
                 e.preventDefault();
               }
             }}
-            className="p-2 border border-gray-400 rounded-md w-[20rem] mx-[40px] outline-none focus:outline-none flex-grow"
+            className="p-2 border border-gray-400 rounded-md w-full lg:max-w-[40%] lg:mx-[40px] outline-none focus:outline-none flex-grow uppercase"
           />
         </div>
 
-        <div className="flex justify-between items-center my-[20px] max-w-[900px]">
-          <label className=" text-gray-700 text-[16px] w-1/4">IFSC Code</label>
+        <div className="flex flex-col lg:flex-row justify-start lg:items-center gap-[20px] lg:gap-0 my-[20px] lg::max-w-[900px]">
+          <label className=" text-gray-700 text-[16px] lg:w-[15%]">
+            IFSC Code
+          </label>
 
           <input
             type="text"
             name="ifscCode"
             value={detail?.merchantDetail?.bankDetail?.ifscCode}
             onChange={handleInputChange}
-            className="p-2 border border-gray-400 rounded-md w-[20rem] mx-[40px] outline-none focus:outline-none flex-grow uppercase"
+            className="p-2 border border-gray-400 rounded-md w-full lg:max-w-[40%] lg:mx-[40px] outline-none focus:outline-none flex-grow uppercase"
           />
         </div>
 
-        <div className="flex justify-between items-center my-[20px] max-w-[900px]">
-          <label className=" text-gray-700 text-[16px] w-1/4">UPI ID</label>
+        <div className="flex flex-col lg:flex-row justify-start lg:items-center gap-[20px] lg:gap-0 my-[20px] lg::max-w-[900px]">
+          <label className=" text-gray-700 text-[16px] lg:w-[15%]">
+            UPI ID
+          </label>
 
           <input
             type="text"
             name="upiId"
             value={detail?.merchantDetail?.bankDetail?.upiId}
             onChange={handleInputChange}
-            className="p-2 border border-gray-400 rounded-md w-[20rem] mx-[40px] outline-none focus:outline-none flex-grow lowercase"
+            className="p-2 border border-gray-400 rounded-md w-full lg:max-w-[40%] lg:mx-[40px] outline-none focus:outline-none flex-grow uppercase"
           />
         </div>
       </div>

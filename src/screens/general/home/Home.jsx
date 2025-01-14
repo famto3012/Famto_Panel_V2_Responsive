@@ -444,7 +444,7 @@ const Home = () => {
   }, [merchantProfileData, userId]);
 
   return (
-    <div className="bg-gray-100 h-full">
+    <div className="bg-gray-100 min-h-full min-w-full">
       <GlobalSearch />
 
       <div className="flex justify-between mx-5 mt-5">
@@ -473,8 +473,8 @@ const Home = () => {
       </div>
 
       <div className="bg-white mt-2 mx-5 py-4">
-        <div className="flex items-center mx-[20px] justify-between ">
-          <div className="flex items-center justify-between">
+        <div className="flex flex-col md:flex-row gap-[30px] md:gap-0 lg:items-center mx-[20px] justify-start lg:justify-between">
+          <div className="flex items-center justify-between overflow-x-auto">
             <RadioGroup
               value={selectedOption}
               colorPalette="teal"
@@ -485,34 +485,34 @@ const Home = () => {
             >
               <Radio
                 value="sales"
-                className="text-black text-[16px] cursor-pointer"
+                className="text-black text-[16px] cursor-pointer w-[110px] md:w-fit"
               >
                 Sales (in ₹)
               </Radio>
               {role === "Admin" && (
                 <Radio
                   value="merchants"
-                  className="text-black text-[16px] cursor-pointer"
+                  className="text-black text-[16px] cursor-pointer w-[110px] md:w-fit"
                 >
                   Merchants
                 </Radio>
               )}
               <Radio
                 value="order"
-                className="text-black text-[16px] cursor-pointer"
+                className="text-black text-[16px] cursor-pointer w-[110px] md:w-fit"
               >
                 Orders
               </Radio>
               <Radio
                 value="commission"
-                className="text-black text-[16px] cursor-pointer"
+                className="text-black text-[16px] cursor-pointer w-[160px] md:w-fit"
               >
                 Commission (in ₹)
               </Radio>
               {role === "Admin" && (
                 <Radio
                   value="subscription"
-                  className="text-black text-[16px] cursor-pointer"
+                  className="text-black text-[16px] cursor-pointer w-[160px] md:w-fit"
                 >
                   Subscription (in ₹)
                 </Radio>

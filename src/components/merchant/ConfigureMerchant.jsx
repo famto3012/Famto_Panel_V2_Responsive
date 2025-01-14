@@ -90,7 +90,7 @@ const ConfigureMerchant = ({ detail, onDataChange }) => {
 
         {role === "Admin" && (
           <div className="mb-4 flex flex-col md:flex-row gap-[15px] md:gap-0 md:w-[800px]">
-            <label className="block mt-3 text-gray-700 w-1/3">
+            <label className="block mt-3 text-gray-700 md:w-1/3">
               Business category
             </label>
 
@@ -113,7 +113,9 @@ const ConfigureMerchant = ({ detail, onDataChange }) => {
 
         {showOption && (
           <div className="mb-4 flex flex-col md:flex-row gap-[15px] md:gap-0 md:w-[800px]">
-            <label className="block text-gray-700 w-1/3">If food, then</label>
+            <label className="block text-gray-700 md:w-1/3">
+              If food, then
+            </label>
 
             <RadioGroup
               value={detail?.merchantDetail?.merchantFoodType}
@@ -147,7 +149,9 @@ const ConfigureMerchant = ({ detail, onDataChange }) => {
         )}
 
         <div className="mb-4 flex flex-col md:flex-row gap-[15px] md:gap-0 md:w-[800px]">
-          <label className="block text-gray-700 w-1/3">Delivery option</label>
+          <label className="block text-gray-700 md:w-1/3">
+            Delivery option
+          </label>
 
           <RadioGroup
             value={detail?.merchantDetail?.deliveryOption}
@@ -186,7 +190,7 @@ const ConfigureMerchant = ({ detail, onDataChange }) => {
         </div>
 
         <div className="mb-4 flex flex-col md:flex-row gap-[15px] md:gap-0 items-start md:w-[800px]">
-          <label className="block text-gray-700 w-1/3">
+          <label className="block text-gray-700 md:w-1/3">
             Select Delivery time
           </label>
           <input
@@ -211,15 +215,15 @@ const ConfigureMerchant = ({ detail, onDataChange }) => {
 
         <div className="mb-4 flex md:w-[800px]">
           <span className="hidden md:w-1/3"></span>
-          <p className="text-gray-500 w-2/5 text-sm mt-2">
+          <p className="text-gray-500 md:w-2/5 text-sm mt-2">
             Note: Enter here the default time taken for the Delivery of an
             order. If a merchant is handling their delivery by itself then he
             will enter his/her own delivery time.
           </p>
         </div>
 
-        <div className="mb-4 flex md:w-[800px]">
-          <label className="block w-1/3 text-gray-700">
+        <div className="mb-4 flex md:w-[800px] gap-[20px] md:gap-0">
+          <label className="block md:w-1/3 text-gray-700">
             Pre Order Sales Status
           </label>
 
