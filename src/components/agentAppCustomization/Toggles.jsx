@@ -252,9 +252,11 @@ const Toggles = () => {
 
   return (
     <>
-      <h1 className="mx-5 font-bold text-[20px]">Agent App </h1>
+      <h1 className="mx-5 font-bold text-[20px] mt-[30px] lg:mt-0">
+        Agent App
+      </h1>
 
-      <div className="flex gap-10 mt-10 mx-5  border-b-2 border-gray-200 pb-5">
+      <div className="flex flex-col lg:flex-row gap-10 mt-10 mx-5  border-b-2 border-gray-200 pb-5">
         <div className="w-72">Splash Screen (390px x 844px)</div>
 
         <div className="text-gray-500">
@@ -323,11 +325,13 @@ const Toggles = () => {
         </div>
       </div>
 
-      <div className="flex mx-5 mt-5">
-        <div className="w-1/5 ">Sign up and Sign in Settings</div>
+      <div className="flex flex-col mx-5 mt-5">
+        <div className="w-full lg:w-1/5 mb-5 lg:mb-0">
+          Sign up and Sign in Settings
+        </div>
 
-        <div className="w-4/5 flex flex-col justify-start">
-          <p className="text-gray-500 max-w-[90%]">
+        <div className="lg:w-4/5 flex flex-col justify-start">
+          <p className="text-gray-500 lg:max-w-[90%]">
             Control sign-up of Agent on your platform. Here you are given with a
             variety of options such as whether to have email or phone number as
             mandatory fields on the sign-up form, how do you want to verify the
@@ -336,8 +340,8 @@ const Toggles = () => {
             platform.
           </p>
 
-          <div className="flex flex-row gap-[20px] mt-[30px]">
-            <div className="flex flex-col gap-[20px] bg-white p-3 rounded-lg w-[20%] h-fit">
+          <div className="flex flex-col lg:flex-row gap-[20px] mt-[30px]">
+            <div className="flex flex-col gap-[20px] bg-white p-3 rounded-lg lg:w-[20%] h-fit">
               <label className="font-semibold text-[16px]">
                 Required fields on signup
               </label>
@@ -361,7 +365,7 @@ const Toggles = () => {
               </div>
             </div>
 
-            <div className="flex flex-col gap-[20px] bg-white p-3 rounded-lg w-[20%] h-fit">
+            <div className="flex flex-col gap-[20px] bg-white p-3 rounded-lg lg:w-[20%] h-fit">
               <label className="font-semibold">Signup Verification</label>
 
               <div className="flex items-center justify-between">
@@ -382,7 +386,7 @@ const Toggles = () => {
               </div>
             </div>
 
-            <div className="flex flex-col gap-[20px] bg-white p-3 rounded-lg w-[20%] h-fit">
+            <div className="flex flex-col gap-[20px] bg-white p-3 rounded-lg lg:w-[20%] h-fit">
               <label className="font-semibold">Login via</label>
               <div className="flex items-center justify-between">
                 OTP
@@ -430,14 +434,15 @@ const Toggles = () => {
         </div>
       </div>
 
-      <div className="mt-10 flex mx-5">
-        <h1 className="w-1/5">Manage agent login & logout timing</h1>
-        <div className="w-4/5 flex-col justify-start">
+      <div className="mt-10 flex flex-col lg:flex-row mx-5">
+        <h1 className="w-full lg:w-1/5">Manage agent login & logout timing</h1>
+
+        <div className="w-full lg:w-4/5 flex-col justify-start mt-5 lg:mt-0">
           <p className="text-gray-500 mb-3">
             The purpose of this time is to set the working time for agent.
           </p>
 
-          <div className="flex flex-row items-center">
+          <div className="flex flex-col lg:flex-row lg:items-center gap-[20px]">
             <DatePicker
               selected={
                 time?.startTime
@@ -490,19 +495,24 @@ const Toggles = () => {
               timeCaption="End Time"
               dateFormat="h:mm aa"
               placeholderText="End Time"
-              className="border-2 p-2 rounded-lg ml-5"
+              className="border-2 p-2 rounded-lg "
             />
           </div>
         </div>
+
         <Button
-          className={`bg-teal-800 rounded-lg px-6 py-2 text-white font-semibold justify-end`}
+          className={`bg-teal-800 rounded-lg px-6 py-2 text-white font-semibold lg:justify-end mt-5 lg:mt-0`}
           onClick={handleAddTime}
         >
           Add
         </Button>
       </div>
-      <h4 className="text-[17px] text-gray-700 ml-[250px] mt-3">Time slots</h4>
-      <div className="mt-5 flex flex-wrap gap-2 w-[35%] ml-[250px]">
+
+      <h4 className="text-[17px] text-gray-700 ml-[20px] lg:ml-[250px] mt-3">
+        Time slots
+      </h4>
+
+      <div className="mt-5 flex flex-wrap gap-2 lg:w-[35%] ml-[20px] lg:ml-[250px]">
         {formData?.workingTime?.map((timeSlot) => (
           <Tag
             key={timeSlot?._id}

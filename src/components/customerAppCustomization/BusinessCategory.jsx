@@ -145,10 +145,11 @@ const BusinessCategory = () => {
 
   return (
     <>
-      <div className="flex justify-between mx-5 mt-10">
-        <div className="w-1/5">Business Category</div>
-        <div className="w-4/5 flex items-center justify-between">
-          <p className="text-gray-500 w-[75%]">
+      <div className="flex flex-col lg:flex-row justify-between mx-5 mt-10 gap-[15px] lg:gap-0">
+        <div className="lg:w-1/5">Business Category</div>
+
+        <div className="w-4/5 flex flex-col lg:flex-row items-center justify-start lg:justify-between gap-[15px] lg:gap-0">
+          <p className="text-gray-500 lg:w-[75%]">
             Business Categories provide your merchants the power to map their
             categories/products to a business category, which in turn will help
             the customers to easy checkout.
@@ -159,7 +160,7 @@ const BusinessCategory = () => {
             className="flex items-center gap-2 bg-teal-800 text-white p-2 rounded-lg"
           >
             <RenderIcon iconName="PlusIcon" size={16} loading={6} />
-            <span>Add Business Category</span>
+            <span className="hidden lg:block">Add Business Category</span>
           </button>
         </div>
       </div>
@@ -169,7 +170,7 @@ const BusinessCategory = () => {
       ) : categoryError ? (
         <Error />
       ) : (
-        <div className="grid justify-center mt-10 gap-5  border-b-2 border-gray-200 pb-10">
+        <div className="grid justify-center mt-10 gap-5 border-b-2 border-gray-200 w-fit lg:w-full pb-10">
           {allBusinessCategory?.map((data, index) => (
             <div
               draggable
@@ -182,41 +183,47 @@ const BusinessCategory = () => {
                 )
               }
               onDragOver={(e) => e.preventDefault()}
-              className="bg-white rounded-lg p-3 px-5 flex items-center justify-between gap-5"
+              className="bg-white rounded-lg p-3 px-5 flex flex-col lg:flex-row items-center justify-between gap-5"
               key={data?._id}
             >
-              <span className="p-3">
-                <RenderIcon iconName="ReOrderIcon" size={20} loading={6} />
-              </span>
+              <div className="flex flex-row items-center">
+                <span className="p-3">
+                  <RenderIcon iconName="ReOrderIcon" size={20} loading={6} />
+                </span>
 
-              <figure className="h-10 w-10">
-                <img
-                  src={data?.bannerImageURL}
-                  className="object-cover w-full h-full rounded-full"
+                <figure className="h-10 w-10">
+                  <img
+                    src={data?.bannerImageURL}
+                    className="object-cover w-full h-full rounded-full"
+                  />
+                </figure>
+
+                <p className=" ms-3 flex-grow overflow-ellipsis">
+                  {data?.title}
+                </p>
+              </div>
+
+              <div className=" flex flex-row items-center gap-[20px] ">
+                <Switch
+                  colorPalette="teal"
+                  checked={data?.status}
+                  onCheckedChange={() => handleUpdateStatus(data?._id)}
                 />
-              </figure>
 
-              <p className="flex-grow overflow-ellipsis">{data?.title}</p>
+                <button
+                  onClick={() => toggleModal("edit", data?._id)}
+                  className="bg-gray-200 text-gray-500 p-3 rounded-lg"
+                >
+                  <RenderIcon iconName="EditIcon" size={20} loading={6} />
+                </button>
 
-              <Switch
-                colorPalette="teal"
-                checked={data?.status}
-                onCheckedChange={() => handleUpdateStatus(data?._id)}
-              />
-
-              <button
-                onClick={() => toggleModal("edit", data?._id)}
-                className="bg-gray-200 text-gray-500 p-3 rounded-lg"
-              >
-                <RenderIcon iconName="EditIcon" size={20} loading={6} />
-              </button>
-
-              <button
-                onClick={() => toggleModal("delete", data?._id)}
-                className="bg-red-100 text-red-500 p-3 rounded-lg"
-              >
-                <RenderIcon iconName="DeleteIcon" size={20} loading={6} />
-              </button>
+                <button
+                  onClick={() => toggleModal("delete", data?._id)}
+                  className="bg-red-100 text-red-500 p-3 rounded-lg"
+                >
+                  <RenderIcon iconName="DeleteIcon" size={20} loading={6} />
+                </button>
+              </div>
             </div>
           ))}
         </div>

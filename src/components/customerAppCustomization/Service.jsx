@@ -89,22 +89,24 @@ const Service = () => {
 
   return (
     <div className="border-b-2 border-gray-200 pb-5 h-fit">
-      <div className="flex justify-between mx-5 mt-10">
+      <div className="flex flex-col lg:flex-row gap-[15px] lg:gap-0 justify-between mx-5 mt-10">
         <h1>Services</h1>
+
         <p className="text-gray-500">
           This enables to add, edit, change thumbnail of the listed services
         </p>
+
         <button
           onClick={() => toggleModal("add")}
-          className=" flex items-center gap-2 bg-teal-800 text-white px-5 rounded-lg p-2"
+          className=" flex items-center gap-2 bg-teal-800 text-white px-5 rounded-lg p-2 w-fit"
         >
           <RenderIcon iconName="PlusIcon" size={16} loading={6} />
-          <span>Add Services</span>
+          <span className="hidden lg:block">Add Services</span>
         </button>
       </div>
 
       {data?.length === 0 && (
-        <div className="flex justify-center mt-5">
+        <div className="flex justify-center my-10 lg:mt-5">
           <p className="text-[20px] font-[500]">No Services listed</p>
         </div>
       )}

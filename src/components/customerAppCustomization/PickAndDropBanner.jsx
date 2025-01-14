@@ -71,16 +71,21 @@ const PickAndDropBanner = () => {
 
   return (
     <>
-      <div className="mt-10 justify-between flex mx-5">
+      <div className="mt-10 justify-between items-start flex flex-col lg:flex-row mx-5">
         <h1>Pick and drop banners (info)</h1>
-        <p className="w-[45rem] text-gray-500">
-          The Purpose of this banner is to educate customer.
-        </p>
-        <Switch
-          colorPalette="teal"
-          checked={bannerStatus}
-          onCheckedChange={() => handleToggleMutation.mutate()}
-        />
+
+        <div className="flex justify-between flex-1 lg:ms-[20%] w-full mt-[20px] lg:mt-0">
+          <p className="w-[50%] lg:w-[45rem] text-gray-500 text-[14px]">
+            The Purpose of this banner is to educate customer.
+          </p>
+
+          <Switch
+            colorPalette="teal"
+            checked={bannerStatus}
+            onCheckedChange={() => handleToggleMutation.mutate()}
+            className="ms-auto"
+          />
+        </div>
       </div>
 
       <div className="mt-5 flex justify-end mx-5">
