@@ -25,6 +25,7 @@ const DeliveryManagement = () => {
   const [isMapLoaded, setIsMapLoaded] = useState(false);
   const [autoAllocationStatus, setAutoAllocationStatus] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [showComponents, setShowComponents] = useState("task");
   const mapContainerRef = useRef(null);
   const navigate = useNavigate();
 
@@ -270,6 +271,7 @@ const DeliveryManagement = () => {
     <>
       <div className="bg-gray-100 relative">
         <div className="h-[10%] pt-4">
+          {/* Title Section */}
           <p className="text-[18px] flex font-semibold p-5">
             <span
               onClick={() => navigate("/home")}
@@ -279,8 +281,10 @@ const DeliveryManagement = () => {
             </span>
             Delivery Management
           </p>
-          <div className="bg-white rounded-lg flex justify-between p-5 mb-1">
-            <div>
+
+          {/* Date Picker and Controls */}
+          <div className="bg-white rounded-lg flex flex-col lg:flex-row justify-between p-5 mb-1">
+            <div className="w-full md:w-1/2 lg:w-1/6 mx-auto lg:mx-0 lg:text-left">
               <DatePicker
                 selectsRange={true}
                 startDate={startDate}
@@ -290,14 +294,16 @@ const DeliveryManagement = () => {
                 }}
                 dateFormat="yyyy/MM/dd"
                 withPortal
-                className="border-2 p-2 rounded-lg cursor-pointer mt-4 outline-none focus:outline-none"
+                className="border-2 p-2 rounded-lg cursor-pointer mt-4 outline-none focus:outline-none w-full text-center"
                 placeholderText="Select Date range"
                 maxDate={new Date()}
               />
             </div>
-            <div className="flex gap-8 items-center">
+
+            {/* Controls Section (Settings Icon & Auto Allocation) */}
+            <div className="flex flex-col lg:flex-row gap-4 items-center lg:gap-8 mt-4 lg:mt-0">
               <span
-                className="p-4 bg-gray-200 rounded-2xl"
+                className="p-4 bg-gray-200 rounded-2xl cursor-pointer"
                 onClick={() => setShowModal(true)}
               >
                 <RenderIcon iconName="SettingsIcon" size={16} loading={6} />
@@ -306,8 +312,8 @@ const DeliveryManagement = () => {
                 isOpen={showModal}
                 onClose={() => setShowModal(false)}
               />
-              <p className="font-medium">
-                Auto Allocation{" "}
+              <p className="font-medium flex items-center">
+                Auto Allocation
                 <Switch
                   className="ml-2"
                   variant="solid"
@@ -320,13 +326,16 @@ const DeliveryManagement = () => {
           </div>
         </div>
 
-        <div className="flex gap-2 pl-2 pr-2">
-          <AllTask
-            onShowShopLocationOnMap={showShopLocationOnMap}
-            onDate={dateRange}
-          />
-
-          <div className="w-2/4 bg-white h-[33rem]">
+        <div className="flex flex-col lg:flex-row gap-2 pl-2 pr-2">
+          {/* AllTask Component on larger screens */}
+          <div className="lg:block hidden w-1/4 bg-white">
+            <AllTask
+              onShowShopLocationOnMap={showShopLocationOnMap}
+              onDate={dateRange}
+            />
+          </div>
+          {/* Map Section */}
+          <div className="lg:w-2/4 w-full bg-white h-[33rem]">
             <div
               id="map"
               ref={mapContainerRef}
@@ -349,7 +358,39 @@ const DeliveryManagement = () => {
             </div>
           </div>
 
-          <AllAgent showAgentLocationOnMap={showAgentLocationOnMap} />
+          {/* AllAgent Component on larger screens */}
+          <div className="lg:block hidden w-1/4 bg-white">
+            <AllAgent showAgentLocationOnMap={showAgentLocationOnMap} />
+          </div>
+
+          {/* On smaller screens, show buttons to toggle between AllTask and AllAgent */}
+          <div className="lg:hidden w-full flex justify-center gap-4 mt-2">
+            <Button
+              onClick={() => setShowComponents("task")}
+              className={`py-3 px-5 ${showComponents === "task" ? "bg-teal-600 text-white" : "bg-white text-teal-600"} text-[15px] font-bold`}
+            >
+              Task
+            </Button>
+            <Button
+              onClick={() => setShowComponents("agent")}
+              className={`py-3 px-5 ${showComponents === "agent" ? "bg-teal-600 text-white" : "bg-white text-teal-600"} text-[15px] font-bold`}
+            >
+              Agent
+            </Button>
+          </div>
+
+          {/* Conditional rendering of AllTask or AllAgent below the map on smaller screens */}
+          <div className="lg:hidden w-full mt-4">
+            {showComponents === "task" && (
+              <AllTask
+                onShowShopLocationOnMap={showShopLocationOnMap}
+                onDate={dateRange}
+              />
+            )}
+            {showComponents === "agent" && (
+              <AllAgent showAgentLocationOnMap={showAgentLocationOnMap} />
+            )}
+          </div>
         </div>
       </div>
     </>
