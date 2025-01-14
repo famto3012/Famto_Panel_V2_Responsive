@@ -50,8 +50,8 @@ const TaskDetails = ({ isOpen, onClose, taskId }) => {
         </DialogHeader>
         <DialogBody>
           <div>
-            <div className="flex items-center gap-[50px]  text-[18px] font-normal">
-              <div className="w-1/2 grid gap-3 ">
+            <div className="flex flex-wrap items-center gap-4 text-[18px] font-normal">
+              <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 grid gap-3">
                 <DataListRoot orientation="horizontal" size="md">
                   <DataListItem label={"Task Id"} value={task?._id} />
                   <DataListItem
@@ -61,7 +61,7 @@ const TaskDetails = ({ isOpen, onClose, taskId }) => {
                 </DataListRoot>
               </div>
 
-              <div className="w-1/2 grid gap-3 ">
+              <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 grid gap-3">
                 <DataListRoot orientation="horizontal" size="md">
                   <DataListItem
                     label={"Agent Name"}
@@ -94,9 +94,8 @@ const TaskDetails = ({ isOpen, onClose, taskId }) => {
                         </p>
                       </TimelineTitle>
                       <TimelineDescription>
-                        <div className="flex justify-between">
+                        <div className="flex flex-wrap justify-between">
                           <div>
-                            {" "}
                             <p className="text-[14px]">
                               By{" "}
                               {task?.orderId?.orderDetailStepper?.accepted
@@ -136,27 +135,24 @@ const TaskDetails = ({ isOpen, onClose, taskId }) => {
                       </TimelineDescription>
                     </TimelineContent>
                   </TimelineItem>
+
                   <div className="relative flex items-center ml-[40px] my-[10px]">
-                    {/* Oval container on the left */}
                     <div className="absolute left-0 bg-blue-50 w-[110px] h-[24px] flex items-center justify-center rounded-full text-black font-semibold">
                       <span className="text-sm">In transit</span>
                     </div>
 
-                    {/* Dotted separator */}
                     <div className="w-[350px] border-t border-dotted border-gray-900 my-[5px] mx-[100px]"></div>
 
-                    {/* Oval container on the right */}
-                    <div className="absolute right-0 bg-blue-50 w-[160px] h-[24px] flex items-center justify-center rounded-full text-black ">
+                    <div className="absolute right-0 bg-blue-50 w-[160px] h-[24px] flex items-center justify-center rounded-full text-black">
                       <span className="text-sm font-semibold">
                         <span className="text-gray-400 mr-1">Distance</span>
-                        {task?.orderId?.orderDetail?.distance}
-                        Kms
+                        {task?.orderId?.orderDetail?.distance} Kms
                       </span>
                     </div>
                   </div>
+
                   <TimelineItem className="mt-3">
                     <TimelineConnector>
-                      {" "}
                       {task?.deliveryDetail?.deliveryStatus === "Completed" ? (
                         <RenderIcon
                           iconName="CheckIcon"
@@ -177,9 +173,8 @@ const TaskDetails = ({ isOpen, onClose, taskId }) => {
                         </p>
                       </TimelineTitle>
                       <TimelineDescription>
-                        <div className="flex justify-between">
+                        <div className="flex flex-wrap justify-between">
                           <div>
-                            {" "}
                             <p className="text-[14px]">
                               By{" "}
                               {task?.orderId?.orderDetailStepper

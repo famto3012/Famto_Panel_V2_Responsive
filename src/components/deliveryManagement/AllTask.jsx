@@ -80,7 +80,7 @@ const AllTask = ({ onShowShopLocationOnMap, onDate }) => {
 
   return (
     <>
-      <div className="w-1/4 rounded-lg bg-white">
+      <div className="w-full rounded-lg bg-white">
         <div className="bg-teal-800 text-white p-5 xl:px-[25px] rounded-lg flex items-center justify-between">
           <p>Tasks</p>
           <p className="bg-white text-teal-800 font-bold rounded-full w-[25px] h-[25px] flex justify-center items-center">
