@@ -81,17 +81,22 @@ const NotificationSetting = () => {
         <nav className="p-5">
           <GlobalSearch />
         </nav>
-        <div className="flex items-center justify-between mx-[30px] mt-[20px]">
-          <h1 className="text-xl font-bold">Notification Settings</h1>
-          <div>
+        <div className="flex flex-wrap items-center justify-between mx-4 md:mx-[30px] mt-[20px] gap-4">
+          <h1 className="text-lg md:text-xl font-bold">
+            Notification Settings
+          </h1>
+          <div className="flex items-center">
             <button
-              className="bg-teal-700 text-white rounded-md flex items-center space-x-1 p-4"
+              className="bg-teal-700 text-white rounded-md flex items-center space-x-1 p-3 md:p-4"
               onClick={() => toggleModal("addSettings")}
             >
               <span className="mr-2">
                 <RenderIcon iconName="PlusIcon" size={16} loading={6} />
               </span>
-              Add Notification
+              <span className="text-sm md:text-base">
+                <span className="block md:hidden">Add</span>
+                <span className="hidden md:block">Add Notification</span>
+              </span>
             </button>
             <AddNotificationSettings
               isOpen={modal?.addSettings}
@@ -99,6 +104,7 @@ const NotificationSetting = () => {
             />
           </div>
         </div>
+
         <div className="overflow-x-auto w-full">
           <Table.Root striped interactive className="w-full mt-[20px]">
             <Table.Header>

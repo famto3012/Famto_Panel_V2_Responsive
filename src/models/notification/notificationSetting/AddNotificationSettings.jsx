@@ -145,12 +145,11 @@ const AddNotificationSettings = ({ isOpen, onClose }) => {
               />
             </div>
           </div>
-          <section className="flex gap-16">
-            <div>
-              <div className="flex items-center mt-9">
-                <label className="text-gray-500">Admin</label>
+          <section className="flex flex-wrap gap-4 md:gap-16">
+            <div className="w-full md:w-auto">
+              <div className="flex items-center mt-6">
+                <label className="text-gray-500 w-32 md:w-auto">Admin</label>
                 <Switch
-                  className="ml-28"
                   onCheckedChange={(value) => onChange("admin", value)}
                   name="admin"
                   colorPalette="teal"
@@ -158,9 +157,10 @@ const AddNotificationSettings = ({ isOpen, onClose }) => {
                 />
               </div>
               <div className="flex items-center mt-4">
-                <label className="text-gray-500">Customer App</label>
+                <label className="text-gray-500 w-32 md:w-auto">
+                  Customer App
+                </label>
                 <Switch
-                  className="ml-16"
                   onCheckedChange={(value) => onChange("customer", value)}
                   name="customer"
                   colorPalette="teal"
@@ -168,9 +168,10 @@ const AddNotificationSettings = ({ isOpen, onClose }) => {
                 />
               </div>
               <div className="flex items-center mt-4">
-                <label className="text-gray-500">Driver App</label>
+                <label className="text-gray-500 w-32 md:w-auto">
+                  Driver App
+                </label>
                 <Switch
-                  className="ml-[85px]"
                   onCheckedChange={(value) => onChange("driver", value)}
                   name="driver"
                   colorPalette="teal"
@@ -178,9 +179,10 @@ const AddNotificationSettings = ({ isOpen, onClose }) => {
                 />
               </div>
               <div className="flex items-center mt-4">
-                <label className="text-gray-500">Merchant App</label>
+                <label className="text-gray-500 w-32 md:w-auto">
+                  Merchant App
+                </label>
                 <Switch
-                  className="ml-16"
                   onCheckedChange={(value) => onChange("merchant", value)}
                   name="merchant"
                   colorPalette="teal"
@@ -188,11 +190,10 @@ const AddNotificationSettings = ({ isOpen, onClose }) => {
                 />
               </div>
             </div>
-            <div>
-              <div className="flex items-center mt-9">
-                <label className="text-gray-500">Whatsapp</label>
+            <div className="w-full md:w-auto">
+              <div className="flex items-center mt-6">
+                <label className="text-gray-500 w-32 md:w-auto">Whatsapp</label>
                 <Switch
-                  className="ml-24"
                   onCheckedChange={(value) => onChange("whatsapp", value)}
                   name="whatsapp"
                   colorPalette="teal"
@@ -200,9 +201,8 @@ const AddNotificationSettings = ({ isOpen, onClose }) => {
                 />
               </div>
               <div className="flex items-center mt-4">
-                <label className="text-gray-500">Email</label>
+                <label className="text-gray-500 w-32 md:w-auto">Email</label>
                 <Switch
-                  className="ml-[125px]"
                   onCheckedChange={(value) => onChange("email", value)}
                   name="email"
                   colorPalette="teal"
@@ -210,9 +210,8 @@ const AddNotificationSettings = ({ isOpen, onClose }) => {
                 />
               </div>
               <div className="flex items-center mt-4">
-                <label className="text-gray-500">SMS</label>
+                <label className="text-gray-500 w-32 md:w-auto">SMS</label>
                 <Switch
-                  className="ml-[130px]"
                   onCheckedChange={(value) => onChange("sms", value)}
                   name="sms"
                   colorPalette="teal"

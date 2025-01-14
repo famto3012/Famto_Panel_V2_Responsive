@@ -17,11 +17,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const EditNotificationSettings = ({
-  isOpen,
-  onClose,
-  selectedId,
-}) => {
+const EditNotificationSettings = ({ isOpen, onClose, selectedId }) => {
   const [notificationSettings, setNotificationSettings] = useState({
     event: "",
     title: "",
@@ -37,7 +33,6 @@ const EditNotificationSettings = ({
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-
 
   const { data: notificationSettingsData } = useQuery({
     queryKey: ["get-single-notification-settings", selectedId],
@@ -164,12 +159,11 @@ const EditNotificationSettings = ({
               />
             </div>
           </div>
-          <section className="flex gap-16">
-            <div>
-              <div className="flex items-center mt-9">
-                <label className="text-gray-500">Admin</label>
+          <section className="flex flex-wrap gap-4 md:gap-16">
+            <div className="w-full md:w-auto">
+              <div className="flex items-center mt-6">
+                <label className="text-gray-500 w-32 md:w-auto">Admin</label>
                 <Switch
-                  className="ml-28"
                   onCheckedChange={(value) => onChange("admin", value)}
                   checked={notificationSettings?.admin}
                   name="admin"
@@ -178,9 +172,10 @@ const EditNotificationSettings = ({
                 />
               </div>
               <div className="flex items-center mt-4">
-                <label className="text-gray-500">Customer App</label>
+                <label className="text-gray-500 w-32 md:w-auto">
+                  Customer App
+                </label>
                 <Switch
-                  className="ml-16"
                   onCheckedChange={(value) => onChange("customer", value)}
                   checked={notificationSettings?.customer}
                   name="customer"
@@ -189,9 +184,10 @@ const EditNotificationSettings = ({
                 />
               </div>
               <div className="flex items-center mt-4">
-                <label className="text-gray-500">Driver App</label>
+                <label className="text-gray-500 w-32 md:w-auto">
+                  Driver App
+                </label>
                 <Switch
-                  className="ml-[85px]"
                   onCheckedChange={(value) => onChange("driver", value)}
                   checked={notificationSettings?.driver}
                   name="driver"
@@ -200,9 +196,10 @@ const EditNotificationSettings = ({
                 />
               </div>
               <div className="flex items-center mt-4">
-                <label className="text-gray-500">Merchant App</label>
+                <label className="text-gray-500 w-32 md:w-auto">
+                  Merchant App
+                </label>
                 <Switch
-                  className="ml-16"
                   onCheckedChange={(value) => onChange("merchant", value)}
                   checked={notificationSettings?.merchant}
                   name="merchant"
@@ -211,11 +208,10 @@ const EditNotificationSettings = ({
                 />
               </div>
             </div>
-            <div>
-              <div className="flex items-center mt-9">
-                <label className="text-gray-500">Whatsapp</label>
+            <div className="w-full md:w-auto">
+              <div className="flex items-center mt-6">
+                <label className="text-gray-500 w-32 md:w-auto">Whatsapp</label>
                 <Switch
-                  className="ml-24"
                   onCheckedChange={(value) => onChange("whatsapp", value)}
                   checked={notificationSettings?.whatsapp}
                   name="whatsapp"
@@ -224,9 +220,8 @@ const EditNotificationSettings = ({
                 />
               </div>
               <div className="flex items-center mt-4">
-                <label className="text-gray-500">Email</label>
+                <label className="text-gray-500 w-32 md:w-auto">Email</label>
                 <Switch
-                  className="ml-[125px]"
                   onCheckedChange={(value) => onChange("email", value)}
                   checked={notificationSettings?.email}
                   name="email"
@@ -235,9 +230,8 @@ const EditNotificationSettings = ({
                 />
               </div>
               <div className="flex items-center mt-4">
-                <label className="text-gray-500">SMS</label>
+                <label className="text-gray-500 w-32 md:w-auto">SMS</label>
                 <Switch
-                  className="ml-[130px]"
                   onCheckedChange={(value) => onChange("sms", value)}
                   checked={notificationSettings?.sms}
                   name="sms"
