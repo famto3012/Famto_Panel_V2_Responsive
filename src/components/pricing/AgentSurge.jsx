@@ -89,87 +89,98 @@ const AgentSurge = () => {
           </button>
         </div>
       </div>
-
-      <Table.Root className="mt-5 z-10 max-h-[30rem]" striped interactive>
-        <Table.Header>
-          <Table.Row className="bg-teal-700 h-14">
-            {[
-              "Rule Name",
-              "Base Fare",
-              "Base Distance Fare",
-              "Waiting Fare",
-              "Waiting Time",
-              "Geofence",
-              "Status",
-            ].map((header, idx) => (
-              <Table.ColumnHeader key={idx} color="white" textAlign="center">
-                {header}
-              </Table.ColumnHeader>
-            ))}
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {isTableLoading ? (
-            <Table.Row className="h-[70px]">
-              <Table.Cell colSpan={7} textAlign="center">
-                <ShowSpinner /> Loading...
-              </Table.Cell>
+      <div className="overflow-x-auto">
+        <Table.Root className="mt-5 z-10 max-h-[30rem]" striped interactive>
+          <Table.Header>
+            <Table.Row className="bg-teal-700 h-14">
+              {[
+                "Rule Name",
+                "Base Fare",
+                "Base Distance Fare",
+                "Waiting Fare",
+                "Waiting Time",
+                "Geofence",
+                "Status",
+              ].map((header, idx) => (
+                <Table.ColumnHeader key={idx} color="white" textAlign="center">
+                  {header}
+                </Table.ColumnHeader>
+              ))}
             </Table.Row>
-          ) : allSurge?.length === 0 ? (
-            <Table.Row className="h-[70px]">
-              <Table.Cell colSpan={7} textAlign="center">
-                No Surge Available
-              </Table.Cell>
-            </Table.Row>
-          ) : isTableError ? (
-            <Table.Row className="h-[70px]">
-              <Table.Cell colSpan={7} textAlign="center">
-                Error in fetching agent surge.
-              </Table.Cell>
-            </Table.Row>
-          ) : (
-            allSurge?.map((surge) => (
-              <Table.Row key={surge._id} className={`h-[70px]`}>
-                <Table.Cell textAlign="center">{surge.ruleName}</Table.Cell>
-                <Table.Cell textAlign="center">{surge.baseFare}</Table.Cell>
-                <Table.Cell textAlign="center">{surge.baseDistance}</Table.Cell>
-                <Table.Cell textAlign="center">{surge.waitingFare}</Table.Cell>
-                <Table.Cell textAlign="center">{surge.waitingTime}</Table.Cell>
-                <Table.Cell textAlign="center">
-                  {surge.geofenceId.name}
-                </Table.Cell>
-                <Table.Cell textAlign="center">
-                  <HStack direction="row" gap="4" justify="center">
-                    {toggleStatus.isPending && selectedId === surge._id ? (
-                      <ShowSpinner />
-                    ) : (
-                      <Switch
-                        colorPalette="teal"
-                        checked={surge?.status}
-                        onChange={() => toggleStatus.mutate(surge._id)}
-                      />
-                    )}
-
-                    <span
-                      onClick={() => toggleModal("edit", surge._id)}
-                      className="text-gray-600"
-                    >
-                      <RenderIcon iconName="EditIcon" size={20} loading={6} />
-                    </span>
-
-                    <span
-                      onClick={() => toggleModal("delete", surge._id)}
-                      className="text-red-500"
-                    >
-                      <RenderIcon iconName="DeleteIcon" size={24} loading={6} />
-                    </span>
-                  </HStack>
+          </Table.Header>
+          <Table.Body>
+            {isTableLoading ? (
+              <Table.Row className="h-[70px]">
+                <Table.Cell colSpan={7} textAlign="center">
+                  <ShowSpinner /> Loading...
                 </Table.Cell>
               </Table.Row>
-            ))
-          )}
-        </Table.Body>
-      </Table.Root>
+            ) : allSurge?.length === 0 ? (
+              <Table.Row className="h-[70px]">
+                <Table.Cell colSpan={7} textAlign="center">
+                  No Surge Available
+                </Table.Cell>
+              </Table.Row>
+            ) : isTableError ? (
+              <Table.Row className="h-[70px]">
+                <Table.Cell colSpan={7} textAlign="center">
+                  Error in fetching agent surge.
+                </Table.Cell>
+              </Table.Row>
+            ) : (
+              allSurge?.map((surge) => (
+                <Table.Row key={surge._id} className={`h-[70px]`}>
+                  <Table.Cell textAlign="center">{surge.ruleName}</Table.Cell>
+                  <Table.Cell textAlign="center">{surge.baseFare}</Table.Cell>
+                  <Table.Cell textAlign="center">
+                    {surge.baseDistance}
+                  </Table.Cell>
+                  <Table.Cell textAlign="center">
+                    {surge.waitingFare}
+                  </Table.Cell>
+                  <Table.Cell textAlign="center">
+                    {surge.waitingTime}
+                  </Table.Cell>
+                  <Table.Cell textAlign="center">
+                    {surge.geofenceId.name}
+                  </Table.Cell>
+                  <Table.Cell textAlign="center">
+                    <HStack direction="row" gap="4" justify="center">
+                      {toggleStatus.isPending && selectedId === surge._id ? (
+                        <ShowSpinner />
+                      ) : (
+                        <Switch
+                          colorPalette="teal"
+                          checked={surge?.status}
+                          onChange={() => toggleStatus.mutate(surge._id)}
+                        />
+                      )}
+
+                      <span
+                        onClick={() => toggleModal("edit", surge._id)}
+                        className="text-gray-600"
+                      >
+                        <RenderIcon iconName="EditIcon" size={20} loading={6} />
+                      </span>
+
+                      <span
+                        onClick={() => toggleModal("delete", surge._id)}
+                        className="text-red-500"
+                      >
+                        <RenderIcon
+                          iconName="DeleteIcon"
+                          size={24}
+                          loading={6}
+                        />
+                      </span>
+                    </HStack>
+                  </Table.Cell>
+                </Table.Row>
+              ))
+            )}
+          </Table.Body>
+        </Table.Root>
+      </div>
 
       <AddAgentSurge isOpen={modal.add} onClose={closeModal} />
       <EditAgentSurge

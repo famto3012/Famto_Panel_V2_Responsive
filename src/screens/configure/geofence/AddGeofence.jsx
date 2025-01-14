@@ -21,7 +21,7 @@ const PlaceSearchPlugin = ({ map }) => {
     }
 
     const optional_config = {
-      location: [28.61, 77.23],
+      location: [8.5892862, 76.8773566], // Center of Trivandrum
       region: "IND",
       height: 300,
       hyperLocal: true,
@@ -245,7 +245,6 @@ const AddGeofence = () => {
           <GlobalSearch />
         </nav>
         <h1 className="font-bold text-lg mx-10 flex">
-          {" "}
           <span
             onClick={() => navigate("/configure/geofence")}
             className="cursor-pointer me-4 mt-1"
@@ -254,10 +253,13 @@ const AddGeofence = () => {
           </span>
           Add Geofence
         </h1>
-        <div className="flex justify-between gap-3">
-          <div className="mt-8 p-6 bg-white  rounded-lg shadow-sm w-1/3 ms-10">
+
+        <div className="flex flex-col sm:flex-row justify-between gap-3 mx-10 mt-8">
+          {/* Geofence Form */}
+          <div className="p-6 bg-white rounded-lg shadow-sm w-full sm:w-1/3">
             <form>
-              <div className="flex flex-col gap-3 ">
+              <div className="flex flex-col gap-3">
+                {/* Colour Picker */}
                 <div>
                   <label
                     className="w-1/3 text-md font-medium"
@@ -282,6 +284,8 @@ const AddGeofence = () => {
                     </div>
                   </div>
                 </div>
+
+                {/* Name */}
                 <div>
                   <label
                     className="w-1/3 text-md font-medium"
@@ -300,6 +304,8 @@ const AddGeofence = () => {
                     />
                   </div>
                 </div>
+
+                {/* Description */}
                 <div>
                   <label
                     className="w-1/3 text-md font-medium"
@@ -319,6 +325,7 @@ const AddGeofence = () => {
                 </div>
               </div>
             </form>
+
             <div className="flex flex-row gap-2 mt-6">
               <button
                 onClick={() => navigate("/configure/geofence")}
@@ -335,7 +342,9 @@ const AddGeofence = () => {
               </button>
             </div>
           </div>
-          <div className="mt-8 p-6 bg-white rounded-lg shadow-sm w-2/3 me-10">
+
+          {/* Map Section */}
+          <div className="p-6 bg-white rounded-lg shadow-sm w-full sm:w-2/3">
             <div
               ref={mapContainerRef}
               id="map"
@@ -345,10 +354,12 @@ const AddGeofence = () => {
                 type="text"
                 id="auto"
                 name="auto"
-                className="mt-2 ms-2 w-[300px] absolute top-0 left-0 text-[15px] p-[10px] outline-none focus:outline-none"
+                className="absolute top-0 left-0 mt-2 ms-2 p-[10px] text-[15px] outline-none focus:outline-none 
+             w-[170px] sm:w-[200px] md:w-[250px] lg:w-[300px]"
                 placeholder="Search places"
                 spellCheck="false"
               />
+
               {isMapLoaded && <PlaceSearchPlugin map={mapObject} />}
               {isMapLoaded && geofences.length >= 0 && (
                 <GeoJsonComponent map={mapObject} />

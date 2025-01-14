@@ -275,8 +275,8 @@ const AddCustomerPricing = ({ isOpen, onClose, pricingId }) => {
                   />
                 </div>
 
-                <div className="flex items-center mt-1">
-                  <label className="w-1/3 text-gray-500">
+                <div className="flex items-center mt-1 flex-col sm:flex-row sm:space-x-4">
+                  <label className="w-full sm:w-1/3 text-gray-500 text-left">
                     Select Delivery Mode <span className="text-red-500">*</span>
                   </label>
 
@@ -285,12 +285,12 @@ const AddCustomerPricing = ({ isOpen, onClose, pricingId }) => {
                     onValueChange={(e) =>
                       setFormData({ ...formData, deliveryMode: e.value })
                     }
-                    className="w-2/3"
+                    className="w-full sm:w-2/3"
                     size="sm"
                     colorPalette="teal"
                     variant="solid"
                   >
-                    <HStack gap="8" direction="row">
+                    <HStack gap="4" direction="row">
                       <Radio value="Home Delivery">Home Delivery</Radio>
                       <Radio value="Pick and Drop">Pick and Drop</Radio>
                       <Radio value="Custom Order">Custom Order</Radio>

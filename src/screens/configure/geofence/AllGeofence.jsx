@@ -131,7 +131,7 @@ const AllGeofence = () => {
           <h1 className="font-bold text-lg">Geofence</h1>
           <Link
             to="/configure/geofence/add"
-            className="bg-teal-700 text-white rounded-md flex items-center px-9 py-2 "
+            className="bg-teal-700 text-white rounded-md flex items-center px-4 sm:px-9 py-2 "
           >
             <RenderIcon iconName="PlusIcon" size={16} loading={6} /> Add
             Geofence
@@ -141,8 +141,39 @@ const AllGeofence = () => {
           A geofence is a virtual perimeter for a real-world geographic area.
           Different geofences can be assigned to a single city.
         </p>
-        <div className="flex justify-between mt-10 gap-5 mx-10">
-          <div className="w-1/3 max-h-[32rem] overflow-y-auto">
+
+        {/* Adjusted flex layout for small screens */}
+        <div className="flex flex-col sm:flex-row sm:justify-between mt-10 gap-5 mx-10">
+          {/* Map section */}
+          <div className="w-full sm:w-3/4 bg-white h-[520px] flex items-center justify-center relative sm:mb-0 mb-5">
+            <div
+              id="map"
+              ref={mapContainerRef}
+              style={{
+                width: "99%",
+                height: "510px",
+                display: "inline-block",
+                position: "relative",
+              }}
+            >
+              {!isMapLoaded && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Button
+                    onClick={initializeMap}
+                    className="m-2 p-3 bg-teal-600 text-[15px] font-bold text-white"
+                  >
+                    Initialize Map
+                  </Button>
+                </div>
+              )}
+              {isMapLoaded && geofences?.length >= 0 && (
+                <GeoJsonComponent map={mapObject} />
+              )}
+            </div>
+          </div>
+
+          {/* Geofences Data Section */}
+          <div className="w-full sm:w-1/3 max-h-[32rem] overflow-y-auto">
             {isLoading ? (
               <ShowSpinner />
             ) : geofences?.length === 0 ? (
@@ -198,34 +229,9 @@ const AllGeofence = () => {
               ))
             )}
           </div>
-          <div className="w-3/4 bg-white h-[520px] flex items-center justify-center relative">
-            <div
-              id="map"
-              ref={mapContainerRef}
-              style={{
-                width: "99%",
-                height: "510px",
-                display: "inline-block",
-                position: "relative",
-              }}
-            >
-              {!isMapLoaded && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Button
-                    onClick={initializeMap}
-                    className="m-2 p-3 bg-teal-600 text-[15px] font-bold text-white"
-                  >
-                    Initialize Map
-                  </Button>
-                </div>
-              )}
-              {isMapLoaded && geofences?.length >= 0 && (
-                <GeoJsonComponent map={mapObject} />
-              )}
-            </div>
-          </div>
         </div>
       </div>
+
       <DeleteGeofence
         isOpen={modal}
         onClose={() => setModal(false)}

@@ -24,7 +24,7 @@ const PlaceSearchPlugin = ({ map }) => {
     }
 
     const optional_config = {
-      location: [28.61, 77.23],
+      location: [8.5892862, 76.8773566], // Center of Trivandrum
       region: "IND",
       height: 300,
     };
@@ -158,10 +158,11 @@ const EditGeofence = () => {
 
       // Function to update coordinates
       const updateCoordinates = () => {
+        console.log("Update");
         const newCoordinates = poly
           .getPath()[0]
           .map((point) => [point.lat, point.lng]);
-
+        console.log("Prob");
         setGeofence((prevState) => ({
           ...prevState,
           coordinates: newCoordinates,
@@ -170,10 +171,28 @@ const EditGeofence = () => {
 
       // Add event listeners to capture changes
       poly.addListener("dblclick", updateCoordinates);
+      let lastTapTime = 0;
+
+      poly.addListener("touchstart", (event) => {
+        const currentTime = new Date().getTime();
+        const tapInterval = currentTime - lastTapTime;
+
+        if (tapInterval < 300 && tapInterval > 0) {
+          // Detected as a double-tap
+          console.log("Double-tap detected on polygon");
+          updateCoordinates(event); // Call your function here
+        }
+
+        lastTapTime = currentTime;
+      });
     }, [map, geofence, color]);
 
     return null;
   };
+
+  useEffect(() => {
+    console.log("Updated geofence data:", geofence); // Debugging after state update
+  }, [geofence]);
 
   useEffect(() => {
     if (geofenceData) {
@@ -181,10 +200,19 @@ const EditGeofence = () => {
 
       // Destructure and validate coordinates
       const { name, description, color, coordinates } = geofenceData;
-
+      console.log("coor", coordinates);
       // Ensure coordinates are valid
       if (Array.isArray(coordinates) && coordinates.length > 0) {
-        setGeofence({ name, description, color, coordinates });
+        console.log("Valid coordinates", coordinates);
+
+        // Update geofence state with the new data
+        setGeofence((prevState) => ({
+          ...prevState,
+          name,
+          description,
+          color,
+          coordinates,
+        }));
       } else {
         console.warn(
           "Invalid or undefined coordinates in geofence data:",
@@ -192,6 +220,7 @@ const EditGeofence = () => {
         );
         setGeofence({ name, description, color, coordinates: [] });
       }
+      console.log("fetch geo", geofence);
     }
   }, [geofenceData]);
 
@@ -278,7 +307,6 @@ const EditGeofence = () => {
           <GlobalSearch />
         </nav>
         <h1 className="font-bold text-lg mx-10 flex">
-          {" "}
           <span
             onClick={() => navigate("/configure/geofence")}
             className="cursor-pointer me-4 mt-1"
@@ -287,10 +315,13 @@ const EditGeofence = () => {
           </span>
           Edit Geofence
         </h1>
-        <div className="flex justify-between gap-3">
-          <div className="mt-8 p-6 bg-white  rounded-lg shadow-sm w-1/3 ms-10">
+
+        <div className="flex flex-col sm:flex-row justify-between gap-3 mx-10 mt-8">
+          {/* Geofence Form */}
+          <div className="p-6 bg-white rounded-lg shadow-sm w-full sm:w-1/3">
             <form>
-              <div className="flex flex-col gap-3 ">
+              <div className="flex flex-col gap-3">
+                {/* Colour Picker */}
                 <div>
                   <label
                     className="w-1/3 text-md font-medium"
@@ -315,6 +346,8 @@ const EditGeofence = () => {
                     </div>
                   </div>
                 </div>
+
+                {/* Name */}
                 <div>
                   <label
                     className="w-1/3 text-md font-medium"
@@ -333,6 +366,8 @@ const EditGeofence = () => {
                     />
                   </div>
                 </div>
+
+                {/* Description */}
                 <div>
                   <label
                     className="w-1/3 text-md font-medium"
@@ -352,6 +387,7 @@ const EditGeofence = () => {
                 </div>
               </div>
             </form>
+
             <div className="flex flex-row gap-2 mt-6">
               <button
                 onClick={() => navigate("/configure/geofence")}
@@ -367,13 +403,16 @@ const EditGeofence = () => {
                 Update
               </button>
             </div>
+
             <p className="text-gray-600 mt-[25px]">
               <span className="font-bold">Note:</span> After changing the
-              coordinates of the geofence. Double click on the marked area after
-              that click on the update button.
+              coordinates of the geofence, double click on the marked area and
+              then click the update button.
             </p>
           </div>
-          <div className="mt-8 p-6 bg-white rounded-lg shadow-sm w-2/3 me-10">
+
+          {/* Map Section */}
+          <div className="p-6 bg-white rounded-lg shadow-sm w-full sm:w-2/3">
             <div
               ref={mapContainerRef}
               id="map"
@@ -383,10 +422,12 @@ const EditGeofence = () => {
                 type="text"
                 id="auto"
                 name="auto"
-                className="mt-2 ms-2 w-[300px] absolute top-0 left-0 text-[15px] p-[10px] outline-none focus:outline-none"
+                className="absolute top-0 left-0 mt-2 ms-2 p-[10px] text-[15px] outline-none focus:outline-none 
+             w-[170px] sm:w-[200px] md:w-[250px] lg:w-[300px]"
                 placeholder="Search places"
                 spellCheck="false"
               />
+
               {isMapLoaded && <PlaceSearchPlugin map={mapObject} />}
               {isMapLoaded && (
                 <GeoJsonComponent

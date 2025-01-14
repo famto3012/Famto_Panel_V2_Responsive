@@ -47,6 +47,7 @@ export const updateGeofence = async ({
   navigate,
 }) => {
   try {
+    console.log("data", updatedGeofence);
     const api = useApiClient(navigate);
     const res = await api.put(
       `/admin/geofence/edit-geofence/${geofenceId}`,

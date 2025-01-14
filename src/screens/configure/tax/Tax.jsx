@@ -81,7 +81,8 @@ const Tax = () => {
       <GlobalSearch />
 
       <div className="flex justify-between mt-5 mx-5">
-        <h1 className="font-bold">Tax</h1>
+        <h1 className="font-bold text-xl sm:text-2xl md:text-2xl">Tax</h1>
+
         <button
           onClick={() => toggleAdd()}
           className="bg-teal-700 text-white px-3 rounded-lg p-2 flex items-center gap-2"
@@ -97,9 +98,9 @@ const Tax = () => {
           Two taxes under the same name cannot coexist.
         </span>
       </p>
-      <div className="w-full">
+      <div className="w-full overflow-x-auto">
         <table className="bg-white mt-[45px] text-center w-full">
-          <thead className=" sticky top-0 left-0 z-20">
+          <thead className="sticky top-0 left-0 z-20">
             <tr>
               {[
                 "Tax name",
@@ -111,13 +112,14 @@ const Tax = () => {
               ].map((header) => (
                 <th
                   key={header}
-                  className="bg-teal-800 text-center h-[70px] text-white"
+                  className="bg-teal-800 text-center h-[70px] text-white text-sm sm:text-base"
                 >
                   {header}
                 </th>
               ))}
             </tr>
           </thead>
+
           <tbody className="bg-white">
             {isLoading && (
               <tr>
