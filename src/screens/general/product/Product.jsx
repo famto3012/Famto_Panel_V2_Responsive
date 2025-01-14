@@ -136,52 +136,73 @@ const Product = () => {
           </div>
         </div>
 
-        <div className="flex">
-          <ListCategory merchantId={selectedMerchant} />
+        <div className="flex flex-col md:flex-row items-center md:items-start">
+          {/* Categories */}
+          <div className="w-full md:w-1/5">
+            <ListCategory merchantId={selectedMerchant} />
+          </div>
 
-          <div className="w-4/5 bg-white rounded-md m-5 ml-2">
-            <div className="border-b-2 flex justify-between p-5">
-              <h1 className="font-semibold flex ml-3 items-center text-[18px] capitalize">
-                {selectedCategory?.categoryName}
-              </h1>
+          {/* Product and Product Details */}
+          <div className="w-full md:w-4/5 bg-white rounded-md m-5 ml-2">
+            <div className="border-b-2 p-5">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                {/* Category Name */}
+                <h1 className="font-semibold ml-3 text-[18px] capitalize">
+                  {selectedCategory?.categoryName}
+                </h1>
 
-              <div className="flex gap-5 items-center">
-                Disabled
-                <Switch
-                  disabled={
-                    handleUpdateCategoryStatus.isPending ||
-                    !selectedCategory.categoryId
-                  }
-                  colorPalette="teal"
-                  checked={selectedCategory?.categoryStatus}
-                  onCheckedChange={() => handleUpdateCategoryStatus.mutate()}
-                />
-                Enable
-                <Button
-                  disabled={!selectedCategory.categoryId}
-                  className="bg-blue-50 p-2 flex items-center gap-x-2 px-5 rounded-md"
-                  onClick={() => toggleModal("edit")}
-                >
-                  <RenderIcon iconName="EditIcon" size={16} loading={6} />
-                  <span>Edit</span>
-                </Button>
-                <Button
-                  disabled={!selectedCategory.categoryId}
-                  className="bg-red-100 p-2 flex items-center gap-x-2 rounded-md px-3"
-                  onClick={() => toggleModal("delete")}
-                >
-                  <span className="text-red-500">
-                    <RenderIcon iconName="DeleteIcon" size={18} loading={6} />
-                  </span>
-                  Delete
-                </Button>
+                {/* Action Buttons and Switch */}
+                <div className="flex flex-col md:flex-row gap-4 md:gap-5 items-start md:items-center">
+                  <div className="flex items-center gap-2">
+                    <span>Disabled</span>
+                    <Switch
+                      disabled={
+                        handleUpdateCategoryStatus.isPending ||
+                        !selectedCategory.categoryId
+                      }
+                      colorPalette="teal"
+                      checked={selectedCategory?.categoryStatus}
+                      onCheckedChange={() =>
+                        handleUpdateCategoryStatus.mutate()
+                      }
+                    />
+                    <span>Enable</span>
+                  </div>
+
+                  {/* Edit Button */}
+                  <Button
+                    disabled={!selectedCategory.categoryId}
+                    className="bg-blue-50 p-2 flex items-center gap-x-2 px-5 rounded-md"
+                    onClick={() => toggleModal("edit")}
+                  >
+                    <RenderIcon iconName="EditIcon" size={16} loading={6} />
+                    <span>Edit</span>
+                  </Button>
+
+                  {/* Delete Button */}
+                  <Button
+                    disabled={!selectedCategory.categoryId}
+                    className="bg-red-100 p-2 flex items-center gap-x-2 rounded-md px-3"
+                    onClick={() => toggleModal("delete")}
+                  >
+                    <span className="text-red-500">
+                      <RenderIcon iconName="DeleteIcon" size={18} loading={6} />
+                    </span>
+                    Delete
+                  </Button>
+                </div>
               </div>
             </div>
 
-            <div className="flex">
-              <ListProduct merchantId={selectedMerchant} />
+            {/* Product and Product Details Block Layout */}
+            <div className="flex flex-col md:flex-row items-center md:items-start">
+              <div className="w-full md:w-1/3">
+                <ListProduct merchantId={selectedMerchant} />
+              </div>
 
-              <ProductDetail merchantId={selectedMerchant} />
+              <div className="w-full md:w-2/3">
+                <ProductDetail merchantId={selectedMerchant} />
+              </div>
             </div>
           </div>
         </div>

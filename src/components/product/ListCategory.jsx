@@ -100,7 +100,7 @@ const ListCategory = ({ merchantId }) => {
 
   return (
     <>
-      <div className="w-1/5 bg-white rounded-md m-5 mr-0">
+      <div className="w-full bg-white rounded-md mt-5 mr-0">
         <div className="border-b-2 pb-1">
           <h1 className="font-[600] px-8 pt-8 pb-4 text-[18px]">Categories</h1>
         </div>
@@ -147,7 +147,7 @@ const ListCategory = ({ merchantId }) => {
           )}
         </div>
 
-        <div className="flex flex-col items-center justify-center gap-2 my-3">
+        <div className="flex flex-col items-center justify-center gap-2 py-3">
           {!isLoading && (
             <span
               className="rounded-full bg-teal-800 text-[12px] text-white p-2.5 w-fit"
