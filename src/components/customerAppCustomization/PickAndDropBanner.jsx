@@ -98,7 +98,7 @@ const PickAndDropBanner = () => {
         </button>
       </div>
 
-      <div className="grid place-self-end xl:grid-cols-2 grid-cols-1 gap-[20px] w-2/3 pe-[20px]">
+      <div className="grid place-content-center lg:place-self-end xl:grid-cols-2 grid-cols-1 gap-[20px] w-full lg:w-2/3 lg:pe-[20px] px-[20px]">
         {isLoading ? (
           <Loader />
         ) : isError ? (
@@ -106,7 +106,7 @@ const PickAndDropBanner = () => {
         ) : (
           data?.map((banner) => (
             <div
-              className="mt-10 bg-white p-3 rounded-md max-w-[400px]"
+              className="mt-10 bg-white p-3 rounded-md lg:max-w-[400px]"
               key={banner._id}
             >
               <p className="font-semibold text-[18px]">{banner.title}</p>

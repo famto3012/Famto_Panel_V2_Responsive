@@ -165,13 +165,11 @@ const Toggles = () => {
     <>
       <h1 className="mx-5 font-bold text-[20px] mt-5 lg:mt-0">Customer App </h1>
 
-      <div className="flex flex-col lg:flex-row gap-10 mt-10 mx-5  border-b-2 border-gray-200 pb-5">
+      <div className="flex flex-col lg:flex-row gap-10 mt-10 mx-5 border-b-2 border-gray-200 pb-5">
         <div className="flex flex-col lg:flex-row items-start gap-[20px] lg:gap-0">
-          <div className="lg:w-72 text-[12px] lg:text-[16px]">
-            Splash Screen (390px x 844px)
-          </div>
+          <div className="lg:w-72">Splash Screen (390px x 844px)</div>
 
-          <div className="text-gray-500 text-[12px] lg:text-[16px]">
+          <div className="text-gray-500">
             Note: The purpose is to wish or design the splash page. The format
             can image or gif Note: Design according to aspect ratio
           </div>
@@ -212,12 +210,10 @@ const Toggles = () => {
       </div>
 
       <div className="flex flex-col lg:flex-row mx-5 mt-10 pb-5 gap-[20px] lg:gap-0">
-        <div className="lg:w-1/5 text-[12px] lg:text-[16px]">
-          Sign up and Sign in Settings
-        </div>
+        <div className="lg:w-1/5">Sign up and Sign in Settings</div>
 
-        <div className="w-4/5 flex flex-col justify-start">
-          <p className="text-gray-500 w-full lg:max-w-[90%] text-[12px] lg:text-[16px]">
+        <div className="lg:w-4/5 flex flex-col justify-start">
+          <p className="text-gray-500 w-full lg:max-w-[90%]">
             Control sign-up of Customer on your platform. Here you are given
             with a variety of options such as whether to have email or phone
             number as mandatory fields on the sign-up form, how do you want to
@@ -323,13 +319,13 @@ const Toggles = () => {
       <div className="mt-10 flex flex-col lg:flex-row mx-5 gap-[10px]">
         <h1 className="lg:w-1/5">Manage Custom order timing</h1>
 
-        <div className="w-4/5 flex-col justify-start">
+        <div className="lg:w-4/5 flex-col justify-start">
           <p className="text-gray-500 mb-3">
             The purpose of this time is to set the working time for custom
             order.
           </p>
 
-          <div className="flex flex-col lg:flex-row items-center gap-[20px]">
+          <div className="flex flex-col lg:flex-row lg:items-center gap-[20px]">
             <DatePicker
               selected={
                 formData?.customOrderCustomization?.startTime
@@ -395,7 +391,7 @@ const Toggles = () => {
               timeCaption="Time"
               dateFormat="h:mm aa"
               placeholderText="End time"
-              className="border-2 p-2 rounded-lg cursor-pointer outline-none focus:outline-none w-fit"
+              className="border-2 p-2 rounded-lg cursor-pointer outline-none focus:outline-none w-full"
             />
           </div>
         </div>
@@ -421,7 +417,7 @@ const Toggles = () => {
           }}
           isSearchable
           isMulti={false}
-          className="w-[80%] lg:w-[20%]"
+          className="mt-5 lg:mt-0 w-full lg:w-[20%]"
           menuPlacement="auto"
         />
       </div>
@@ -429,13 +425,13 @@ const Toggles = () => {
       <div className="mt-10 flex flex-col lg:flex-row mx-5">
         <h1 className="w-full lg:w-1/5">Manage Pick and Drop timing</h1>
 
-        <div className="w-4/5 flex-col">
+        <div className="lg:w-4/5 flex-col">
           <p className="text-gray-500 mb-3">
             The purpose of this time is to set the working time for Pick and
             Drop.
           </p>
 
-          <div className="flex flex-col lg:flex-row items-center gap-[20px]">
+          <div className="flex flex-col lg:flex-row lg:items-center gap-[20px]">
             <DatePicker
               selected={
                 formData?.pickAndDropOrderCustomization?.startTime
@@ -501,7 +497,7 @@ const Toggles = () => {
               timeCaption="Time"
               dateFormat="h:mm aa"
               placeholderText="End time"
-              className="border-2 p-2 rounded-lg cursor-pointer outline-none focus:outline-none w-fit"
+              className="border-2 p-2 rounded-lg cursor-pointer outline-none focus:outline-none w-full"
             />
           </div>
         </div>
@@ -529,7 +525,7 @@ const Toggles = () => {
           }}
           isSearchable
           isMulti={false}
-          className="w-[80%] lg:w-[20%]"
+          className="mt-5 lg:mt-0 w-full lg:w-[20%]"
         />
       </div>
 
