@@ -22,7 +22,7 @@ import {
 
 const AlertNotification = () => {
   const [alertNotification, setAlertNotification] = useState({
-    userType: "",
+    userType: "customer",
     id: "",
     title: "",
     description: "",
@@ -569,7 +569,7 @@ const AlertNotification = () => {
               </Table.Body>
             </Table.Root>
           </div>
-          <div className="flex justify-center bg-white mt-3 mb-4">
+          {/* <div className="flex justify-center bg-white mt-3 mb-4">
             <PaginationRoot
               count={pagination.totalDocuments || 0}
               page={selectedFilter.page}
@@ -587,7 +587,27 @@ const AlertNotification = () => {
                 <PaginationNextTrigger className="bg-gray-200 hover:bg-white" />
               </HStack>
             </PaginationRoot>
+          </div> */}
+          <div className="flex justify-center bg-white mt-3 mb-4 px-4">
+            <PaginationRoot
+              count={pagination.totalDocuments || 0}
+              page={selectedFilter.page}
+              pageSize={30}
+              defaultPage={1}
+              onPageChange={(e) =>
+                setSelectedFilter({ ...selectedFilter, page: e.page })
+              }
+              variant="solid"
+              className="py-4 flex flex-wrap justify-center gap-2"
+            >
+              <HStack className="flex flex-wrap gap-2">
+                <PaginationPrevTrigger className="bg-gray-200 hover:bg-white px-3 py-2 rounded-md text-sm md:text-base" />
+                <PaginationItems className="bg-gray-200 hover:bg-white px-3 py-2 rounded-md text-sm md:text-base" />
+                <PaginationNextTrigger className="bg-gray-200 hover:bg-white px-3 py-2 rounded-md text-sm md:text-base" />
+              </HStack>
+            </PaginationRoot>
           </div>
+
           <SendNotification
             isOpen={modal.sendAlertNotification}
             onClose={() => {

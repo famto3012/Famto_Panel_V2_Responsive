@@ -395,6 +395,18 @@ const PushNotification = () => {
                 </label>
               </div>
             </div>
+            {imgSrc && (
+              <CropImage
+                selectedImage={img}
+                aspectRatio={16 / 9}
+                onCropComplete={handleCropComplete}
+                isOpen={modal.cropImage}
+                onClose={() => {
+                  setModal({ ...modal, cropImage: false });
+                  setImg(null);
+                }}
+              />
+            )}
 
             <div className="flex flex-wrap lg:flex-nowrap mt-5">
               <label className="ml-5 lg:ml-10 w-full lg:w-auto">
@@ -437,7 +449,7 @@ const PushNotification = () => {
               />
             </div>
 
-            <div className="flex flex-wrap justify-end mb-10 gap-4">
+            <div className="flex flex-wrap justify-end mb-10 pb-4 gap-4">
               <Button className="bg-gray-200 rounded-lg px-8 py-2 font-semibold">
                 Cancel
               </Button>
