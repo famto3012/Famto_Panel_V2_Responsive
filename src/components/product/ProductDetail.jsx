@@ -20,6 +20,7 @@ import EditProduct from "@/models/general/product/EditProduct";
 import ChangeCategory from "@/models/general/product/ChangeCategory";
 import DeleteProduct from "@/models/general/product/DeleteProduct";
 import EnlargeImage from "@/models/common/EnlargeImage";
+import Error from "../others/Error";
 
 const ProductDetail = ({ merchantId }) => {
   const [modal, setModal] = useState({
@@ -100,7 +101,7 @@ const ProductDetail = ({ merchantId }) => {
         data &&
         Object?.keys(data)?.length > 0 && (
           <>
-            <div className="p-5 flex items-start w-full">
+            {/* <div className="p-5 flex items-start w-full">
               <div className="flex gap-3 items-start w-full">
                 <div className="flex flex-1 gap-3">
                   <figure
@@ -158,6 +159,84 @@ const ProductDetail = ({ merchantId }) => {
                 </button>
                 <button
                   className="bg-red-100 p-2 flex items-center rounded-lg px-3"
+                  onClick={() => toggleModal("delete")}
+                >
+                  <span className="text-red-500">
+                    <RenderIcon iconName="DeleteIcon" size={18} loading={6} />
+                  </span>
+                  Delete
+                </button>
+              </div>
+            </div> */}
+            <div className="p-5 flex flex-col md:flex-row items-start w-full gap-4 md:gap-0">
+              {/* Product Image and Details */}
+              <div className="flex flex-col md:flex-1 md:flex-row gap-3 items-start w-full">
+                <figure
+                  onClick={() =>
+                    toggleModal(
+                      "enlarge",
+                      data?.productImageURL ||
+                        import.meta.env.VITE_APP_DEFAULT_PRODUCT_IMAGE
+                    )
+                  }
+                  className="h-[90px] w-[90px] flex-shrink-0 cursor-pointer"
+                >
+                  <img
+                    src={
+                      data?.productImageURL ||
+                      import.meta.env.VITE_APP_DEFAULT_PRODUCT_IMAGE
+                    }
+                    alt={data?.productName}
+                    className="w-full h-full object-cover rounded-md"
+                  />
+                </figure>
+
+                <div className="flex-1">
+                  <p className="font-semibold text-wrap text-gray-800">
+                    {data?.productName}
+                  </p>
+                  <p className="text-teal-800 font-bold">₹ {data?.price}</p>
+                </div>
+              </div>
+
+              {/* Change Category Button */}
+              <div className="w-full md:w-auto">
+                <button
+                  className="bg-yellow-200/50 w-full md:w-auto p-3 font-medium rounded-lg"
+                  onClick={() => toggleModal("change")}
+                >
+                  Change Category
+                </button>
+              </div>
+            </div>
+
+            {/* Product Details Section */}
+            <div className="flex flex-col md:flex-row justify-between p-5 items-start md:items-center gap-4 md:gap-0">
+              <p className="font-semibold">Product Details</p>
+
+              <div className="flex flex-col md:flex-row gap-3 md:gap-5 items-start md:items-center">
+                {/* Inventory Switch */}
+                <div className="flex items-center gap-2">
+                  <span>Inventory</span>
+                  <Switch
+                    colorPalette="teal"
+                    checked={data?.inventory}
+                    onCheckedChange={() => handleUpdateProductStatus.mutate()}
+                  />
+                </div>
+
+                {/* Edit Button */}
+                <button
+                  className="bg-blue-50 p-2 w-full md:w-auto flex items-center outline-none focus:outline-none px-5 rounded-lg"
+                  onClick={() => toggleModal("edit")}
+                >
+                  <RenderIcon iconName="EditIcon" size={16} loading={6} />
+                  <span>Edit</span>
+                </button>
+
+                {/* Delete Button */}
+                <button
+                  className="bg-red-100 p-2 w-full md:w-auto flex items-center rounded-lg px-3"
                   onClick={() => toggleModal("delete")}
                 >
                   <span className="text-red-500">

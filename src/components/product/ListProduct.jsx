@@ -96,7 +96,7 @@ const ListProduct = ({ merchantId }) => {
   };
 
   return (
-    <div className="w-1/3">
+    <div className="w-full">
       <div className="max-h-[30rem] overflow-y-auto">
         {isLoading ? (
           <div className="flex justify-center my-3 ">
@@ -138,7 +138,7 @@ const ListProduct = ({ merchantId }) => {
         )}
       </div>
 
-      <div className="flex flex-col items-center justify-center gap-2 mt-3">
+      <div className="flex flex-col items-center justify-center gap-2 py-3 mt-3">
         {!isLoading && (
           <>
             <span

@@ -458,21 +458,24 @@ const EditProduct = ({ isOpen, onClose, merchantId }) => {
                   onChange={handleInputChange}
                 ></textarea>
               </div>
-              <div className="flex items-center">
-                <label className="w-1/3 text-gray-500" htmlFor="type">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-0">
+                {/* Label */}
+                <label className="w-full sm:w-1/3 text-gray-500" htmlFor="type">
                   Type <span className="text-red-600">*</span>
                 </label>
+
+                {/* Radio Group */}
                 <RadioGroup
                   value={formData.type}
                   onValueChange={(e) =>
                     setFormData({ ...formData, type: e.value })
                   }
-                  className="w-2/3"
+                  className="w-full sm:w-2/3"
                   size="sm"
                   colorPalette="teal"
                   variant="solid"
                 >
-                  <HStack gap="8" direction="row">
+                  <HStack gap="8" direction="row" className="flex-wrap">
                     <Radio value="Veg" className="cursor-pointer">
                       Veg
                     </Radio>
@@ -485,6 +488,7 @@ const EditProduct = ({ isOpen, onClose, merchantId }) => {
                   </HStack>
                 </RadioGroup>
               </div>
+
               <div className="flex items-center">
                 <label className="w-1/3 text-gray-500" htmlFor="photos">
                   Photos
