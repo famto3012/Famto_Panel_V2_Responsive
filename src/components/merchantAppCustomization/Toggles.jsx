@@ -139,7 +139,7 @@ const Toggles = () => {
 
   return (
     <>
-      <h1 className="mx-5 font-bold text-[20px]">Merchant App </h1>
+      <h1 className="mx-5 font-bold text-[20px] mt-5 lg:mt-0">Merchant App </h1>
 
       <div className="flex gap-10 mt-10 mx-5  border-b-2 border-gray-200 pb-5">
         <div className="w-72">Splash Screen (390px x 844px)</div>

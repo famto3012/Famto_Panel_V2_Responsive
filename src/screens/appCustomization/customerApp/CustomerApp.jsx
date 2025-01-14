@@ -8,7 +8,7 @@ import PickAndDropBanner from "@/components/customerAppCustomization/PickAndDrop
 
 const CustomerApp = () => {
   return (
-    <div className="bg-gray-100 h-fit pb-[50px]">
+    <div className="bg-gray-100 min-h-full min-w-full pb-[50px]">
       <GlobalSearch />
 
       <Toggles />
