@@ -87,18 +87,18 @@ const ResetPassword = () => {
           src="https://firebasestorage.googleapis.com/v0/b/famto-aa73e.appspot.com/o/admin_panel_assets%2FLoginImage.svg?alt=media&token=c7452bf9-0b3a-4358-bef0-cd1bfa57e80f"
         />
       </figure>
-      <div className=" flex justify-center h-full w-1/2 items-center m-4">
-        <div className="min-w-screen bg-white h-auto w-[400px] rounded-2xl border-2 border-teal-700 p-10">
-          <div className="text-center mt-5 ">
+      <div className="flex justify-center items-center h-screen w-full md:h-full md:w-1/2 bg-white">
+        <div className="bg-white h-[calc(100vh)] md:h-auto w-full md:w-[400px] rounded-none md:rounded-2xl md:border-2 md:border-teal-700 p-5 md:p-10 space-y-4">
+          <div className="text-center mt-5">
             <img
               src="https://firebasestorage.googleapis.com/v0/b/famto-aa73e.appspot.com/o/admin_panel_assets%2FGroup%20427320755.svg?alt=media&token=02f2a096-b50a-4618-b9fb-a333f0c2aac0"
               alt="Logo"
-              className="mx-auto flex h-20 w-20"
+              className="mx-auto h-16 w-16 md:h-20 md:w-20"
             />
-            <h2 className="mt-8 text-[18px] font-medium text-black ">
+            <h2 className="mt-5 text-lg md:text-[18px] font-medium text-black">
               Reset Password
             </h2>
-            <p className="text-zinc-500 mt-5 font-poppins">
+            <p className="text-zinc-500 mt-3 font-poppins text-[14px]">
               Enter your new password
             </p>
           </div>
@@ -111,7 +111,7 @@ const ResetPassword = () => {
                   value={formData.password}
                   onChange={handleInputChange}
                   placeholder="Enter new Password"
-                  className="border border-gray-300 bg-slate-200 outline-none focus:outline-none rounded-xl p-3"
+                  className="border border-gray-300 bg-slate-200 outline-none focus:outline-none rounded-xl p-3 w-full"
                 />
                 <input
                   type="password"
@@ -119,12 +119,12 @@ const ResetPassword = () => {
                   name="confirmPassword"
                   onChange={handleInputChange}
                   placeholder="Confirm new Password"
-                  className="border border-gray-300 bg-slate-200 outline-none focus:outline-none rounded-xl p-3"
+                  className="border border-gray-300 bg-slate-200 outline-none focus:outline-none rounded-xl p-3 w-full"
                 />
               </div>
               <div className="flex flex-col items-center justify-center">
                 <Button
-                  className="bg-teal-700 hover:bg-teal-900 rounded-2xl text-white font-bold p-3 mb-12 w-full focus:outline-none focus:shadow-outline"
+                  className="bg-teal-700 hover:bg-teal-900 rounded-2xl text-white font-bold p-3 w-full focus:outline-none focus:shadow-outline"
                   onClick={initiatePasswordReset}
                 >
                   {handleRestPassword.isPending
