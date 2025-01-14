@@ -12,6 +12,7 @@ import ProtectedRoute from "./ProtectedRoutes";
 import Loader from "@/components/others/Loader";
 import AuthContext from "@/context/AuthContext";
 import Maintenance from "@/screens/other/Maintenance";
+import WhatsappRoutes from "./WhatsappRoute";
 
 // Lazy load each route component
 const AuthRoutes = lazy(() => import("./AuthRoute"));
@@ -78,6 +79,7 @@ const Routers = () => {
           }
         />
         <Route path="/comm-and-subs/*" element={<CommAndSubsRoutes />} />
+        <Route path="/chat/*" element={<WhatsappRoutes />} />
         <Route path="/marketing/*" element={<MarketingRoutes />} />
         <Route path="/notification/*" element={<NotificationRoutes />} />
         <Route
