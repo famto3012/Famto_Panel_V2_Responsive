@@ -410,15 +410,15 @@ const EditPromoCode = ({ isOpen, onClose, promoCodeId }) => {
                 />
               </div>
 
-              <div className="flex items-center">
-                <label className="w-1/2 text-gray-500">
+              <div className="flex items-center flex-col sm:flex-row">
+                <label className="w-full sm:w-1/2 text-gray-500 mb-2 sm:mb-0">
                   Delivery Mode<span className="text-red-600 ml-2">*</span>
                 </label>
 
                 <RadioGroup
                   value={formData.deliveryMode}
                   onValueChange={(e) => handleDeliveryModeChange(e.value)}
-                  className="w-2/3"
+                  className="w-full sm:w-2/3"
                   size="sm"
                   colorPalette="teal"
                   variant="solid"

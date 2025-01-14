@@ -118,18 +118,20 @@ const Referral = () => {
     <div className="bg-gray-100 h-[100%]">
       <GlobalSearch />
 
-      <h1 className="font-bold text-[20px] ms-5 mt-[30px]">Referral</h1>
+      <h1 className="font-bold text-[18px] sm:text-[20px] md:text-[24px] ms-5 mt-[30px] text-left">
+        Referral
+      </h1>
 
-      <p className="mx-5 text-gray-500 mt-5">
+      <p className="mx-5 text-gray-500 mt-5 text-center sm:text-left text-sm sm:text-base md:text-lg">
         Define referral code that customers can use to refer new customers
         coming on your platform. Referral code defined here is applied on
         checkout while placing the order. <br /> Note: Referrer - who shares;
         Referee - who receives
       </p>
 
-      <div className="bg-white m-5 p-10 rounded-lg">
-        <div className="flex">
-          <div className="w-1/2">
+      <div className="bg-white my-5 p-5 rounded-lg">
+        <div className="flex flex-col sm:flex-row">
+          <div className="w-full sm:w-1/2">
             <label>
               Referral Type<span className="text-red-600 ml-2">*</span>
             </label>
@@ -140,7 +142,7 @@ const Referral = () => {
             onValueChange={(e) =>
               setFormData({ ...formData, referralType: e.value })
             }
-            className="w-2/3"
+            className="w-full sm:w-2/3"
             size="sm"
             colorPalette="teal"
             variant="solid"
@@ -156,8 +158,8 @@ const Referral = () => {
           </RadioGroup>
         </div>
 
-        <div className="flex">
-          <label className="mt-10 w-1/2">
+        <div className="flex flex-col sm:flex-row mt-5">
+          <label className="w-full sm:w-1/2">
             Referrer Discount<span className="text-red-600 ml-2">*</span>
           </label>
 
@@ -166,13 +168,13 @@ const Referral = () => {
             name="referrerDiscount"
             value={formData.referrerDiscount}
             onChange={handleInputChange}
-            className="border-2 border-gray-300 rounded w-2/3 mt-10 p-2 outline-none focus:outline-none"
+            className="border-2 border-gray-300 rounded w-full sm:w-2/3 mt-2 sm:mt-0 p-2 outline-none focus:outline-none"
           />
         </div>
 
         {formData.referralType === "Percentage-discount" && (
-          <div className="flex">
-            <label className="mt-10 w-1/2">
+          <div className="flex flex-col sm:flex-row mt-5">
+            <label className="w-full sm:w-1/2">
               Referrer maximum discount value
               <span className="text-red-600 ml-2">*</span>
             </label>
@@ -182,13 +184,13 @@ const Referral = () => {
               name="referrerMaxDiscountValue"
               value={formData.referrerMaxDiscountValue}
               onChange={handleInputChange}
-              className="border-2 border-gray-300 rounded mt-10 w-2/3 p-2 outline-none focus:outline-none "
+              className="border-2 border-gray-300 rounded w-full sm:w-2/3 mt-2 sm:mt-0 p-2 outline-none focus:outline-none"
             />
           </div>
         )}
 
-        <div className="flex">
-          <label className="mt-10 w-1/2">
+        <div className="flex flex-col sm:flex-row mt-5">
+          <label className="w-full sm:w-1/2">
             Referrer App Heading Description
             <span className="text-red-600 ml-2">*</span>
           </label>
@@ -198,12 +200,12 @@ const Referral = () => {
             name="referrerAppHeadingAndDescription"
             value={formData.referrerAppHeadingAndDescription}
             onChange={handleInputChange}
-            className="border-2 border-gray-300 rounded w-2/3 mt-10 p-2 outline-none focus:outline-none"
+            className="border-2 border-gray-300 rounded w-full sm:w-2/3 mt-2 sm:mt-0 p-2 outline-none focus:outline-none"
           />
         </div>
 
-        <div className="flex">
-          <label className="mt-10 w-1/2">
+        <div className="flex flex-col sm:flex-row mt-5">
+          <label className="w-full sm:w-1/2">
             Referee discount<span className="text-red-600 ml-2">*</span>
           </label>
 
@@ -212,13 +214,13 @@ const Referral = () => {
             name="refereeDiscount"
             value={formData.refereeDiscount}
             onChange={handleInputChange}
-            className="border-2 border-gray-300 rounded mt-10 w-2/3 p-2 outline-none focus:outline-none"
+            className="border-2 border-gray-300 rounded w-full sm:w-2/3 mt-2 sm:mt-0 p-2 outline-none focus:outline-none"
           />
         </div>
 
         {formData.referralType === "Percentage-discount" && (
-          <div className="flex">
-            <label className="mt-10 w-1/2">
+          <div className="flex flex-col sm:flex-row mt-5">
+            <label className="w-full sm:w-1/2">
               Referee maximum discount value
               <span className="text-red-600 ml-2">*</span>
             </label>
@@ -228,13 +230,13 @@ const Referral = () => {
               name="refereeMaxDiscountValue"
               value={formData.refereeMaxDiscountValue}
               onChange={handleInputChange}
-              className="border-2 border-gray-300 rounded mt-10 w-2/3 p-2 outline-none focus:outline-none"
+              className="border-2 border-gray-300 rounded w-full sm:w-2/3 mt-2 sm:mt-0 p-2 outline-none focus:outline-none"
             />
           </div>
         )}
 
-        <div className="flex">
-          <label className="mt-10 w-1/2">
+        <div className="flex flex-col sm:flex-row mt-5">
+          <label className="w-full sm:w-1/2">
             Minimum order amount
             <span className="text-red-600 ml-2">*</span>
           </label>
@@ -244,12 +246,12 @@ const Referral = () => {
             name="minOrderAmount"
             value={formData.minOrderAmount}
             onChange={handleInputChange}
-            className="border-2 border-gray-300 rounded  mt-10 w-2/3 p-2 outline-none focus:outline-none"
+            className="border-2 border-gray-300 rounded w-full sm:w-2/3 mt-2 sm:mt-0 p-2 outline-none focus:outline-none"
           />
         </div>
 
-        <div className="flex">
-          <label className="mt-10 w-1/2">
+        <div className="flex flex-col sm:flex-row mt-5">
+          <label className="w-full sm:w-1/2">
             Referee description
             <span className="text-red-600 ml-2">*</span>
           </label>
@@ -259,16 +261,16 @@ const Referral = () => {
             name="refereeDescription"
             value={formData.refereeDescription}
             onChange={handleInputChange}
-            className="border-2 border-gray-300 rounded  mt-10 w-2/3 p-2 outline-none focus:outline-none"
+            className="border-2 border-gray-300 rounded w-full sm:w-2/3 mt-2 sm:mt-0 p-2 outline-none focus:outline-none"
           />
         </div>
 
-        <div className="mt-10 flex">
-          <label className="w-1/2">
+        <div className="mt-10 flex flex-col sm:flex-row">
+          <label className="w-full sm:w-1/2">
             Status<span className="text-red-600 ml-2">*</span>
           </label>
 
-          <div className="w-2/3">
+          <div className="w-full sm:w-2/3">
             {toggleStatus.isPending ? (
               <div className="flex justify-start">
                 <ShowSpinner />
