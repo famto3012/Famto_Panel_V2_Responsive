@@ -75,15 +75,15 @@ const PromoCode = () => {
   return (
     <div className="bg-gray-100 h-full">
       <GlobalSearch />
-      <div className="mx-5 flex justify-between">
+      <div className="mx-5 flex justify-between mt-4">
         <h1 className="font-bold text-[20px]">Promo codes</h1>
       </div>
-      <div className="m-5 text-gray-500 flex items-center justify-between">
-        <p className=" max-w-[80%]">
+      <div className="m-5 text-gray-500 flex flex-col sm:flex-row items-center justify-between">
+        <p className="max-w-full sm:max-w-[80%] mb-4 sm:mb-0">
           Promo codes are exclusive discount vouchers that can be redeemed by
           the customers during the checkout process <br /> You can create
           customized promotional codes with a detailed description that will be
-          visible to customers
+          visible to customers.
         </p>
 
         <button
@@ -95,101 +95,111 @@ const PromoCode = () => {
         </button>
       </div>
 
-      <Table.Root striped interactive stickyHeader>
-        <Table.Header>
-          <Table.Row className="bg-teal-700 h-14">
-            {[
-              "Code",
-              "Value",
-              "Maximum discount",
-              "Minimum order amount",
-              "Validity",
-              "Description",
-              "Promo Application mode",
-              "Promo Applied on",
-              "Current Usage Count / Max Usage Count",
-              "Status",
-            ].map((header, index) => (
-              <Table.ColumnHeader key={index} color="white" textAlign="center">
-                {header}
-              </Table.ColumnHeader>
-            ))}
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {isLoading ? (
-            <Table.Row className="h-[70px]">
-              <Table.Cell colSpan={12} textAlign="center">
-                <ShowSpinner /> Loading...
-              </Table.Cell>
+      <div className="overflow-x-auto">
+        <Table.Root striped interactive stickyHeader>
+          <Table.Header>
+            <Table.Row className="bg-teal-700 h-14">
+              {[
+                "Code",
+                "Value",
+                "Maximum discount",
+                "Minimum order amount",
+                "Validity",
+                "Description",
+                "Promo Application mode",
+                "Promo Applied on",
+                "Current Usage Count / Max Usage Count",
+                "Status",
+              ].map((header, index) => (
+                <Table.ColumnHeader
+                  key={index}
+                  color="white"
+                  textAlign="center"
+                >
+                  {header}
+                </Table.ColumnHeader>
+              ))}
             </Table.Row>
-          ) : data?.length === 0 ? (
-            <Table.Row className="h-[70px]">
-              <Table.Cell colSpan={12} textAlign="center">
-                No Promo codes Available
-              </Table.Cell>
-            </Table.Row>
-          ) : isError ? (
-            <Table.Row className="h-[70px]">
-              <Table.Cell colSpan={12} textAlign="center">
-                Error in fetching promo codes.
-              </Table.Cell>
-            </Table.Row>
-          ) : (
-            data?.map((item) => (
-              <Table.Row key={item.promoCodeId} className={`h-[70px]`}>
-                <Table.Cell textAlign="center">{item.promoCode}</Table.Cell>
-                <Table.Cell textAlign="center">{item.promoValue}</Table.Cell>
-                <Table.Cell textAlign="center">
-                  {item.maxDiscountValue}
-                </Table.Cell>
-                <Table.Cell textAlign="center">
-                  {item.minOrderAmount}
-                </Table.Cell>
-                <Table.Cell textAlign="center">
-                  {formatDate(item.fromDate)} <br /> {formatDate(item.toDate)}
-                </Table.Cell>
-                <Table.Cell textAlign="center">{item.description}</Table.Cell>
-                <Table.Cell textAlign="center">
-                  {item.applicationMode}
-                </Table.Cell>
-                <Table.Cell textAlign="center">{item.appliedOn}</Table.Cell>
-                <Table.Cell textAlign="center">
-                  {item.noOfUserUsed} / {item.maxAllowedUsers}
-                </Table.Cell>
-                <Table.Cell textAlign="center">
-                  <HStack direction="row" gap="4" justify="center">
-                    {toggleStatus.isPending &&
-                    selectedId === item.promoCodeId ? (
-                      <ShowSpinner />
-                    ) : (
-                      <Switch
-                        colorPalette="teal"
-                        checked={item?.status}
-                        onChange={() => toggleStatus.mutate(item.promoCodeId)}
-                      />
-                    )}
-
-                    <span
-                      onClick={() => toggleModal("edit", item.promoCodeId)}
-                      className="text-gray-600"
-                    >
-                      <RenderIcon iconName="EditIcon" size={20} loading={6} />
-                    </span>
-
-                    <span
-                      onClick={() => toggleModal("delete", item.promoCodeId)}
-                      className="text-red-500"
-                    >
-                      <RenderIcon iconName="DeleteIcon" size={24} loading={6} />
-                    </span>
-                  </HStack>
+          </Table.Header>
+          <Table.Body>
+            {isLoading ? (
+              <Table.Row className="h-[70px]">
+                <Table.Cell colSpan={12} textAlign="center">
+                  <ShowSpinner /> Loading...
                 </Table.Cell>
               </Table.Row>
-            ))
-          )}
-        </Table.Body>
-      </Table.Root>
+            ) : data?.length === 0 ? (
+              <Table.Row className="h-[70px]">
+                <Table.Cell colSpan={12} textAlign="center">
+                  No Promo codes Available
+                </Table.Cell>
+              </Table.Row>
+            ) : isError ? (
+              <Table.Row className="h-[70px]">
+                <Table.Cell colSpan={12} textAlign="center">
+                  Error in fetching promo codes.
+                </Table.Cell>
+              </Table.Row>
+            ) : (
+              data?.map((item) => (
+                <Table.Row key={item.promoCodeId} className={`h-[70px]`}>
+                  <Table.Cell textAlign="center">{item.promoCode}</Table.Cell>
+                  <Table.Cell textAlign="center">{item.promoValue}</Table.Cell>
+                  <Table.Cell textAlign="center">
+                    {item.maxDiscountValue}
+                  </Table.Cell>
+                  <Table.Cell textAlign="center">
+                    {item.minOrderAmount}
+                  </Table.Cell>
+                  <Table.Cell textAlign="center">
+                    {formatDate(item.fromDate)} <br /> {formatDate(item.toDate)}
+                  </Table.Cell>
+                  <Table.Cell textAlign="center">{item.description}</Table.Cell>
+                  <Table.Cell textAlign="center">
+                    {item.applicationMode}
+                  </Table.Cell>
+                  <Table.Cell textAlign="center">{item.appliedOn}</Table.Cell>
+                  <Table.Cell textAlign="center">
+                    {item.noOfUserUsed} / {item.maxAllowedUsers}
+                  </Table.Cell>
+                  <Table.Cell textAlign="center">
+                    <HStack direction="row" gap="4" justify="center">
+                      {toggleStatus.isPending &&
+                      selectedId === item.promoCodeId ? (
+                        <ShowSpinner />
+                      ) : (
+                        <Switch
+                          colorPalette="teal"
+                          checked={item?.status}
+                          onChange={() => toggleStatus.mutate(item.promoCodeId)}
+                        />
+                      )}
+
+                      <span
+                        onClick={() => toggleModal("edit", item.promoCodeId)}
+                        className="text-gray-600"
+                      >
+                        <RenderIcon iconName="EditIcon" size={20} loading={6} />
+                      </span>
+
+                      <span
+                        onClick={() => toggleModal("delete", item.promoCodeId)}
+                        className="text-red-500"
+                      >
+                        <RenderIcon
+                          iconName="DeleteIcon"
+                          size={24}
+                          loading={6}
+                        />
+                      </span>
+                    </HStack>
+                  </Table.Cell>
+                </Table.Row>
+              ))
+            )}
+          </Table.Body>
+        </Table.Root>
+      </div>
 
       <AddPromoCode isOpen={modal.add} onClose={closeModal} />
       <EditPromoCode

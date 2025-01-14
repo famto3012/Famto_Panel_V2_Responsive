@@ -16,9 +16,11 @@ const ReferralTable = () => {
 
   return (
     <>
-      <p className="mx-5 mb-5 font-bold text-[20px]">Referral Statics</p>
+      <p className="mx-5 mb-5 font-bold text-[16px] sm:text-[18px] md:text-[20px] lg:text-[22px]">
+        Referral Statics
+      </p>
 
-      <div className="mt-5 max-h-[30rem]">
+      <div className="mt-5 max-h-[30rem] overflow-x-auto">
         <Table.Root striped interactive stickyHeader>
           <Table.Header>
             <Table.Row className="bg-teal-700 h-[70px]">
