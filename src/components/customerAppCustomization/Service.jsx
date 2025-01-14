@@ -90,7 +90,7 @@ const Service = () => {
   return (
     <div className="border-b-2 border-gray-200 pb-5 h-fit">
       <div className="flex flex-col lg:flex-row gap-[15px] lg:gap-0 justify-between mx-5 mt-10">
-        <h1>Services</h1>
+        <h1 className="text-[18px] font-[600]">Services</h1>
 
         <p className="text-gray-500">
           This enables to add, edit, change thumbnail of the listed services
@@ -98,7 +98,7 @@ const Service = () => {
 
         <button
           onClick={() => toggleModal("add")}
-          className=" flex items-center gap-2 bg-teal-800 text-white px-5 rounded-lg p-2 w-fit"
+          className="flex items-center gap-2 bg-teal-800 text-white px-5 rounded-lg p-2 w-fit"
         >
           <RenderIcon iconName="PlusIcon" size={16} loading={6} />
           <span className="hidden lg:block">Add Services</span>
@@ -124,7 +124,7 @@ const Service = () => {
             )
           }
           onDragOver={(e) => e.preventDefault()}
-          className="flex justify-center mt-5"
+          className="flex justify-center mt-5 mx-4 lg:mx-0"
         >
           <div className="w-96 h-fit">
             <div className="bg-gray-300 flex flex-col gap-3 rounded-lg w-full">

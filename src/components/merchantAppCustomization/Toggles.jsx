@@ -141,8 +141,8 @@ const Toggles = () => {
     <>
       <h1 className="mx-5 font-bold text-[20px] mt-5 lg:mt-0">Merchant App </h1>
 
-      <div className="flex gap-10 mt-10 mx-5  border-b-2 border-gray-200 pb-5">
-        <div className="w-72">Splash Screen (390px x 844px)</div>
+      <div className="flex flex-col lg:flex-row gap-10 mt-10 mx-5 border-b-2 border-gray-200 pb-5">
+        <div className="lg:w-72">Splash Screen (390px x 844px)</div>
 
         <div className="text-gray-500">
           Note: The purpose is to wish or design the splash page. The format can
@@ -210,11 +210,11 @@ const Toggles = () => {
         </div>
       </div>
 
-      <div className="flex mx-5 mt-5">
-        <div className="w-1/5 ">Sign up and Sign in Settings</div>
+      <div className="flex flex-col lg:flex-row mx-5 mt-5">
+        <div className="lg:w-1/5 ">Sign up and Sign in Settings</div>
 
-        <div className="w-4/5 flex flex-col justify-start">
-          <p className="text-gray-500 max-w-[90%]">
+        <div className="lg:w-4/5 flex flex-col justify-start">
+          <p className="text-gray-500 w-full lg:max-w-[90%] mt-5 lg:mt-0">
             Control sign-up of Merchant on your platform. Here you are given
             with a variety of options such as whether to have email or phone
             number as mandatory fields on the sign-up form, how do you want to
@@ -223,8 +223,8 @@ const Toggles = () => {
             sign up on your platform.
           </p>
 
-          <div className="flex flex-row gap-[20px] mt-[30px]">
-            <div className="flex flex-col gap-[20px] bg-white p-3 rounded-lg w-[20%] h-fit">
+          <div className="flex flex-col lg:flex-row gap-[20px] mt-[30px]">
+            <div className="flex flex-col gap-[20px] bg-white p-3 rounded-lg w-full lg:w-[20%] h-fit">
               <label className="font-semibold text-[16px]">
                 Required fields on signup
               </label>
@@ -248,7 +248,7 @@ const Toggles = () => {
               </div>
             </div>
 
-            <div className="flex flex-col gap-[20px] bg-white p-3 rounded-lg w-[20%] h-fit">
+            <div className="flex flex-col gap-[20px] bg-white p-3 rounded-lg w-full lg:w-[20%] h-fit">
               <label className="font-semibold">Signup Verification</label>
 
               <div className="flex items-center justify-between">
@@ -269,7 +269,7 @@ const Toggles = () => {
               </div>
             </div>
 
-            <div className="flex flex-col gap-[20px] bg-white p-3 rounded-lg w-[20%] h-fit">
+            <div className="flex flex-col gap-[20px] bg-white p-3 rounded-lg w-full lg:w-[20%] h-fit">
               <label className="font-semibold">Login via</label>
               <div className="flex items-center justify-between">
                 OTP
