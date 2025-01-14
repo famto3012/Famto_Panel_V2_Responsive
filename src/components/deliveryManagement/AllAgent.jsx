@@ -51,7 +51,7 @@ const AllAgent = ({ showAgentLocationOnMap }) => {
   const isLoading = filterAgentLoading;
 
   return (
-    <div className="w-1/4 rounded-lg bg-white  pb-5">
+    <div className="w-full rounded-lg bg-white  pb-5">
       <div className="bg-teal-800 text-white p-5 xl:px-[25px] rounded-t-lg flex items-center justify-between">
         <p>Agents</p>
         <p className="bg-white text-teal-800 font-bold rounded-full w-[25px] h-[25px] flex justify-center items-center">
