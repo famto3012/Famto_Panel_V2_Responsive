@@ -31,6 +31,7 @@ import {
   updateMerchantStatusForMerchantToggle,
 } from "@/hooks/merchant/useMerchant";
 import { useInterval } from "react-use";
+import { useSocket } from "@/context/SocketContext";
 
 // Register Chart.js components
 Chart.register(
@@ -67,7 +68,9 @@ const Home = () => {
     newOrder,
     orderRejected,
     scheduledOrder,
+    setShowBadge,
   } = useSoundContext();
+  const { updateFcmToken } = useSocket();
 
   const handleNotification = (payload) => {
     if (
@@ -76,8 +79,22 @@ const Home = () => {
       payload.notification.title === scheduledOrder
     ) {
       playNewOrderNotificationSound();
+      setShowBadge(true);
+      toaster.create({
+        title: payload.notification.title,
+        description: payload.notification.body,
+        image: payload.notification.image,
+        type: "info",
+      });
     } else {
       playNewNotificationSound();
+      setShowBadge(true);
+      toaster.create({
+        title: payload.notification.title,
+        description: payload.notification.body,
+        image: payload.notification.image,
+        type: "info",
+      });
     }
   };
 
@@ -385,6 +402,7 @@ const Home = () => {
   }, [graphData, selectedOption]);
 
   useEffect(() => {
+    requestPermission();
     const unsubscribe = onMessage(messaging, (payload) => {
       handleNotification(payload);
       const { title, body } = payload.notification;
@@ -406,6 +424,7 @@ const Home = () => {
           vapidKey: import.meta.env.VITE_APP_VAPID_KEY,
         });
         if (token) {
+          updateFcmToken(token);
           saveFcmTokenToStorage(token);
           // Send the token to your server and update the UI if necessary
         } else {
@@ -430,7 +449,6 @@ const Home = () => {
   }, 60000);
 
   useEffect(() => {
-    requestPermission();
     if (merchantProfileData) {
       setStatus(merchantProfileData?.status);
       setStatusManualToggle(merchantProfileData?.statusManualToggle);

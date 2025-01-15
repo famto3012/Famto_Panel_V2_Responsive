@@ -15,6 +15,7 @@ import {
 import AuthContext from "@/context/AuthContext";
 import { useInterval } from "react-use";
 import MainSideBar from "../sideBar/MainSideBar";
+import { toaster } from "../ui/toaster";
 
 const GlobalSearch = () => {
   const [showModal, setShowModal] = useState(false);
@@ -87,11 +88,23 @@ const GlobalSearch = () => {
       console.log("New order sound", orderRejected);
       console.log("New order sound", scheduledOrder);
       playNewOrderNotificationSound();
+      toaster.create({
+        title: payload.notification.title,
+        description: payload.notification.body,
+        image: payload.notification.image,
+        type: "info",
+      });
       setShowBadge(true);
     } else {
       console.log("Handle notification");
       console.log("New Notification sound");
       playNewNotificationSound();
+      toaster.create({
+        title: payload.notification.title,
+        description: payload.notification.body,
+        image: payload.notification.image,
+        type: "info",
+      });
       setShowBadge(true);
     }
     // addNotificationToTable(payload.notification);
