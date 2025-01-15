@@ -45,8 +45,8 @@ const NewCustomerForm = ({ toggleNewCustomerForm, onAddCustomer }) => {
 
   return (
     <div className="flex">
-      <label className="w-1/3"></label>
-      <div className="mt-6 p-6 bg-gray-200 rounded-lg shadow-lg w-1/2">
+      <label className="hidden md:block md:w-1/3"></label>
+      <div className="mt-6 p-6 bg-gray-200 rounded-lg shadow-lg w-full md:w-1/2">
         <div>
           <div className="mb-4 text-gray-500">
             <p>
@@ -128,7 +128,8 @@ const NewCustomerForm = ({ toggleNewCustomerForm, onAddCustomer }) => {
                 onClick={handleAddCustomer}
                 className="bg-teal-700 text-white px-4 py-2 rounded w-1/2"
               >
-                Add Customer
+                <span className="hidden md:block">Add Customer</span>
+                <span className="md:hidden">Add</span>
               </button>
             </div>
           )}

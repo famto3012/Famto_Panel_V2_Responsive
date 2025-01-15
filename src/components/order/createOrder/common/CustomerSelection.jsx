@@ -43,14 +43,15 @@ const CustomerSelection = ({ onCustomerSelect }) => {
   };
 
   return (
-    <div className="flex items-center relative">
+    <div className="flex flex-col md:flex-row md:items-center relative gap-[20px] md:gap-0">
       <label
-        className="w-1/3 px-6 text-gray-600 text-[16px]"
+        className="w-full md:w-1/3 md:px-6 text-gray-600 text-[16px]"
         htmlFor="customer"
       >
         Select Customer
       </label>
-      <div className="w-1/2 relative">
+
+      <div className="w-full md:w-1/2 relative">
         <div className="relative">
           <input
             type="text"

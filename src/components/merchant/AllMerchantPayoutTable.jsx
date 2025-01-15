@@ -57,7 +57,7 @@ const AllMerchantPayoutTable = ({ filter }) => {
   };
 
   return (
-    <div className="mt-[20px] w-full">
+    <div className="mt-[20px] w-full overflow-x-auto">
       <Table.Root striped interactive>
         <Table.Header>
           <Table.Row className="bg-teal-700 h-14">

@@ -47,7 +47,7 @@ const SelectProduct = ({ merchantId, categoryId, onProductSelect }) => {
         productId: item.productId,
         quantity: item.quantity,
         price: price,
-        variantId: item.selectedVariantId || null,
+        variantTypeId: item.selectedVariantId || null,
       };
     });
 
@@ -122,11 +122,11 @@ const SelectProduct = ({ merchantId, categoryId, onProductSelect }) => {
 
   return (
     <>
-      <div className="flex items-center relative">
-        <label className="w-1/3 px-6 text-gray-500" htmlFor="product">
+      <div className="flex flex-col md:flex-row md:items-center relative gap-[20px] md:gap-0">
+        <label className="md:w-1/3 md:px-6 text-gray-500" htmlFor="product">
           Select Product
         </label>
-        <div className="relative w-1/2 z-30">
+        <div className="relative md:w-1/2 z-30">
           <input
             type="text"
             name="product"
@@ -162,14 +162,16 @@ const SelectProduct = ({ merchantId, categoryId, onProductSelect }) => {
       </div>
 
       <div
-        className={`${selectedItems.length === 0 ? "hidden" : `flex items-start`} `}
+        className={`${selectedItems.length === 0 ? "hidden" : `flex flex-col md:flex-row md:items-start gap-[20px] md:gap-0`} `}
       >
-        <label className="w-1/3 px-6 text-gray-500">Selected Products</label>
-        <div className="relative w-[50%] flex gap-4 flex-wrap ">
+        <label className="md:w-1/3 md:px-6 text-gray-500">
+          Selected Products
+        </label>
+        <div className="relative w-full md:w-[50%] flex gap-4 flex-wrap ">
           {selectedItems?.map((item) => (
             <div
               key={item.productId}
-              className="flex items-center gap-3 py-2 bg-gray-100 p-3 border-2 border-gray-300 rounded-md"
+              className="flex w-full items-center justify-between gap-3 py-2 bg-gray-100 p-3 border-2 border-gray-300 rounded-md"
             >
               <div>
                 <p className="text-gray-600 mb-2 w-[120px] truncate">

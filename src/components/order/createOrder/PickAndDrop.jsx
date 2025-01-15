@@ -197,8 +197,8 @@ const PickAndDrop = ({ data, address }) => {
           />
 
           {data?.ifScheduled?.time && (
-            <div className="flex items-center">
-              <label className="w-1/3 px-6" htmlFor="orderTime">
+            <div className="flex flex-col md:flex-row md:items-start gap-[20px] md:gap-0">
+              <label className="md:w-1/3 md:px-6" htmlFor="orderTime">
                 Order Time
               </label>
               <input
@@ -206,14 +206,14 @@ const PickAndDrop = ({ data, address }) => {
                 name="orderTime"
                 placeholder="In scheduled order, it will be filled automatically as scheduled"
                 readOnly
-                className="h-10 ps-3 text-sm w-1/2  outline-none focus:outline-none"
+                className="h-10 ps-3 text-sm md:w-1/2 outline-none focus:outline-none"
                 value={data?.ifScheduled?.time}
               />
             </div>
           )}
 
-          <div className="flex items-center">
-            <label className="w-1/3 px-6" htmlFor="pickData.instructions">
+          <div className="flex flex-col md:flex-row md:items-start gap-[20px] md:gap-0">
+            <label className="md:w-1/3 md:px-6" htmlFor="pickData.instructions">
               Pick Instructions (if any)
             </label>
 
@@ -221,7 +221,7 @@ const PickAndDrop = ({ data, address }) => {
               rows={3}
               name="instructionInPickup"
               placeholder="Pickup Instructions"
-              className="h-10 ps-3 py-3 text-sm border-2 w-1/2 rounded-md outline-none focus:outline-none resize-y overflow-auto"
+              className="h-10 ps-3 py-3 text-sm border-2 md:w-1/2 rounded-md outline-none focus:outline-none resize-y overflow-auto"
               value={pickAndDropData.instructionInPickup}
               onChange={(e) =>
                 setPickAndDropData({
@@ -232,11 +232,11 @@ const PickAndDrop = ({ data, address }) => {
             />
           </div>
 
-          <div className="flex items-center">
-            <label className="w-1/3 px-6">Task Specifications</label>
+          <div className="flex flex-col md:flex-row md:items-start gap-[20px] md:gap-0">
+            <label className="md:w-1/3 md:px-6">Task Specifications</label>
             <button
               type="button"
-              className="bg-zinc-200 w-1/2 rounded-md p-2 flex items-center justify-center gap-3"
+              className="bg-zinc-200 md:w-1/2 rounded-md p-2 flex items-center justify-center gap-3"
               onClick={handleAddItem}
             >
               <RenderIcon iconName="PlusIcon" size={20} loading={6} />
@@ -248,13 +248,13 @@ const PickAndDrop = ({ data, address }) => {
             {pickAndDropData?.items?.map((item, index) => (
               <div
                 key={index}
-                className="bg-gray-100 mx-6 p-10 rounded-lg mb-4"
+                className="bg-gray-100 md:mx-6 py-5 px-3 md:p-10 rounded-lg mb-4"
               >
-                <div className="flex">
-                  <label className="w-1/3">Item type</label>
+                <div className="flex flex-col md:flex-row md:items-start gap-[20px] md:gap-0">
+                  <label className="md:w-1/3">Item type</label>
 
                   <Select
-                    className="w-1/2 outline-none focus:outline-none z-10"
+                    className="md:w-1/2 outline-none focus:outline-none z-10"
                     value={itemTypes.find(
                       (option) => option.value === item.itemName
                     )}
@@ -268,9 +268,10 @@ const PickAndDrop = ({ data, address }) => {
                     }}
                   />
                 </div>
-                <div className="flex mt-5">
-                  <label className="w-1/3">Dimensions (in cm)</label>
-                  <div className="w-1/2 gap-2">
+
+                <div className="flex flex-col md:flex-row md:items-start gap-[20px] md:gap-0 mt-5">
+                  <label className="md:w-1/3">Dimensions (in cm)</label>
+                  <div className="md:w-1/2 gap-2">
                     <div className="flex gap-2">
                       <input
                         type="text"
@@ -347,11 +348,11 @@ const PickAndDrop = ({ data, address }) => {
                   </div>
                 </div>
 
-                <div className="flex items-center mt-3">
-                  <label htmlFor="" className="w-1/3"></label>
+                <div className="flex flex-col md:flex-row md:items-start gap-[20px] md:gap-0 mt-3">
+                  <label htmlFor="" className="md:w-1/3"></label>
                   <button
                     type="button"
-                    className="bg-red-200 w-1/2 rounded-md p-2 flex items-center justify-center gap-x-2"
+                    className="bg-red-200 md:w-1/2 rounded-md p-2 flex items-center justify-center gap-x-2"
                     onClick={() => handleRemoveItem(index)}
                   >
                     <span className="text-red-500">
@@ -387,8 +388,8 @@ const PickAndDrop = ({ data, address }) => {
           />
 
           {data?.deliveryTime && (
-            <div className="flex items-center">
-              <label className="w-1/3 px-6" htmlFor="deliveryTime">
+            <div className="flex flex-col md:flex-row md:items-start gap-[20px] md:gap-0">
+              <label className="md:w-1/3 md:px-6" htmlFor="deliveryTime">
                 Delivery Time
               </label>
               <input
@@ -396,19 +397,21 @@ const PickAndDrop = ({ data, address }) => {
                 name="deliveryTime"
                 readOnly
                 placeholder="In scheduled order, it will be filled automatically as scheduled"
-                className="h-10 ps-3 text-sm w-1/2  outline-none focus:outline-none"
+                className="h-10 ps-3 text-sm md:w-1/2  outline-none focus:outline-none"
                 value={data?.deliveryTime}
               />
             </div>
           )}
 
-          <div className="flex items-start">
-            <label className="w-1/3 px-6">Drop Instructions (if any)</label>
+          <div className="flex flex-col md:flex-row md:items-start gap-[20px] md:gap-0">
+            <label className="md:w-1/3 md:px-6">
+              Drop Instructions (if any)
+            </label>
             <textarea
               rows={3}
               name="instructionInDelivery"
               placeholder="Delivery Instructions"
-              className="h-10 ps-3 py-3 text-sm border-2 w-1/2 rounded-md outline-none focus:outline-none resize-y overflow-auto"
+              className="h-10 ps-3 py-3 text-sm border-2 md:w-1/2 rounded-md outline-none focus:outline-none resize-y overflow-auto"
               value={pickAndDropData.instructionInDelivery}
               onChange={(e) =>
                 setPickAndDropData({
@@ -419,8 +422,8 @@ const PickAndDrop = ({ data, address }) => {
             />
           </div>
 
-          <div className="flex items-center">
-            <label className="w-1/3 px-6" htmlFor="dropData.addedTip">
+          <div className="flex flex-col md:flex-row md:items-start gap-[20px] md:gap-0">
+            <label className="md:w-1/3 md:px-6" htmlFor="dropData.addedTip">
               Add Tip
             </label>
             <input
@@ -428,7 +431,7 @@ const PickAndDrop = ({ data, address }) => {
               name="addedTip"
               pattern="[0-9]"
               placeholder="Tip for the delivery"
-              className="h-10 ps-3 text-sm border-2 w-1/2 rounded-md outline-none focus:outline-none"
+              className="h-10 ps-3 text-sm border-2 md:w-1/2 rounded-md outline-none focus:outline-none"
               value={pickAndDropData.addedTip}
               onChange={(e) =>
                 setPickAndDropData({
@@ -448,8 +451,8 @@ const PickAndDrop = ({ data, address }) => {
             />
           </div>
 
-          <div className="flex items-center">
-            <label className="w-1/3 px-6" htmlFor="dropData.addedTip">
+          <div className="flex flex-col md:flex-row md:items-start gap-[20px] md:gap-0">
+            <label className="md:w-1/3 md:px-6" htmlFor="dropData.addedTip">
               Vehicle type
             </label>
             {["Bike", "Scooter"].map((vehicle, index) => (

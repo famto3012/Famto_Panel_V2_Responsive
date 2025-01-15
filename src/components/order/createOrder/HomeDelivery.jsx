@@ -134,9 +134,9 @@ const HomeDelivery = ({ data, address }) => {
           <SelectMerchant onMerchantSelect={handleMerchantSelect} />
         )}
 
-        <div className="flex items-center relative">
-          <label className="w-1/3 px-6 invisible"></label>
-          <div className="w-1/2 flex items-center gap-5 overflow-x-auto">
+        <div className="flex md:items-center relative">
+          <label className="hidden md:block md:w-1/3 md:px-6 invisible"></label>
+          <div className="md:w-1/2 flex md:items-center gap-5 overflow-x-auto">
             {businessCategories?.map((category) => (
               <button
                 key={category._id}
@@ -167,9 +167,9 @@ const HomeDelivery = ({ data, address }) => {
         />
 
         {role === "Admin" && (
-          <div className="flex items-start">
+          <div className="flex flex-col md:flex-row md:items-start gap-[20px] md:gap-0">
             <label
-              className="w-1/3 px-6 text-gray-700"
+              className="md:w-1/3 md:px-6 text-gray-700"
               htmlFor="instructionToMerchant"
             >
               Instruction to Merchant
@@ -178,7 +178,7 @@ const HomeDelivery = ({ data, address }) => {
               name="instructionToMerchant"
               rows={3}
               placeholder="Instruction to Merchant"
-              className="text-[16px] ps-3 pt-2 border-2 w-1/2 outline-none focus:outline-none resize-y overflow-y-auto rounded-md"
+              className="text-[16px] ps-3 pt-2 border-2 md:w-1/2 outline-none focus:outline-none resize-y overflow-y-auto rounded-md"
               value={homeDeliveryData.instructionToMerchant}
               onChange={(e) =>
                 setHomeDeliveryData({
@@ -204,9 +204,9 @@ const HomeDelivery = ({ data, address }) => {
           onToggleAddAddress={handleToggleNewAddress}
         />
 
-        <div className="flex items-start">
+        <div className="flex flex-col md:flex-row md:items-start gap-[20px] md:gap-0">
           <label
-            className="w-1/3 px-6 text-gray-700"
+            className="md:w-1/3 md:px-6 text-gray-700"
             htmlFor="instructionToDeliveryAgent"
           >
             Instructions to Delivery Agent
@@ -215,7 +215,7 @@ const HomeDelivery = ({ data, address }) => {
             name="instructionToDeliveryAgent"
             rows={3}
             placeholder="Instruction to agent"
-            className="text-[16px] ps-3 pt-2 border-2 w-1/2 outline-none focus:outline-none resize-y rounded-md"
+            className="text-[16px] ps-3 pt-2 border-2 md:w-1/2 outline-none focus:outline-none resize-y rounded-md"
             value={homeDeliveryData.instructionToDeliveryAgent}
             onChange={(e) =>
               setHomeDeliveryData({
@@ -226,12 +226,12 @@ const HomeDelivery = ({ data, address }) => {
           />
         </div>
 
-        <div className="flex items-center">
-          <label className="w-1/3 px-6" htmlFor="addedTip">
+        <div className="flex flex-col md:flex-row md:items-start gap-[20px] md:gap-0">
+          <label className="md:w-1/3 md:px-6" htmlFor="addedTip">
             Tips
           </label>
           <input
-            className="h-10 px-5 text-sm border-2 w-1/2  outline-none focus:outline-none rounded-md"
+            className="h-10 px-5 text-sm border-2 md:w-1/2  outline-none focus:outline-none rounded-md"
             type="text"
             placeholder="Add Tip"
             name="addedTip"
@@ -255,8 +255,8 @@ const HomeDelivery = ({ data, address }) => {
           />
         </div>
 
-        <div className="flex items-center">
-          <label className="w-1/3 px-6" htmlFor="discount">
+        <div className="flex flex-col md:flex-row md:items-start gap-[20px] md:gap-0">
+          <label className="md:w-1/3 md:px-6" htmlFor="discount">
             Flat Discount
           </label>
 
@@ -264,7 +264,7 @@ const HomeDelivery = ({ data, address }) => {
             type="text"
             name="flatDiscount"
             placeholder="Flat discount"
-            className="h-10 ps-3 text-sm border-2 w-1/2 outline-none focus:outline-none rounded-md"
+            className="h-10 ps-3 text-sm border-2 md:w-1/2 outline-none focus:outline-none rounded-md"
             value={homeDeliveryData.flatDiscount}
             onChange={(e) =>
               setHomeDeliveryData({

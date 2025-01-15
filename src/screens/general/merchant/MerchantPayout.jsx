@@ -21,6 +21,8 @@ import {
 import "react-datepicker/dist/react-datepicker.css";
 import AllMerchantPayoutTable from "@/components/merchant/AllMerchantPayoutTable";
 import { toaster } from "@/components/ui/toaster";
+import FilterWrapper from "@/components/SideFilters/FilterWrapper";
+import MerchantPayoutFilters from "@/components/SideFilters/MerchantPayoutFilters";
 
 const MerchantPayout = () => {
   const [filter, setFilter] = useState({
@@ -31,6 +33,7 @@ const MerchantPayout = () => {
     name: "",
   });
   const [debounceName, setDebounceName] = useState("");
+  const [filterOpen, setFilterOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -127,6 +130,10 @@ const MerchantPayout = () => {
     };
   }, [debounceName]);
 
+  const handleFilterChange = (type, value) => {
+    setFilter({ ...filter, [type]: value });
+  };
+
   if (geofenceLoading || merchantLoading) return <Loader />;
   if (geofenceError || merchantError) return <Error />;
 
@@ -151,8 +158,8 @@ const MerchantPayout = () => {
         </button>
       </div>
 
-      <div className="bg-white flex items-center justify-between mx-[30px] mt-3 p-5 rounded-md">
-        <div className="flex items-center gap-[20px]">
+      <div className="bg-white flex items-center justify-between mx-3 md:mx-[30px] mt-3 p-3 md:p-5 rounded-md">
+        <div className="hidden md:flex items-center gap-[20px]">
           <Select
             options={merchantOptions}
             value={merchantOptions?.find(
@@ -192,7 +199,7 @@ const MerchantPayout = () => {
           />
         </div>
 
-        <div className="flex items-center gap-5">
+        <div className="flex items-center md:gap-5">
           <DatePicker
             selectsRange
             startDate={filter.date[0]}
@@ -200,7 +207,7 @@ const MerchantPayout = () => {
             onChange={(date) => setFilter({ ...filter, date })}
             dateFormat="yyyy/MM/dd"
             maxDate={new Date(new Date().setDate(new Date().getDate() - 1))}
-            className="cursor-pointer "
+            className="cursor-pointer hidden md:block"
             placeholderText="Select Date range"
             customInput={
               <span className="text-gray-400">
@@ -213,10 +220,26 @@ const MerchantPayout = () => {
             type="search"
             value={debounceName}
             onChange={(e) => setDebounceName(e.target.value)}
-            className="bg-gray-100 p-3 rounded-3xl focus:outline-none text-[14px] ps-[20px]"
+            className="bg-gray-100 p-3 rounded-3xl focus:outline-none text-[14px] md:ps-[20px]"
             placeholder="Search merchant"
           />
         </div>
+
+        <span
+          onClick={() => setFilterOpen(true)}
+          className="md:hidden text-gray-400"
+        >
+          <RenderIcon iconName="FilterIcon" size={20} loading={6} />
+        </span>
+
+        <FilterWrapper filterOpen={filterOpen} setFilterOpen={setFilterOpen}>
+          <MerchantPayoutFilters
+            currentValue={filter}
+            geofenceOptions={geofenceOptions}
+            merchantOptions={merchantOptions}
+            onFilterChange={handleFilterChange}
+          />
+        </FilterWrapper>
       </div>
 
       <AllMerchantPayoutTable filter={filter} />

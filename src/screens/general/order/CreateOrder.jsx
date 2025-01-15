@@ -59,7 +59,7 @@ const CreateOrder = () => {
   };
 
   return (
-    <div className="bg-gray-100 h-full">
+    <div className="bg-gray-100 min-h-full min-w-full">
       <GlobalSearch />
 
       <div className="flex items-center justify-start mt-[10px] ms-[20px]">
@@ -75,16 +75,17 @@ const CreateOrder = () => {
 
           <div>
             <div className="flex">
-              <label className="w-1/3"></label>
+              <label className="md:w-1/3"></label>
               <button
                 type="button"
-                className="w-1/2 bg-gray-200 font-semibold py-2 rounded flex justify-between items-center px-4 border border-gray-300"
+                className="w-full md:w-1/2 bg-gray-200 font-semibold py-2 rounded flex justify-between items-center px-4 border border-gray-300"
                 onClick={toggleNewCustomerForm}
               >
                 <span>Add Customer</span>
                 <RenderIcon iconName="PlusIcon" size={20} loading={6} />
               </button>
             </div>
+
             {isFormVisible && (
               <NewCustomerForm
                 toggleNewCustomerForm={toggleNewCustomerForm}

@@ -32,7 +32,7 @@ const MerchantPayoutDetail = () => {
         <h3 className="font-[600] text-[18px]">Merchant Payout Detail</h3>
       </div>
 
-      <div className="mt-[20px] w-full">
+      <div className="mt-[20px] w-full overflow-x-auto">
         <Table.Root striped interactive stickyHeader>
           <Table.Header>
             <Table.Row className="bg-teal-700 h-14">

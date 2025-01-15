@@ -96,8 +96,8 @@ const TakeAway = ({ data }) => {
           )}
 
           <div className="flex items-center relative">
-            <label className="w-1/3 px-6 invisible"></label>
-            <div className="w-1/2 flex items-center gap-5 overflow-x-auto">
+            <label className="md:w-1/3 px-6 hidden md:block invisible"></label>
+            <div className="w-full md:w-1/2 flex items-center gap-5 overflow-x-auto">
               {businessCategories?.map((category) => (
                 <button
                   key={category._id}
@@ -124,9 +124,9 @@ const TakeAway = ({ data }) => {
           />
 
           {role === "Admin" && (
-            <div className="flex items-start">
+            <div className="flex flex-col md:flex-row md:items-start gap-[20px] md:gap-0">
               <label
-                className="w-1/3 px-6 text-gray-500 text-[16px]"
+                className="md:w-1/3 md:px-6 text-gray-500 text-[16px]"
                 htmlFor="instructionToMerchant"
               >
                 Instruction to Merchant
@@ -136,7 +136,7 @@ const TakeAway = ({ data }) => {
                 name="instructionToMerchant"
                 id="instructionToMerchant"
                 placeholder="Instruction to Merchant"
-                className="h-20 text-sm ps-3 pt-2 border-2 w-1/2 outline-none focus:outline-none resize-y overflow-y-auto"
+                className="h-20 text-sm ps-3 pt-2 border-2 md:w-1/2 outline-none focus:outline-none resize-y overflow-y-auto"
                 value={takeAwayData.instructionToMerchant}
                 onChange={(e) =>
                   setTakeAwayData({
