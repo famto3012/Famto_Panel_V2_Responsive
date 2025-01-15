@@ -7,6 +7,7 @@ import AuthContext from "@/context/AuthContext";
 import RenderIcon from "@/icons/RenderIcon";
 
 import { signInHandler } from "@/hooks/auth/useAuth";
+import { SocketContext } from "@/context/SocketContext";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
@@ -25,6 +26,7 @@ const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const { saveToStorage } = useContext(AuthContext);
+  const { setUserId } = useContext(SocketContext);
   const navigate = useNavigate();
 
   const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
@@ -37,6 +39,7 @@ const SignIn = () => {
     mutationFn: () => signInHandler(formData),
     onSuccess: ({ token, role, _id, fullName, refreshToken }) => {
       saveToStorage(token, role, _id, fullName, undefined, refreshToken);
+      setUserId(_id);
       navigate("/home");
     },
     onError: (err) => {

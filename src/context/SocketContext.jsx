@@ -24,6 +24,11 @@ export const SocketProvider = ({ children }) => {
 
   const [socket, setSocket] = useState(null);
 
+  const updateFcmToken = (token) => {
+    encryptStorage.setItem("fcmToken", token);
+    setFcmToken(token);
+  };
+
   useEffect(() => {
     if (userId && fcmToken) {
       const newSocket = io("http://localhost:8080", {
@@ -58,7 +63,7 @@ export const SocketProvider = ({ children }) => {
   }, [userId, fcmToken]);
 
   return (
-    <SocketContext.Provider value={{ socket }}>
+    <SocketContext.Provider value={{ socket, updateFcmToken, setUserId }}>
       {children}
     </SocketContext.Provider>
   );
