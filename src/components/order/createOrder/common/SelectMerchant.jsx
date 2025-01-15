@@ -40,14 +40,15 @@ const SelectMerchant = ({ onMerchantSelect }) => {
   };
 
   return (
-    <div className="flex items-center relative">
+    <div className="flex flex-col md:flex-row md:items-center relative gap-[20px] md:gap-0">
       <label
-        className="w-1/3 px-6 text-gray-500 text-[16px]"
+        className="md:w-1/3 md:px-6 text-gray-500 text-[16px]"
         htmlFor="merchant"
       >
         Select Merchant
       </label>
-      <div className="relative w-1/2">
+
+      <div className="relative md:w-1/2">
         <input
           type="text"
           name="merchantName"

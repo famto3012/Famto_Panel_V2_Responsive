@@ -32,6 +32,8 @@ import {
 import { getAllGeofence } from "@/hooks/geofence/useGeofence";
 
 import ApproveAgentPayout from "@/models/general/agent/ApproveAgentPayout";
+import FilterWrapper from "@/components/SideFilters/FilterWrapper";
+import AgentPayoutFilters from "@/components/SideFilters/AgentPayoutFilters";
 
 const AgentPayout = () => {
   const [filter, setFilter] = useState({
@@ -48,6 +50,7 @@ const AgentPayout = () => {
     agentId: null,
     detailId: null,
   });
+  const [filterOpen, setFilterOpen] = useState(false);
 
   const limit = 50;
 
@@ -177,6 +180,10 @@ const AgentPayout = () => {
     setShowModal(false);
   };
 
+  const handleFilterChange = (type, value) => {
+    setFilter({ ...filter, [type]: value });
+  };
+
   const isLoading = agentLoading || geofenceLoading || payoutLoading;
   const isError = agentError || geofenceError || payoutError;
 
@@ -202,8 +209,8 @@ const AgentPayout = () => {
         </Button>
       </div>
 
-      <div className="flex items-center bg-white p-5 mx-5 rounded-lg justify-between mt-[20px] px-[30px]">
-        <div className="flex items-center gap-[20px]">
+      <div className="flex items-center bg-white p-5 mx-5 rounded-lg justify-between mt-[20px] md:px-[30px]">
+        <div className="hidden md:flex items-center gap-[20px]">
           <Select
             options={payoutPaymentStatus}
             value={payoutPaymentStatus?.find(
@@ -270,7 +277,7 @@ const AgentPayout = () => {
         </div>
 
         <div className="flex items-center gap-4">
-          <div className="relative flex items-center">
+          <div className="relative hidden md:flex items-center">
             {filter.date && (
               <span
                 onClick={() => setFilter({ ...filter, date: null })}
@@ -305,85 +312,104 @@ const AgentPayout = () => {
             />
           </div>
         </div>
+
+        <span onClick={() => setFilterOpen(true)} className=" text-gray-400">
+          <RenderIcon iconName="FilterIcon" size={20} loading={6} />
+        </span>
+
+        <FilterWrapper filterOpen={filterOpen} setFilterOpen={setFilterOpen}>
+          <AgentPayoutFilters
+            currentValue={filter}
+            agentOptions={agentOptions}
+            geofenceOptions={geofenceOptions}
+            onFilterChange={handleFilterChange}
+          />
+        </FilterWrapper>
       </div>
 
-      <Table.Root className="mt-5 z-10">
-        <Table.Header>
-          <Table.Row className="bg-teal-700 h-14">
-            {[
-              "Agent ID",
-              "Name",
-              "Phone",
-              "Worked Date",
-              "Orders",
-              "Cancelled orders",
-              "Total distance",
-              "Login Hours",
-              "CIH",
-              "Total Earnings",
-              "Calculated Earning",
-              "Status Approval",
-            ].map((header, idx) => (
-              <Table.ColumnHeader key={idx} color="white" textAlign="center">
-                {header}
-              </Table.ColumnHeader>
-            ))}
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {isLoading ? (
-            <Table.Row className="h-[70px]">
-              <Table.Cell colSpan={12} textAlign="center">
-                <ShowSpinner /> Loading...
-              </Table.Cell>
+      <div className=" overflow-x-auto">
+        <Table.Root className="mt-5 z-10">
+          <Table.Header>
+            <Table.Row className="bg-teal-700 h-14">
+              {[
+                "Agent ID",
+                "Name",
+                "Phone",
+                "Worked Date",
+                "Orders",
+                "Cancelled orders",
+                "Total distance",
+                "Login Hours",
+                "CIH",
+                "Total Earnings",
+                "Calculated Earning",
+                "Status Approval",
+              ].map((header, idx) => (
+                <Table.ColumnHeader key={idx} color="white" textAlign="center">
+                  {header}
+                </Table.ColumnHeader>
+              ))}
             </Table.Row>
-          ) : isError ? (
-            <Table.Row className="h-[70px]">
-              <Table.Cell colSpan={12} textAlign="center">
-                <Error />
-              </Table.Cell>
-            </Table.Row>
-          ) : payoutData?.data?.length === 0 ? (
-            <Table.Row className="h-[70px]">
-              <Table.Cell colSpan={12} textAlign="center">
-                No Data Available
-              </Table.Cell>
-            </Table.Row>
-          ) : (
-            payoutData?.data?.map((data) => (
-              <Table.Row key={data.detailId} className={`h-[70px]`}>
-                <Table.Cell textAlign="center">{data.agentId}</Table.Cell>
-                <Table.Cell textAlign="center">{data.fullName}</Table.Cell>
-                <Table.Cell textAlign="center">{data.phoneNumber}</Table.Cell>
-                <Table.Cell textAlign="center">{data.workedDate}</Table.Cell>
-                <Table.Cell textAlign="center">{data.orders}</Table.Cell>
-                <Table.Cell textAlign="center">
-                  {data.cancelledOrders}
-                </Table.Cell>
-                <Table.Cell textAlign="center">{data.totalDistance}</Table.Cell>
-                <Table.Cell textAlign="center">{data.loginHours}</Table.Cell>
-                <Table.Cell textAlign="center">{data.cashInHand}</Table.Cell>
-                <Table.Cell textAlign="center">{data.totalEarnings}</Table.Cell>
-                <Table.Cell textAlign="center">
-                  {data.calculatedEarnings}
-                </Table.Cell>
-                <Table.Cell textAlign="center">
-                  {data.paymentSettled ? (
-                    <p className="text-green-500 font-[500]">Approved</p>
-                  ) : (
-                    <Button
-                      onClick={() => toggleModal(data.agentId, data.detailId)}
-                      className="bg-teal-700 text-white p-3"
-                    >
-                      Approve
-                    </Button>
-                  )}
+          </Table.Header>
+          <Table.Body>
+            {isLoading ? (
+              <Table.Row className="h-[70px]">
+                <Table.Cell colSpan={12} textAlign="center">
+                  <ShowSpinner /> Loading...
                 </Table.Cell>
               </Table.Row>
-            ))
-          )}
-        </Table.Body>
-      </Table.Root>
+            ) : isError ? (
+              <Table.Row className="h-[70px]">
+                <Table.Cell colSpan={12} textAlign="center">
+                  <Error />
+                </Table.Cell>
+              </Table.Row>
+            ) : payoutData?.data?.length === 0 ? (
+              <Table.Row className="h-[70px]">
+                <Table.Cell colSpan={12} textAlign="center">
+                  No Data Available
+                </Table.Cell>
+              </Table.Row>
+            ) : (
+              payoutData?.data?.map((data) => (
+                <Table.Row key={data.detailId} className={`h-[70px]`}>
+                  <Table.Cell textAlign="center">{data.agentId}</Table.Cell>
+                  <Table.Cell textAlign="center">{data.fullName}</Table.Cell>
+                  <Table.Cell textAlign="center">{data.phoneNumber}</Table.Cell>
+                  <Table.Cell textAlign="center">{data.workedDate}</Table.Cell>
+                  <Table.Cell textAlign="center">{data.orders}</Table.Cell>
+                  <Table.Cell textAlign="center">
+                    {data.cancelledOrders}
+                  </Table.Cell>
+                  <Table.Cell textAlign="center">
+                    {data.totalDistance}
+                  </Table.Cell>
+                  <Table.Cell textAlign="center">{data.loginHours}</Table.Cell>
+                  <Table.Cell textAlign="center">{data.cashInHand}</Table.Cell>
+                  <Table.Cell textAlign="center">
+                    {data.totalEarnings}
+                  </Table.Cell>
+                  <Table.Cell textAlign="center">
+                    {data.calculatedEarnings}
+                  </Table.Cell>
+                  <Table.Cell textAlign="center">
+                    {data.paymentSettled ? (
+                      <p className="text-green-500 font-[500]">Approved</p>
+                    ) : (
+                      <Button
+                        onClick={() => toggleModal(data.agentId, data.detailId)}
+                        className="bg-teal-700 text-white p-3"
+                      >
+                        Approve
+                      </Button>
+                    )}
+                  </Table.Cell>
+                </Table.Row>
+              ))
+            )}
+          </Table.Body>
+        </Table.Root>
+      </div>
 
       {payoutData?.total && (
         <PaginationRoot

@@ -108,8 +108,8 @@ const AddAddressForm = ({ onAddCustomerAddress }) => {
 
   return (
     <div className="flex mt-5">
-      <label className="w-1/3"></label>
-      <div className="mt-6 p-6 bg-gray-200 rounded-lg shadow-lg w-1/2">
+      <label className="hidden md:block w-1/3"></label>
+      <div className="mt-6 p-6 bg-gray-200 rounded-lg shadow-lg md:w-1/2">
         <div className="flex flex-col gap-3">
           <div className="flex flex-row space-x-2 justify-around">
             {["home", "work", "other"].map((button) => (

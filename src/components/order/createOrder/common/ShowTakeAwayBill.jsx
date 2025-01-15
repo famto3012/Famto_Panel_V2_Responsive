@@ -94,19 +94,20 @@ const ShowTakeAwayBill = ({ data }) => {
 
   return (
     <>
-      <div className="flex my-5">
-        <h1 className="px-6 w-1/3 font-semibold">Payment mode</h1>
+      <div className="flex flex-col md:flex-row my-5 gap-[20px] md:gap-0">
+        <h1 className="md:px-6 md:w-1/3 font-semibold">Payment mode</h1>
 
-        <div className=" w-1/2">
+        <div className=" md:w-1/2">
           <p className="border-2 p-3 rounded-md text-[16px] font-[500]">
             Online Payment
           </p>
         </div>
       </div>
 
-      <div className="flex mt-5">
-        <h1 className="px-6 w-1/3 font-semibold">Bill Summary</h1>
-        <div className="overflow-auto w-1/2">
+      <div className="flex flex-col md:flex-row mt-5 gap-[20px] md:gap-0">
+        <h1 className="md:px-6 md:w-1/3 font-semibold">Bill Summary</h1>
+
+        <div className="overflow-auto md:w-1/2">
           <table className="border-2 border-teal-700 w-full text-left ">
             <thead>
               <tr>

@@ -97,12 +97,12 @@ const AddressSelection = ({
   return (
     <>
       {address?.length > 0 && (
-        <div className="flex items-start mb-5">
-          <label className="w-1/3 px-6" htmlFor="address">
+        <div className="flex flex-col md:flex-row md:items-start mb-5 gap-[20px] md:gap-0 w-full">
+          <label className="md:w-1/3 md:px-6" htmlFor="address">
             {label}
           </label>
 
-          <div className="w-2/3">
+          <div className="md:w-2/3 overflow-x-auto">
             {address?.map((address, index) => (
               <input
                 key={index}
@@ -148,7 +148,7 @@ const AddressSelection = ({
       )}
 
       {selectedAddress.type === "home" && (
-        <div className="px-6 py-2 border-2 rounded-md ms-[33%] bg-gray-100 w-fit">
+        <div className="px-6 py-2 border-2 rounded-md md:ms-[33%] bg-gray-100 w-fit">
           {address.find((addr) => addr.type === "home")?.homeAddress && (
             <div className="flex flex-col gap-1">
               <span>
@@ -169,7 +169,7 @@ const AddressSelection = ({
       )}
 
       {selectedAddress.type === "work" && (
-        <div className="px-6 py-2 border-2 rounded-md ms-[33%] bg-gray-100 w-fit">
+        <div className="px-6 py-2 border-2 rounded-md md:ms-[33%] bg-gray-100 w-fit">
           {address?.find((addr) => addr.type === "work")?.workAddress && (
             <div className="flex flex-col gap-1">
               <span>

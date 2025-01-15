@@ -86,8 +86,8 @@ const DeliveryModeAndOption = ({ onDataChange }) => {
 
   return (
     <>
-      <div className="flex items-center mt-1">
-        <label className="w-1/3 px-6 text-[16px] text-gray-600">
+      <div className="flex flex-col md:flex-row md:items-center mt-1 gap-[20px] md:gap-0">
+        <label className="md:w-1/3 md:px-6 text-[16px] text-gray-600">
           Select Delivery Option
         </label>
 
@@ -115,8 +115,8 @@ const DeliveryModeAndOption = ({ onDataChange }) => {
       </div>
 
       {formData?.deliveryOption === "Scheduled" && (
-        <div className="flex items-center">
-          <label className="w-1/3 px-6 text-gray-700 invisible">
+        <div className="flex md:items-center justify-start">
+          <label className="md:w-1/3 px-6 text-gray-700 hidden md:block invisible">
             Select Delivery Date and time
           </label>
 
@@ -154,12 +154,12 @@ const DeliveryModeAndOption = ({ onDataChange }) => {
         </div>
       )}
 
-      <div className="flex items-center mt-2">
-        <label className="w-1/3 px-6 text-[16px] text-gray-600">
+      <div className="flex flex-col md:flex-row md:items-center mt-2 gap-[20px] md:gap-0 w-full">
+        <label className="md:w-1/3 md:px-6 text-[16px] text-gray-600">
           Select Delivery Mode
         </label>
 
-        <div className="flex items-center space-x-2 w-2/3 gap-3">
+        <div className="flex items-center space-x-2 md:w-2/3 gap-3 overflow-auto">
           <RadioGroup
             value={formData?.deliveryMode}
             size="sm"

@@ -96,8 +96,8 @@ const ShowBill = ({ data }) => {
 
   return (
     <>
-      <div className="flex items-center">
-        <label className="w-1/3 px-6" htmlFor="paymentType">
+      <div className="flex flex-col md:flex-row md:items-start gap-[20px] md:gap-0">
+        <label className="md:w-1/3 md:px-6" htmlFor="paymentType">
           Payment Types
         </label>
 
@@ -109,15 +109,15 @@ const ShowBill = ({ data }) => {
           onChange={(option) =>
             setFormData({ ...formData, paymentMode: option.value })
           }
-          className="w-1/2 outline-none focus:outline-none "
+          className="md:w-1/2 outline-none focus:outline-none "
           placeholder="Select payment mode"
           menuPlacement="auto"
         />
       </div>
 
-      <div className="flex mt-5">
-        <h1 className="px-6 w-1/3 font-semibold">Bill Summary</h1>
-        <div className="overflow-auto w-1/2">
+      <div className="flex flex-col md:flex-row md:items-start gap-[20px] md:gap-0 mt-5">
+        <h1 className="md:px-6 md:w-1/3 font-semibold">Bill Summary</h1>
+        <div className="overflow-auto md:w-1/2">
           <table className="border-2 border-teal-700 w-full text-left ">
             <thead>
               <tr>
