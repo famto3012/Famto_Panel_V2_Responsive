@@ -60,7 +60,7 @@ const AllOrders = () => {
   const { data: allMerchants } = useQuery({
     queryKey: ["merchant-dropdown"],
     queryFn: () => fetchMerchantsForDropDown(navigate),
-    enabled: role && role === "Admin",
+    enabled: role ? role === "Admin" : false,
   });
 
   const merchantOptions = [
