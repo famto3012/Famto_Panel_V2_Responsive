@@ -436,7 +436,7 @@ const AgentDetail = () => {
 
       <h1 className="font-semibold text-[18px] ml-5 my-5">Work Structure</h1>
 
-      <div className="mb-[100px] overflow-x-auto">
+      <div className="overflow-x-auto">
         <Table.Root>
           <Table.Header>
             <Table.Row className="bg-teal-700 h-14">
@@ -466,6 +466,35 @@ const AgentDetail = () => {
                 {data?.workStructure?.tag}
               </Table.Cell>
             </Table.Row>
+          </Table.Body>
+        </Table.Root>
+      </div>
+
+      <h1 className="font-semibold text-[18px] ml-5 my-5">Agent Activity</h1>
+
+      <div className="mb-[100px] overflow-auto max-h-[30rem]">
+        <Table.Root>
+          <Table.Header>
+            <Table.Row className="bg-teal-700 h-14">
+              {["Date", "Time", "Description"].map((header, index) => (
+                <Table.ColumnHeader
+                  key={index}
+                  color="white"
+                  textAlign="center"
+                >
+                  {header}
+                </Table.ColumnHeader>
+              ))}
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {data?.activityLog?.map((log) => (
+              <Table.Row className={`h-[70px]`}>
+                <Table.Cell textAlign="center">{log.date}</Table.Cell>
+                <Table.Cell textAlign="center">{log.time}</Table.Cell>
+                <Table.Cell textAlign="center">{log.description}</Table.Cell>
+              </Table.Row>
+            ))}
           </Table.Body>
         </Table.Root>
       </div>

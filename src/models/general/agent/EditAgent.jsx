@@ -26,7 +26,10 @@ import CropImage from "@/components/others/CropImage";
 import { fetchAllManagers } from "@/hooks/manager/useManager";
 import { getAllGeofence } from "@/hooks/geofence/useGeofence";
 import { fetchAllAgentPricing } from "@/hooks/pricing/useAgentPricing";
-import { updateAgentDetail } from "@/hooks/agent/useAgent";
+import {
+  fetchAgentAppTimings,
+  updateAgentDetail,
+} from "@/hooks/agent/useAgent";
 
 const EditAgent = ({ isOpen, onClose, data }) => {
   const [formData, setFormData] = useState({});
@@ -84,6 +87,16 @@ const EditAgent = ({ isOpen, onClose, data }) => {
     enabled: isOpen,
   });
 
+  const {
+    data: appTimings,
+    isLoading: appTimingsLoading,
+    isError: appTimingsError,
+  } = useQuery({
+    queryKey: ["agent-app-timings"],
+    queryFn: () => fetchAgentAppTimings(navigate),
+    enabled: isOpen,
+  });
+
   const geofenceOptions = allGeofence?.map((geofence) => ({
     label: geofence.name,
     value: geofence._id,
@@ -97,6 +110,11 @@ const EditAgent = ({ isOpen, onClose, data }) => {
   const pricingOptions = allPricing?.map((pricing) => ({
     label: pricing.ruleName,
     value: pricing._id,
+  }));
+
+  const timingOptions = appTimings?.map((timing) => ({
+    label: `${timing.startTime} - ${timing.endTime}`,
+    value: timing.id,
   }));
 
   const handleInputChange = (e, index) => {
@@ -228,8 +246,10 @@ const EditAgent = ({ isOpen, onClose, data }) => {
     });
   };
 
-  const isLoading = managerLoading || geofenceLoading || pricingLoading;
-  const isError = managerError || geofenceError || pricingError;
+  const isLoading =
+    managerLoading || geofenceLoading || pricingLoading || appTimingsLoading;
+  const isError =
+    managerError || geofenceError || pricingError || appTimingsError;
 
   return (
     <DialogRoot
@@ -611,6 +631,46 @@ const EditAgent = ({ isOpen, onClose, data }) => {
                   placeholder="Select geofence"
                   isSearchable={true}
                   isMulti={false}
+                  styles={{
+                    control: (provided) => ({
+                      ...provided,
+                      paddingRight: "",
+                    }),
+                    dropdownIndicator: (provided) => ({
+                      ...provided,
+                      padding: "10px",
+                    }),
+                  }}
+                />
+              </div>
+
+              <div className="flex items-center mt-5 gap-4">
+                <label className="w-1/2 text-gray-500" htmlFor="geofenceId">
+                  Timings <span className="text-red-600">*</span>
+                </label>
+
+                <Select
+                  options={timingOptions}
+                  value={timingOptions?.filter((option) =>
+                    formData?.workStructure?.workTimings?.includes(option.value)
+                  )}
+                  onChange={(selectedOptions) => {
+                    const updatedWorkTimings =
+                      selectedOptions?.map((option) => option.value) || [];
+
+                    console.log("new: ", updatedWorkTimings);
+
+                    setFormData({
+                      ...formData,
+                      workStructure: {
+                        ...formData.workStructure,
+                        workTimings: updatedWorkTimings,
+                      },
+                    });
+                  }}
+                  className="rounded focus:outline-none w-full"
+                  placeholder="Select timing"
+                  isMulti
                   styles={{
                     control: (provided) => ({
                       ...provided,

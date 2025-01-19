@@ -246,3 +246,14 @@ export const downloadAgentCSV = async (filter, navigate) => {
     throw err.response?.data?.message || "Failed to download agent payout CSV";
   }
 };
+
+export const fetchAgentAppTimings = async (navigate) => {
+  try {
+    const api = useApiClient(navigate);
+    const res = await api.get(`/admin/app-customization/agent-app-timing`);
+
+    return res.status === 200 ? res.data : [];
+  } catch (err) {
+    throw err.response?.data?.message || "Failed to fetch agent app timings";
+  }
+};
