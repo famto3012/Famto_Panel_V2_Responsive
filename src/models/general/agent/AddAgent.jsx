@@ -24,7 +24,7 @@ import Error from "@/components/others/Error";
 import { fetchAllManagers } from "@/hooks/manager/useManager";
 import { getAllGeofence } from "@/hooks/geofence/useGeofence";
 import { fetchAllAgentPricing } from "@/hooks/pricing/useAgentPricing";
-import { createNewAgent } from "@/hooks/agent/useAgent";
+import { createNewAgent, fetchAgentAppTimings } from "@/hooks/agent/useAgent";
 import CropImage from "@/components/others/CropImage";
 import { Button } from "@/components/ui/button";
 
@@ -46,6 +46,7 @@ const AddAgent = ({ isOpen, onClose }) => {
     type: "",
     licensePlate: "",
     drivingLicenseNumber: "",
+    workTimings: [],
   });
   const [croppedFile, setCroppedFile] = useState({
     agent: null,
@@ -98,6 +99,16 @@ const AddAgent = ({ isOpen, onClose }) => {
   } = useQuery({
     queryKey: ["all-agent-pricing"],
     queryFn: () => fetchAllAgentPricing(navigate),
+    enabled: isOpen,
+  });
+
+  const {
+    data: appTimings,
+    isLoading: appTimingsLoading,
+    isError: appTimingsError,
+  } = useQuery({
+    queryKey: ["agent-app-timings"],
+    queryFn: () => fetchAgentAppTimings(navigate),
     enabled: isOpen,
   });
 
@@ -213,6 +224,11 @@ const AddAgent = ({ isOpen, onClose }) => {
     value: pricing._id,
   }));
 
+  const timingOptions = appTimings?.map((timing) => ({
+    label: `${timing.startTime} - ${timing.endTime}`,
+    value: timing.id,
+  }));
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -243,8 +259,10 @@ const AddAgent = ({ isOpen, onClose }) => {
     setShowCrop(false);
   };
 
-  const isLoading = managerLoading || geofenceLoading || pricingLoading;
-  const isError = managerError || geofenceError || pricingError;
+  const isLoading =
+    managerLoading || geofenceLoading || pricingLoading || appTimingsLoading;
+  const isError =
+    managerError || geofenceError || pricingError || appTimingsError;
 
   return (
     <DialogRoot
@@ -760,6 +778,40 @@ const AddAgent = ({ isOpen, onClose }) => {
                   placeholder="Select geofence"
                   isSearchable={true}
                   isMulti={false}
+                  styles={{
+                    control: (provided) => ({
+                      ...provided,
+                      paddingRight: "",
+                    }),
+                    dropdownIndicator: (provided) => ({
+                      ...provided,
+                      padding: "10px",
+                    }),
+                  }}
+                />
+              </div>
+
+              <div className="flex items-center mt-5 gap-4">
+                <label className="w-1/2 text-gray-500" htmlFor="geofenceId">
+                  Timings <span className="text-red-600">*</span>
+                </label>
+
+                <Select
+                  options={timingOptions}
+                  value={timingOptions?.filter((option) =>
+                    formData.workTimings?.includes(option.value)
+                  )}
+                  onChange={(selectedOptions) => {
+                    const updatedWorkTimings =
+                      selectedOptions?.map((option) => option.value) || [];
+                    setFormData({
+                      ...formData,
+                      workTimings: updatedWorkTimings,
+                    });
+                  }}
+                  className="rounded focus:outline-none w-full"
+                  placeholder="Select timing"
+                  isMulti
                   styles={{
                     control: (provided) => ({
                       ...provided,
