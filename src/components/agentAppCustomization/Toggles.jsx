@@ -32,7 +32,7 @@ const Toggles = () => {
     loginViaGoogle: false,
     loginViaApple: false,
     loginViaFacebook: false,
-    workingTime: [{ startTime: "", endTime: "" }],
+    workingTime: [],
   });
   const [time, setTime] = useState({
     startTime: "",
@@ -81,34 +81,37 @@ const Toggles = () => {
   const handleSave = () => {
     const formDataObject = new FormData();
 
-    // Iterate through formData and append each key-value pair to the formDataObject
     Object.keys(formData).forEach((key) => {
       if (Array.isArray(formData[key])) {
-        // If the key's value is an array (e.g., workingTime), append each object in the array as a separate entry
-        formData[key].forEach((item, index) => {
-          // Check if the item is an object (e.g., workingTime object)
-          if (typeof item === "object" && item !== null) {
+        // Ensure empty arrays are sent as JSON strings
+        if (formData[key].length === 0) {
+          formDataObject.append(key, JSON.stringify([]));
+        } else {
+          formData[key].forEach((item, index) => {
             Object.keys(item).forEach((nestedKey) => {
               formDataObject.append(
-                `${key}[${index}][${nestedKey}]`, // Nested field structure: key[index][nestedKey]
+                `${key}[${index}][${nestedKey}]`,
                 item[nestedKey]
               );
             });
-          }
-        });
+          });
+        }
       } else {
-        // Otherwise, append the key-value pair directly
         formDataObject.append(key, formData[key]);
       }
     });
 
-    // Correctly append the cropped file
     if (croppedFile) {
       formDataObject.append("splashScreenImage", croppedFile);
     }
 
-    // Send the form data
+    // Log for debugging
+    for (let [key, value] of formDataObject.entries()) {
+      console.log(key, value);
+    }
+
     handleUpdateMutation.mutate(formDataObject);
+
     setActiveTimeSlot(null);
   };
 
@@ -124,8 +127,6 @@ const Toggles = () => {
 
     const startTime = time.startTime;
     const endTime = time.endTime;
-    console.log("Start time: ", time.startTime);
-    console.log("End time: ", time.endTime);
 
     // Validation: Start time and end time should not be the same
     if (startTime === endTime) {
@@ -223,6 +224,7 @@ const Toggles = () => {
       ),
     }));
   };
+
   const onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
@@ -325,7 +327,7 @@ const Toggles = () => {
         </div>
       </div>
 
-      <div className="flex flex-col mx-5 mt-5">
+      <div className="flex flex-col md:flex-row mx-5 mt-5">
         <div className="w-full lg:w-1/5 mb-5 lg:mb-0">
           Sign up and Sign in Settings
         </div>
@@ -508,122 +510,127 @@ const Toggles = () => {
         </Button>
       </div>
 
-      <h4 className="text-[17px] text-gray-700 ml-[20px] lg:ml-[250px] mt-3">
-        Time slots
-      </h4>
+      <div className="flex flex-col md:flex-row items-start mt-5 mx-[20px] md:mx-0 gap-[20px] md:gap-0">
+        <h4 className="text-[17px] text-gray-700 lg:w-1/5 md:ms-[20px]">
+          Time slots
+        </h4>
 
-      <div className="mt-5 flex flex-wrap gap-2 lg:w-[35%] ml-[20px] lg:ml-[250px]">
-        {formData?.workingTime?.map((timeSlot) => (
-          <Tag
-            key={timeSlot?._id}
-            rounded="full"
-            size="xl"
-            startElement={
-              <span onClick={() => setActiveTimeSlot(timeSlot)}>
-                <RenderIcon iconName="ActivityIcon" size={24} loading={6} />
-              </span>
-            }
-            className="bg-white"
-            closable
-            onClose={() => handleRemoveTimeSlot(timeSlot?._id)}
-          >
-            {`${formatTime(timeSlot?.startTime) || "N/A"} - ${formatTime(timeSlot?.endTime) || "N/A"}`}
-          </Tag>
-        ))}
-      </div>
-      {activeTimeSlot && (
-        <div className="flex mt-5 w-[35%] ml-[250px]">
-          <DatePicker
-            selected={
-              activeTimeSlot?.startTime
-                ? new Date(`1970-01-01T${activeTimeSlot.startTime}`)
-                : null
-            }
-            onChange={(time) => {
-              if (time) {
-                const formattedTime = time.toLocaleTimeString("en-CA", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  hour12: false,
-                });
-
-                // Update the startTime of the active time slot in formData
-                setFormData((prev) => {
-                  const updatedWorkingTime = prev.workingTime.map((slot) =>
-                    slot._id === activeTimeSlot._id
-                      ? { ...slot, startTime: formattedTime }
-                      : slot
-                  );
-
-                  // Ensure activeTimeSlot is updated as well
-                  setActiveTimeSlot((prevSlot) =>
-                    prevSlot?._id === activeTimeSlot._id
-                      ? { ...prevSlot, startTime: formattedTime }
-                      : prevSlot
-                  );
-
-                  return { ...prev, workingTime: updatedWorkingTime };
-                });
+        <div className="flex flex-wrap gap-x-2 md:ms-[-20px] lg:w-4/5 ">
+          {formData?.workingTime?.map((timeSlot) => (
+            <Tag
+              key={timeSlot?._id}
+              size="xl"
+              startElement={
+                <span onClick={() => setActiveTimeSlot(timeSlot)}>
+                  <RenderIcon iconName="ActivityIcon" size={24} loading={6} />
+                </span>
               }
-            }}
-            showTimeSelect
-            showTimeSelectOnly
-            timeIntervals={15}
-            timeCaption="Start Time"
-            dateFormat="h:mm aa"
-            placeholderText="Start Time"
-            className="border-2 p-2 rounded-lg"
-          />
-
-          <DatePicker
-            selected={
-              activeTimeSlot?.endTime
-                ? new Date(`1970-01-01T${activeTimeSlot.endTime}`) // Ensure it handles endTime correctly
-                : null
-            }
-            onChange={(time) => {
-              if (time) {
-                const formattedTime = time.toLocaleTimeString("en-CA", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  hour12: false,
-                });
-
-                // Update the endTime of the active time slot in formData and also update activeTimeSlot
-                setFormData((prev) => {
-                  const updatedWorkingTime = prev.workingTime.map((slot) =>
-                    slot._id === activeTimeSlot._id
-                      ? { ...slot, endTime: formattedTime }
-                      : slot
-                  );
-
-                  // Ensure activeTimeSlot is updated as well
-                  setActiveTimeSlot((prevSlot) =>
-                    prevSlot?._id === activeTimeSlot._id
-                      ? { ...prevSlot, endTime: formattedTime }
-                      : prevSlot
-                  );
-
-                  return { ...prev, workingTime: updatedWorkingTime };
-                });
-              }
-            }}
-            showTimeSelect
-            showTimeSelectOnly
-            timeIntervals={15}
-            timeCaption="End Time"
-            dateFormat="h:mm aa"
-            placeholderText="End Time"
-            className="border-2 p-2 rounded-lg ml-5"
-          />
-          <Button
-            className="bg-red-500 rounded-lg text-white font-semibold ml-5"
-            onClick={() => setActiveTimeSlot(null)}
-          >
-            <RenderIcon iconName="CancelIcon" size={24} loading={6} />
-          </Button>
+              className="bg-white p-3"
+              closable
+              onClose={() => handleRemoveTimeSlot(timeSlot?._id)}
+            >
+              {`${formatTime(timeSlot?.startTime) || "N/A"} - ${formatTime(timeSlot?.endTime) || "N/A"}`}
+            </Tag>
+          ))}
         </div>
-      )}
+      </div>
+
+      <div className="flex flex-col md:flex-row mx-[20px] md:mx-0">
+        <div className="w-1/5" />
+        {activeTimeSlot && (
+          <div className="flex mt-5">
+            <DatePicker
+              selected={
+                activeTimeSlot?.startTime
+                  ? new Date(`1970-01-01T${activeTimeSlot.startTime}`)
+                  : null
+              }
+              onChange={(time) => {
+                if (time) {
+                  const formattedTime = time.toLocaleTimeString("en-CA", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    hour12: false,
+                  });
+
+                  // Update the startTime of the active time slot in formData
+                  setFormData((prev) => {
+                    const updatedWorkingTime = prev.workingTime.map((slot) =>
+                      slot._id === activeTimeSlot._id
+                        ? { ...slot, startTime: formattedTime }
+                        : slot
+                    );
+
+                    // Ensure activeTimeSlot is updated as well
+                    setActiveTimeSlot((prevSlot) =>
+                      prevSlot?._id === activeTimeSlot._id
+                        ? { ...prevSlot, startTime: formattedTime }
+                        : prevSlot
+                    );
+
+                    return { ...prev, workingTime: updatedWorkingTime };
+                  });
+                }
+              }}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={15}
+              timeCaption="Start Time"
+              dateFormat="h:mm aa"
+              placeholderText="Start Time"
+              className="border-2 p-2 rounded-lg"
+            />
+
+            <DatePicker
+              selected={
+                activeTimeSlot?.endTime
+                  ? new Date(`1970-01-01T${activeTimeSlot.endTime}`) // Ensure it handles endTime correctly
+                  : null
+              }
+              onChange={(time) => {
+                if (time) {
+                  const formattedTime = time.toLocaleTimeString("en-CA", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    hour12: false,
+                  });
+
+                  // Update the endTime of the active time slot in formData and also update activeTimeSlot
+                  setFormData((prev) => {
+                    const updatedWorkingTime = prev.workingTime.map((slot) =>
+                      slot._id === activeTimeSlot._id
+                        ? { ...slot, endTime: formattedTime }
+                        : slot
+                    );
+
+                    // Ensure activeTimeSlot is updated as well
+                    setActiveTimeSlot((prevSlot) =>
+                      prevSlot?._id === activeTimeSlot._id
+                        ? { ...prevSlot, endTime: formattedTime }
+                        : prevSlot
+                    );
+
+                    return { ...prev, workingTime: updatedWorkingTime };
+                  });
+                }
+              }}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={15}
+              timeCaption="End Time"
+              dateFormat="h:mm aa"
+              placeholderText="End Time"
+              className="border-2 p-2 rounded-lg ml-5"
+            />
+            <Button
+              className="bg-red-500 rounded-lg text-white font-semibold ml-5"
+              onClick={() => setActiveTimeSlot(null)}
+            >
+              <RenderIcon iconName="CancelIcon" size={24} loading={6} />
+            </Button>
+          </div>
+        )}
+      </div>
 
       <div className="flex justify-end p-10 gap-4 border-b-2 border-gray-200">
         <Button

@@ -17,6 +17,8 @@ export const fetchCustomizationData = async (navigate) => {
 
 export const updateCustomizationData = async (data, navigate) => {
   try {
+    console.log(data);
+
     const api = useApiClient(navigate);
     const res = await api.post(`/admin/app-customization/agent-app`, data);
 
