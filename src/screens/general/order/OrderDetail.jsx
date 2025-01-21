@@ -137,14 +137,17 @@ const OrderDetail = () => {
         </p>
 
         <div className="flex gap-[20px] justify-center md:justify-end">
-          {orderId.charAt(0) === "O" && role === "Admin" && (
-            <Button
-              className="bg-teal-700 text-white p-2 rounded-md"
-              onClick={() => markOrderAsCompleted.mutate()}
-            >
-              Mark as Completed
-            </Button>
-          )}
+          {orderId.charAt(0) === "O" &&
+            role === "Admin" &&
+            orderDetail?.orderStatus === "On-going" &&
+            orderDetail?.deliveryAgentDetail?._id && (
+              <Button
+                className="bg-teal-700 text-white p-2 rounded-md"
+                onClick={() => markOrderAsCompleted.mutate()}
+              >
+                Mark as Completed
+              </Button>
+            )}
 
           {orderId.charAt(0) === "O" && (
             <Button
