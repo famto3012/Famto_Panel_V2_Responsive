@@ -282,7 +282,7 @@ const AllOrdersTable = ({ filter }) => {
                           On-going
                         </p>
                       ) : (
-                        <p className="text-red-500 font-[600] text-[16px]">
+                        <p className="text-green-500 font-[600] text-[16px]">
                           {order?.orderStatus}
                         </p>
                       )}
