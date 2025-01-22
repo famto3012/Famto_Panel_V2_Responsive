@@ -3,6 +3,8 @@ import useApiClient from "@/api/apiClient";
 // Manager
 export const addManager = async (data, navigate) => {
   try {
+    console.log(data);
+
     const api = useApiClient(navigate);
     const res = await api.post(`/admin/managers/add-manager`, data);
 
@@ -31,8 +33,8 @@ export const fetchAllManagers = async (filter, navigate) => {
     const api = useApiClient(navigate);
     const res = await api.get(`/admin/managers`, {
       params: {
-        geofence: filter.geofence,
-        name: filter.name,
+        geofence: filter?.geofence || null,
+        name: filter?.name || "",
       },
     });
 

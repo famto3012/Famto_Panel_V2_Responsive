@@ -1,4 +1,7 @@
 import GlobalSearch from "@/components/others/GlobalSearch";
+import Loader from "@/components/others/Loader";
+import { getAllGeofence } from "@/hooks/geofence/useGeofence";
+import { fetchAllManagers } from "@/hooks/manager/useManager";
 import RenderIcon from "@/icons/RenderIcon";
 import AddManager from "@/models/general/manager/AddManager";
 import AddRole from "@/models/general/manager/AddRole";
@@ -7,8 +10,9 @@ import DeleteRole from "@/models/general/manager/DeleteRole";
 import EditManager from "@/models/general/manager/EditManager";
 import EditRole from "@/models/general/manager/EditRole";
 import { Button, HStack, Table } from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 
 const AllManager = () => {
@@ -25,6 +29,31 @@ const AllManager = () => {
     deleteRole: false,
   });
   const [selectedId, setSelectedId] = useState(null);
+
+  const navigate = useNavigate();
+
+  const {
+    data: allGeofence,
+    isLoading: geofenceLoading,
+    isError: geofenceError,
+  } = useQuery({
+    queryKey: ["all-geofence"],
+    queryFn: () => getAllGeofence(navigate),
+  });
+
+  const {
+    data: allManager,
+    isLoading: managerLoading,
+    isError: managerError,
+  } = useQuery({
+    queryKey: ["all-managers"],
+    queryFn: () => fetchAllManagers(filter, navigate),
+  });
+
+  const geofenceOptions = allGeofence?.map((geofence) => ({
+    label: geofence.name,
+    value: geofence._id,
+  }));
 
   const toggleModal = (type, id = null) => {
     setSelectedId(id);
@@ -43,7 +72,11 @@ const AllManager = () => {
     });
   };
 
-  const geofenceOptions = [];
+  const isLoading = geofenceLoading || managerLoading;
+  const isError = geofenceError || managerError;
+
+  if (isLoading) return <Loader />;
+  if (isError) return <Error />;
 
   return (
     <>
@@ -67,7 +100,7 @@ const AllManager = () => {
             <Select
               options={geofenceOptions}
               value={geofenceOptions.find(
-                (option) => option.value === geofenceFilter
+                (option) => option.value === filter.geofence
               )}
               onChange={(option) =>
                 setFilter({ ...filter, geofence: option.value })
@@ -105,78 +138,85 @@ const AllManager = () => {
           <Table.Root className="mt-5 z-10 max-h-[30rem]" striped interactive>
             <Table.Header>
               <Table.Row className="bg-teal-700 h-14">
-                {[
-                  "Id",
-                  "Name",
-                  "Email",
-                  "Phone",
-                  "Role",
-                  "Geofence",
-                  "Action",
-                ].map((header, idx) => (
-                  <Table.ColumnHeader
-                    key={idx}
-                    color="white"
-                    textAlign="center"
-                  >
-                    {header}
-                  </Table.ColumnHeader>
-                ))}
+                {["Name", "Email", "Phone", "Role", "Geofence", "Action"].map(
+                  (header, idx) => (
+                    <Table.ColumnHeader
+                      key={idx}
+                      color="white"
+                      textAlign="center"
+                    >
+                      {header}
+                    </Table.ColumnHeader>
+                  )
+                )}
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {/* {isTableLoading ? (
-              <Table.Row className="h-[70px]">
-                <Table.Cell colSpan={10} textAlign="center">
-                  <ShowSpinner /> Loading...
-                </Table.Cell>
-              </Table.Row>
-            ) : allPricing?.length === 0 ? (
-              <Table.Row className="h-[70px]">
-                <Table.Cell colSpan={10} textAlign="center">
-                  No Pricing Available
-                </Table.Cell>
-              </Table.Row>
-            ) : isError ? (
-              <Table.Row className="h-[70px]">
-                <Table.Cell colSpan={10} textAlign="center">
-                  Error in fetching agent pricings.
-                </Table.Cell>
-              </Table.Row>
-            ) : (
-              allPricing?.map((price) => ( */}
-              <Table.Row className={`h-[70px]`}>
-                <Table.Cell textAlign="center">One</Table.Cell>
-                <Table.Cell textAlign="center">One</Table.Cell>
-                <Table.Cell textAlign="center">One</Table.Cell>
-                <Table.Cell textAlign="center">One</Table.Cell>
-                <Table.Cell textAlign="center">One</Table.Cell>
-                <Table.Cell textAlign="center">One</Table.Cell>
-                <Table.Cell textAlign="center">
-                  <HStack
-                    display={"flex"}
-                    justifyContent={"center"}
-                    alignItems={"center"}
-                    gap={5}
-                  >
-                    <Button
-                      onClick={() => toggleModal("editManager", 12)}
-                      className="text-gray-600 p-2"
-                    >
-                      <RenderIcon iconName="EditIcon" size={20} loading={6} />
-                    </Button>
+              {isLoading ? (
+                <Table.Row className="h-[70px]">
+                  <Table.Cell colSpan={10} textAlign="center">
+                    <ShowSpinner /> Loading...
+                  </Table.Cell>
+                </Table.Row>
+              ) : allManager?.length === 0 ? (
+                <Table.Row className="h-[70px]">
+                  <Table.Cell colSpan={10} textAlign="center">
+                    No Manager available
+                  </Table.Cell>
+                </Table.Row>
+              ) : isError ? (
+                <Table.Row className="h-[70px]">
+                  <Table.Cell colSpan={10} textAlign="center">
+                    Error in fetching manager.
+                  </Table.Cell>
+                </Table.Row>
+              ) : (
+                allManager?.map((manager) => (
+                  <Table.Row className={`h-[70px]`} key={manager.managerId}>
+                    <Table.Cell textAlign="center">{manager.name}</Table.Cell>
+                    <Table.Cell textAlign="center">{manager.email}</Table.Cell>
+                    <Table.Cell textAlign="center">{manager.phone}</Table.Cell>
+                    <Table.Cell textAlign="center">{manager.role}</Table.Cell>
+                    <Table.Cell textAlign="center">
+                      {manager.geofence}
+                    </Table.Cell>
+                    <Table.Cell textAlign="center">
+                      <HStack
+                        display={"flex"}
+                        justifyContent={"center"}
+                        alignItems={"center"}
+                        gap={5}
+                      >
+                        <Button
+                          onClick={() =>
+                            toggleModal("editManager", manager.managerId)
+                          }
+                          className="text-gray-600 p-2"
+                        >
+                          <RenderIcon
+                            iconName="EditIcon"
+                            size={20}
+                            loading={6}
+                          />
+                        </Button>
 
-                    <span
-                      onClick={() => toggleModal("deleteManager", 12)}
-                      className="text-red-500"
-                    >
-                      <RenderIcon iconName="DeleteIcon" size={24} loading={6} />
-                    </span>
-                  </HStack>
-                </Table.Cell>
-              </Table.Row>
-              {/* ))
-            )} */}
+                        <span
+                          onClick={() =>
+                            toggleModal("deleteManager", manager.managerId)
+                          }
+                          className="text-red-500"
+                        >
+                          <RenderIcon
+                            iconName="DeleteIcon"
+                            size={24}
+                            loading={6}
+                          />
+                        </span>
+                      </HStack>
+                    </Table.Cell>
+                  </Table.Row>
+                ))
+              )}
             </Table.Body>
           </Table.Root>
         </div>
@@ -262,24 +302,26 @@ const AllManager = () => {
         </div>
       </div>
 
-      <AddManager isOpen={modal.addManager} onClose={closeModal} />
+      <AddManager
+        isOpen={modal.addManager}
+        onClose={closeModal}
+        geofenceOptions={geofenceOptions}
+      />
       <EditManager
         isOpen={modal.editManager}
         onClose={closeModal}
-        selectedId={12}
+        managerId={selectedId}
+        geofenceOptions={geofenceOptions}
       />
       <DeleteManager
         isOpen={modal.deleteManager}
         onClose={closeModal}
-        selectedId={12}
+        managerId={12}
       />
+
       <AddRole isOpen={modal.addRole} onClose={closeModal} />
-      <EditRole isOpen={modal.editRole} onClose={closeModal} selectedId={12} />
-      <DeleteRole
-        isOpen={modal.deleteRole}
-        onClose={closeModal}
-        selectedId={12}
-      />
+      <EditRole isOpen={modal.editRole} onClose={closeModal} roleId={12} />
+      <DeleteRole isOpen={modal.deleteRole} onClose={closeModal} roleId={12} />
     </>
   );
 };

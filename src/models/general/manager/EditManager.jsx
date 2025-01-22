@@ -10,9 +10,17 @@ import {
 import { toaster } from "@/components/ui/toaster";
 import { Button } from "@/components/ui/button";
 import Select from "react-select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {
+  editManager,
+  fetchAllRoles,
+  fetchSingleManager,
+} from "@/hooks/manager/useManager";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import ModalLoader from "@/components/others/ModalLoader";
 
-const EditManager = ({ isOpen, onClose, selectedId }) => {
+const EditManager = ({ isOpen, onClose, managerId, geofenceOptions }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -22,17 +30,80 @@ const EditManager = ({ isOpen, onClose, selectedId }) => {
     geofence: "",
   });
 
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSelect = (value, type) => {
-    setFormData({ ...formData, [type]: value });
+  const handleSelect = (selectedOption, type) => {
+    setFormData({ ...formData, [type]: selectedOption.value });
   };
 
+  const {
+    data: managerData,
+    isLoading: managerLoading,
+    isError: managerError,
+  } = useQuery({
+    queryKey: ["all-roles"],
+    queryFn: () => fetchSingleManager(managerId, navigate),
+    enabled: isOpen,
+  });
+
+  useEffect(() => {
+    managerData && setFormData(managerData);
+  }, [managerData]);
+
+  const {
+    data: allRoles,
+    isLoading: roleLoading,
+    isError: roleError,
+  } = useQuery({
+    queryKey: ["all-roles"],
+    queryFn: () => fetchAllRoles(navigate),
+    enabled: isOpen,
+  });
+
+  // const roleOptions = allRoles?.map((role) => ({
+  //   label: role.roleName,
+  //   value: role.roleId,
+  // }));
+
   const roleOptions = [];
-  const geofenceOptions = [];
+
+  const handleEditManager = useMutation({
+    mutationKey: ["edit-manager"],
+    mutationFn: () => editManager(managerId, formData, navigate),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["all-managers"]);
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        password: "",
+        role: null,
+        geofence: null,
+      });
+      onClose();
+      toaster.create({
+        title: "Success",
+        description: "Manager updated successfully",
+        type: "success",
+      });
+    },
+    onError: () => {
+      toaster.create({
+        title: "Error",
+        description: "Error while updating manager",
+        type: "error",
+      });
+    },
+  });
+
+  if (roleLoading || managerLoading) return <ModalLoader />;
+  if (roleError || roleLoading) return <Error />;
 
   return (
     <DialogRoot
@@ -74,7 +145,7 @@ const EditManager = ({ isOpen, onClose, selectedId }) => {
               <input
                 className="border-2 border-gray-300 rounded p-2 w-2/3 outline-none focus:outline-none"
                 type="text"
-                placeholder="Name"
+                placeholder="Email"
                 value={formData.email}
                 name="email"
                 onChange={handleInputChange}
@@ -89,9 +160,9 @@ const EditManager = ({ isOpen, onClose, selectedId }) => {
               <input
                 className="border-2 border-gray-300 rounded p-2 w-2/3 outline-none focus:outline-none"
                 type="text"
-                placeholder="Name"
-                value={formData.phone}
-                name="phone"
+                placeholder="Phone number"
+                value={formData.phoneNumber}
+                name="phoneNumber"
                 onChange={handleInputChange}
               />
             </div>
@@ -104,7 +175,7 @@ const EditManager = ({ isOpen, onClose, selectedId }) => {
               <input
                 className="border-2 border-gray-300 rounded p-2 w-2/3 outline-none focus:outline-none"
                 type="text"
-                placeholder="Name"
+                placeholder="Password"
                 value={formData.password}
                 name="password"
                 onChange={handleInputChange}
@@ -117,11 +188,11 @@ const EditManager = ({ isOpen, onClose, selectedId }) => {
               <Select
                 className="w-2/3 outline-none focus:outline-none"
                 value={roleOptions?.find(
-                  (option) => option.value === formData.assignRole
+                  (option) => option.value === formData.role
                 )}
                 isClearable
                 isSearchable
-                onChange={(option) => handleSelect(option.value, "assignRole")}
+                onChange={(option) => handleSelect(option, "role")}
                 options={roleOptions}
                 placeholder="Select Role"
               />
@@ -139,7 +210,7 @@ const EditManager = ({ isOpen, onClose, selectedId }) => {
                 )}
                 isClearable
                 isSearchable
-                onChange={(option) => handleSelect(option.value, "geofence")}
+                onChange={(option) => handleSelect(option, "geofenceId")}
                 options={geofenceOptions}
                 placeholder="Select Geofence"
               />
