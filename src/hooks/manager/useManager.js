@@ -97,7 +97,7 @@ export const editRole = async (roleId, data, navigate) => {
 export const fetchAllRoles = async (navigate) => {
   try {
     const api = useApiClient(navigate);
-    const res = await api.get(`/admin/managers//manager-roles`);
+    const res = await api.get(`/admin/managers/manager-roles`);
 
     return res.status === 200 ? res.data : [];
   } catch (err) {

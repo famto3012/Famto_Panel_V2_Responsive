@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Switch } from "@/components/ui/switch";
 import { toaster } from "@/components/ui/toaster";
+import { fetchAllRoles } from "@/hooks/manager/useManager";
 import {
   getSingleNotificationSettings,
   updateNotificationSettings,
@@ -16,6 +17,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Select from "react-select";
 
 const EditNotificationSettings = ({ isOpen, onClose, selectedId }) => {
   const [notificationSettings, setNotificationSettings] = useState({
@@ -26,10 +28,12 @@ const EditNotificationSettings = ({ isOpen, onClose, selectedId }) => {
     customer: false,
     driver: false,
     merchant: false,
+    manager: [],
     whatsapp: false,
     email: false,
     sms: false,
   });
+  const [roles, setRoles] = useState([]);
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -38,6 +42,11 @@ const EditNotificationSettings = ({ isOpen, onClose, selectedId }) => {
     queryKey: ["get-single-notification-settings", selectedId],
     queryFn: () => getSingleNotificationSettings(navigate, selectedId),
     enabled: !!selectedId,
+  });
+
+  const { data: roleList } = useQuery({
+    queryKey: ["get-manager-roles"],
+    queryFn: () => fetchAllRoles(navigate),
   });
 
   const handleUpdateNotificationSettings = useMutation({
@@ -80,6 +89,15 @@ const EditNotificationSettings = ({ isOpen, onClose, selectedId }) => {
     });
   };
 
+  const handleManagerChange = (selectedOptions) => {
+    setNotificationSettings((prevState) => ({
+      ...prevState,
+      manager: selectedOptions
+        ? selectedOptions.map((option) => option.value)
+        : [],
+    }));
+  };
+
   const handleCancel = () => {
     onClose();
   };
@@ -95,7 +113,16 @@ const EditNotificationSettings = ({ isOpen, onClose, selectedId }) => {
     if (notificationSettingsData) {
       setNotificationSettings(notificationSettingsData);
     }
-  }, [notificationSettingsData]);
+    if (roleList && roleList.length > 0) {
+      // Map through the roleList data and update roles state
+      const updatedRoles = roleList.map((role) => ({
+        label: role.roleName, // Assuming `roleName` is the field in the data
+        value: role.roleName, // Assuming `value` is the field in the data
+      }));
+
+      setRoles(updatedRoles);
+    }
+  }, [notificationSettingsData, roleList]);
 
   return (
     <DialogRoot
@@ -156,6 +183,26 @@ const EditNotificationSettings = ({ isOpen, onClose, selectedId }) => {
                 value={notificationSettings?.description}
                 onChange={handleInputChange}
                 className="border-2 border-gray-300 rounded p-6 px-2 w-2/3 outline-none focus:outline-none"
+              />
+            </div>
+            <div className="flex items-center">
+              <label htmlFor="event" className="w-1/3 text-gray-500">
+                Manager
+              </label>
+
+              <Select
+                className="w-2/3 outline-none focus:outline-none"
+                value={roles.filter((option) =>
+                  notificationSettings.manager.includes(option.value)
+                )}
+                name="manager"
+                isMulti={true}
+                isSearchable={true}
+                onChange={handleManagerChange}
+                options={roles}
+                placeholder="Select role name"
+                isClearable={true}
+                required
               />
             </div>
           </div>
