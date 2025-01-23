@@ -73,7 +73,7 @@ export const deleteManager = async (managerId, navigate) => {
 export const addRole = async (data, navigate) => {
   try {
     const api = useApiClient(navigate);
-    const res = await api.post(`/admin/managers//manager-roles`, data);
+    const res = await api.post(`/admin/managers/manager-roles`, data);
 
     return res.status === 201 ? res.data.message : null;
   } catch (err) {

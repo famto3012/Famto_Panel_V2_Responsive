@@ -177,6 +177,117 @@ const addNotificationSettingsOption = [
   },
 ];
 
+const allowedRoutesOption = [
+  {
+    label: "Home",
+    value: "/home",
+  },
+  {
+    label: "Order",
+    value: "/order",
+  },
+  {
+    label: "Merchant",
+    value: "/merchant",
+  },
+  {
+    label: "Product",
+    value: "/product",
+  },
+  {
+    label: "Customer",
+    value: "/customer",
+  },
+  {
+    label: "Agent",
+    value: "/agent",
+  },
+  {
+    label: "Delivery management",
+    value: "/delivery-management",
+  },
+  {
+    label: "Commissions and Subscriptions",
+    value: "/comm-and-subs",
+  },
+  {
+    label: "Whatsapp",
+    value: "/chat",
+  },
+  {
+    label: "Discount",
+    value: "/marketing/discount",
+  },
+  {
+    label: "Banner",
+    value: "/marketing/ad-banner",
+  },
+  {
+    label: "Loyalty point",
+    value: "/marketing/loyalty-point",
+  },
+  {
+    label: "Promocode",
+    value: "/marketing/promo-code",
+  },
+  {
+    label: "Referral",
+    value: "/marketing/referral",
+  },
+  {
+    label: "Notification log",
+    value: "/notification/logs",
+  },
+  {
+    label: "Push notification",
+    value: "/notification/push-notification",
+  },
+  {
+    label: "Notification settings",
+    value: "/notification/settings",
+  },
+  {
+    label: "Alert notification",
+    value: "/notification/alert-notification",
+  },
+  {
+    label: "Managers",
+    value: "/configure/managers",
+  },
+  {
+    label: "Pricing",
+    value: "/configure/pricing",
+  },
+  {
+    label: "Tax",
+    value: "/configure/tax",
+  },
+  {
+    label: "Geofence",
+    value: "/configure/geofence",
+  },
+  {
+    label: "Customer app customization",
+    value: "/customize/customer-app",
+  },
+  {
+    label: "Agent app customization",
+    value: "/customize/agent-app",
+  },
+  {
+    label: "Merchant app customization",
+    value: "/customize/merchant-app",
+  },
+  {
+    label: "Activity log",
+    value: "/account/activity-logs",
+  },
+  {
+    label: "Account log",
+    value: "/account/account-logs",
+  },
+];
+
 export {
   itemTypes,
   unitOptions,
@@ -197,4 +308,5 @@ export {
   paymentOptions,
   agentDeliveryManagementStatusOptions,
   addNotificationSettingsOption,
+  allowedRoutesOption,
 };
