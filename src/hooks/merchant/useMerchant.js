@@ -311,7 +311,7 @@ export const downloadAllMerchantCSV = async (filter, navigate) => {
       }
     );
 
-    return res.status === 200 ? res.data.message : null;
+    return res.status === 200 ? res.data : null;
   } catch (err) {
     throw new Error(
       err.response?.data?.message || "Failed to download sample merchant csv"
