@@ -5,7 +5,7 @@ import {
   useLocation,
   Navigate,
 } from "react-router-dom";
-import { Suspense, lazy, useContext, useEffect } from "react";
+import { Suspense, lazy, useContext, useEffect, useState } from "react";
 
 import ProtectedRoute from "./ProtectedRoutes";
 
@@ -13,6 +13,9 @@ import Loader from "@/components/others/Loader";
 import AuthContext from "@/context/AuthContext";
 import Maintenance from "@/screens/other/Maintenance";
 import WhatsappRoutes from "./WhatsappRoute";
+import { fetchAllowedRoutes } from "@/hooks/manager/useManager";
+import { allowedMerchantRouteOptions } from "@/utils/defaultData";
+import { useQuery } from "@tanstack/react-query";
 
 // Lazy load each route component
 const AuthRoutes = lazy(() => import("./AuthRoute"));
@@ -31,9 +34,10 @@ const CustomizeRoutes = lazy(() => import("./CustomizeRoute"));
 const AccountRoutes = lazy(() => import("./AccountRoute"));
 
 const Routers = () => {
-  const { token } = useContext(AuthContext);
+  const { token, role } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
+  const [allowedRoutes, setAllowedRoutes] = useState([]);
 
   useEffect(() => {
     if (!token && !location.pathname.startsWith("/auth")) {
@@ -45,39 +49,73 @@ const Routers = () => {
     // navigate("/maintenance");
   }, [token, location.pathname, navigate]);
 
+  const { data } = useQuery({
+    queryKey: ["allowed-routes"],
+    queryFn: () => fetchAllowedRoutes(navigate),
+    enabled: token && role === "Manager" ? true : false,
+  });
+
+  useEffect(() => {
+    if (role === "Merchant") {
+      setAllowedRoutes(allowedMerchantRouteOptions);
+    } else if (role === "Manager" && data) {
+      setAllowedRoutes(data);
+    }
+  }, [data]);
+
+  const canAccessRoute = (route) => {
+    console.log(route, role);
+
+    if (role === "Admin") {
+      return true;
+    } else {
+      allowedRoutes.some((r) => r.route === route);
+    }
+  };
+
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="/auth/*" element={<AuthRoutes />} />
         <Route path="/home/*" element={<HomeRoutes />} />
-        <Route path="/order/*" element={<OrderRoutes />} />
-        <Route
-          path="/merchant/*"
-          element={
-            <ProtectedRoute requiredRole="Admin">
-              <MerchantRoutes />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/product/*" element={<ProductRoutes />} />
+        {canAccessRoute("/order") && (
+          <Route path="/order/*" element={<OrderRoutes />} />
+        )}
+        {canAccessRoute("/merchant") && (
+          <Route
+            path="/merchant/*"
+            element={
+              <ProtectedRoute requiredRole="Admin">
+                <MerchantRoutes />
+              </ProtectedRoute>
+            }
+          />
+        )}
+        {canAccessRoute("/product") && (
+          <Route path="/product/*" element={<ProductRoutes />} />
+        )}
         <Route path="/customer/*" element={<CustomerRoutes />} />
-        <Route
-          path="/agent/*"
-          element={
-            <ProtectedRoute requiredRole="Admin">
-              <AgentRoutes />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/delivery-management/*"
-          element={
-            <ProtectedRoute requiredRole="Admin">
-              <DeliveryRoutes />
-            </ProtectedRoute>
-          }
-        />
+        {canAccessRoute("/agent") && (
+          <Route
+            path="/agent/*"
+            element={
+              <ProtectedRoute>
+                <AgentRoutes />
+              </ProtectedRoute>
+            }
+          />
+        )}
+        {canAccessRoute("/delivery-management") && (
+          <Route
+            path="/delivery-management/*"
+            element={
+              <ProtectedRoute>
+                <DeliveryRoutes />
+              </ProtectedRoute>
+            }
+          />
+        )}
         <Route path="/comm-and-subs/*" element={<CommAndSubsRoutes />} />
         <Route path="/chat/*" element={<WhatsappRoutes />} />
         <Route path="/marketing/*" element={<MarketingRoutes />} />

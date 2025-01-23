@@ -288,6 +288,37 @@ const allowedRoutesOption = [
   },
 ];
 
+const allowedMerchantRouteOptions = [
+  {
+    label: "Home",
+    value: "/home",
+  },
+  {
+    label: "Order",
+    value: "/order",
+  },
+  {
+    label: "Product",
+    value: "/product",
+  },
+  {
+    label: "Customer",
+    value: "/customer",
+  },
+  {
+    label: "Commissions and Subscriptions",
+    value: "/comm-and-subs",
+  },
+  {
+    label: "Notification log",
+    value: "/notification/logs",
+  },
+  {
+    label: "Settings",
+    value: "/account/settings",
+  },
+];
+
 export {
   itemTypes,
   unitOptions,
@@ -309,4 +340,5 @@ export {
   agentDeliveryManagementStatusOptions,
   addNotificationSettingsOption,
   allowedRoutesOption,
+  allowedMerchantRouteOptions,
 };
