@@ -1,7 +1,9 @@
+import Error from "@/components/others/Error";
 import GlobalSearch from "@/components/others/GlobalSearch";
 import Loader from "@/components/others/Loader";
+import ShowSpinner from "@/components/others/ShowSpinner";
 import { getAllGeofence } from "@/hooks/geofence/useGeofence";
-import { fetchAllManagers } from "@/hooks/manager/useManager";
+import { fetchAllManagers, fetchAllRoles } from "@/hooks/manager/useManager";
 import RenderIcon from "@/icons/RenderIcon";
 import AddManager from "@/models/general/manager/AddManager";
 import AddRole from "@/models/general/manager/AddRole";
@@ -50,6 +52,15 @@ const AllManager = () => {
     queryFn: () => fetchAllManagers(filter, navigate),
   });
 
+  const {
+    data: roles,
+    isLoading: roleLoading,
+    isError: roleError,
+  } = useQuery({
+    queryKey: ["get-all-role"],
+    queryFn: () => fetchAllRoles(navigate),
+  });
+
   const geofenceOptions = allGeofence?.map((geofence) => ({
     label: geofence.name,
     value: geofence._id,
@@ -72,8 +83,8 @@ const AllManager = () => {
     });
   };
 
-  const isLoading = geofenceLoading || managerLoading;
-  const isError = geofenceError || managerError;
+  const isLoading = geofenceLoading || managerLoading || roleLoading;
+  const isError = geofenceError || managerError || roleError;
 
   if (isLoading) return <Loader />;
   if (isError) return <Error />;
@@ -237,7 +248,7 @@ const AllManager = () => {
           <Table.Root className="mt-5 z-10 max-h-[30rem]" striped interactive>
             <Table.Header>
               <Table.Row className="bg-teal-700 h-14">
-                {["Domain", "Allowed Options", "Action"].map((header, idx) => (
+                {["Domain", "Allowed Routes", "Action"].map((header, idx) => (
                   <Table.ColumnHeader
                     key={idx}
                     color="white"
@@ -249,54 +260,64 @@ const AllManager = () => {
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {/* {isTableLoading ? (
-              <Table.Row className="h-[70px]">
-                <Table.Cell colSpan={10} textAlign="center">
-                  <ShowSpinner /> Loading...
-                </Table.Cell>
-              </Table.Row>
-            ) : allPricing?.length === 0 ? (
-              <Table.Row className="h-[70px]">
-                <Table.Cell colSpan={10} textAlign="center">
-                  No Pricing Available
-                </Table.Cell>
-              </Table.Row>
-            ) : isError ? (
-              <Table.Row className="h-[70px]">
-                <Table.Cell colSpan={10} textAlign="center">
-                  Error in fetching agent pricings.
-                </Table.Cell>
-              </Table.Row>
-            ) : (
-              allPricing?.map((price) => ( */}
-              <Table.Row className={`h-[70px]`}>
-                <Table.Cell textAlign="center">One</Table.Cell>
-                <Table.Cell textAlign="center">One</Table.Cell>
-                <Table.Cell textAlign="center">
-                  <HStack
-                    display={"flex"}
-                    justifyContent={"center"}
-                    alignItems={"center"}
-                    gap={5}
-                  >
-                    <Button
-                      onClick={() => toggleModal("editRole", 23)}
-                      className="text-gray-600"
-                    >
-                      <RenderIcon iconName="EditIcon" size={20} loading={6} />
-                    </Button>
+              {isLoading ? (
+                <Table.Row className="h-[70px]">
+                  <Table.Cell colSpan={10} textAlign="center">
+                    <ShowSpinner /> Loading...
+                  </Table.Cell>
+                </Table.Row>
+              ) : roles?.length === 0 ? (
+                <Table.Row className="h-[70px]">
+                  <Table.Cell colSpan={10} textAlign="center">
+                    No Roles Available
+                  </Table.Cell>
+                </Table.Row>
+              ) : isError ? (
+                <Table.Row className="h-[70px]">
+                  <Table.Cell colSpan={10} textAlign="center">
+                    Error in roles.
+                  </Table.Cell>
+                </Table.Row>
+              ) : (
+                roles?.map((role) => (
+                  <Table.Row className={`h-[70px]`} key={role.roleId}>
+                    <Table.Cell textAlign="center">{role.roleName}</Table.Cell>
+                    <Table.Cell textAlign="center">
+                      {role.allowedRoutes[0].label}
+                    </Table.Cell>
+                    <Table.Cell textAlign="center">
+                      <HStack
+                        display={"flex"}
+                        justifyContent={"center"}
+                        alignItems={"center"}
+                        gap={5}
+                      >
+                        <Button
+                          onClick={() => toggleModal("editRole", 23)}
+                          className="text-gray-600"
+                        >
+                          <RenderIcon
+                            iconName="EditIcon"
+                            size={20}
+                            loading={6}
+                          />
+                        </Button>
 
-                    <span
-                      onClick={() => toggleModal("deleteRole", 23)}
-                      className="text-red-500"
-                    >
-                      <RenderIcon iconName="DeleteIcon" size={24} loading={6} />
-                    </span>
-                  </HStack>
-                </Table.Cell>
-              </Table.Row>
-              {/* ))
-            )} */}
+                        <span
+                          onClick={() => toggleModal("deleteRole", 23)}
+                          className="text-red-500"
+                        >
+                          <RenderIcon
+                            iconName="DeleteIcon"
+                            size={24}
+                            loading={6}
+                          />
+                        </span>
+                      </HStack>
+                    </Table.Cell>
+                  </Table.Row>
+                ))
+              )}
             </Table.Body>
           </Table.Root>
         </div>

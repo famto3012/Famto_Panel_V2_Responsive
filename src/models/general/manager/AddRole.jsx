@@ -10,8 +10,64 @@ import {
 import { toaster } from "@/components/ui/toaster";
 import { Button } from "@/components/ui/button";
 import Select from "react-select";
+import { allowedRoutesOption } from "@/utils/defaultData";
+import { useState } from "react";
+import { addRole } from "@/hooks/manager/useManager";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 const AddRole = ({ isOpen, onClose }) => {
+  const [role, setRole] = useState({
+    roleName: "",
+    allowedRoutes: [],
+  });
+
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const handleInputChange = (e) => {
+    setRole({
+      ...role,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleAllowedOptionsChange = (selectedOptions) => {
+    setRole((prevState) => ({
+      ...prevState,
+      allowedRoutes: selectedOptions
+        ? selectedOptions.map((option) => ({
+            label: option.label,
+            route: option.value,
+          }))
+        : [],
+    }));
+  };
+
+  const handleAddRole = useMutation({
+    mutationKey: ["add-role"],
+    mutationFn: (role) => {
+      return addRole(role, navigate);
+    },
+    onSuccess: (data) => {
+      toaster.create({
+        title: "Success",
+        description: data?.message || "Role added successfully.",
+        type: "success",
+      });
+      queryClient.invalidateQueries(["get-all-role"]);
+      onClose();
+    },
+    onError: (error) => {
+      console.log(error);
+      toaster.create({
+        title: "Error",
+        description: error || "Error in adding role.",
+        type: "error",
+      });
+    },
+  });
+
   return (
     <DialogRoot
       open={isOpen}
@@ -32,12 +88,29 @@ const AddRole = ({ isOpen, onClose }) => {
               <input
                 type="text"
                 className="border w-2/3 p-2 rounded-md outline-none focus:outline-none"
+                value={role.roleName}
+                name="roleName"
+                onChange={handleInputChange}
               />
             </div>
 
             <div className="flex items-center justify-between">
-              <label className="w-1/3 text-[16px]">Allowed Options</label>
-              <Select className="w-2/3" placeholder="Select roles" isMulti />
+              <label className="w-1/3 text-[16px]">Allowed Routes</label>
+              <Select
+                className="w-2/3 outline-none focus:outline-none"
+                value={role.allowedRoutes.map((route) => ({
+                  label: route.label,
+                  value: route.route, // Map back to the expected `value` for `react-select`
+                }))}
+                name="allowedRoutes"
+                isMulti={true}
+                isSearchable={true}
+                onChange={handleAllowedOptionsChange}
+                options={allowedRoutesOption}
+                placeholder="Select allowed routes"
+                isClearable={true}
+                required
+              />
             </div>
           </div>
         </DialogBody>
@@ -52,7 +125,9 @@ const AddRole = ({ isOpen, onClose }) => {
 
           <Button
             className="bg-teal-700 p-2 text-white"
-            onClick={() => {}}
+            onClick={() => {
+              handleAddRole.mutate(role);
+            }}
             disabled={false}
           >
             Save
