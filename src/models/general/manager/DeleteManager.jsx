@@ -9,8 +9,35 @@ import {
 } from "@/components/ui/dialog";
 import { toaster } from "@/components/ui/toaster";
 import { Button } from "@/components/ui/button";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteManager } from "@/hooks/manager/useManager";
+import { useNavigate } from "react-router-dom";
 
-const DeleteManager = ({ isOpen, onClose, selectedId }) => {
+const DeleteManager = ({ isOpen, onClose, managerId }) => {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const handleDeleteManager = useMutation({
+    mutationKey: ["delete-manager"],
+    mutationFn: () => deleteManager(managerId, navigate),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["all-managers"]);
+      onClose();
+      toaster.create({
+        title: "Success",
+        description: "Manager deleted successfully",
+        type: "success",
+      });
+    },
+    onError: () => {
+      toaster.create({
+        title: "Error",
+        description: "Error while deleting manager",
+        type: "error",
+      });
+    },
+  });
+
   return (
     <DialogRoot
       open={isOpen}
@@ -38,10 +65,10 @@ const DeleteManager = ({ isOpen, onClose, selectedId }) => {
 
           <Button
             className="bg-red-500 p-2 text-white"
-            onClick={() => {}}
-            disabled={false}
+            onClick={() => handleDeleteManager.mutate()}
+            disabled={handleDeleteManager.isPending}
           >
-            Delete
+            {handleDeleteManager.isPending ? `Deleting...` : `Delete`}
           </Button>
         </DialogFooter>
       </DialogContent>

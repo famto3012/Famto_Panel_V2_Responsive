@@ -10,8 +10,69 @@ import {
 import { toaster } from "@/components/ui/toaster";
 import { Button } from "@/components/ui/button";
 import Select from "react-select";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import ModalLoader from "@/components/others/ModalLoader";
+import Error from "@/components/others/Error";
+import { allowedRoutesOption } from "@/utils/defaultData";
+import { editRole, fetchSingleRole } from "@/hooks/manager/useManager";
 
-const EditRole = ({ isOpen, onClose, selectedId }) => {
+const EditRole = ({ isOpen, onClose, roleId }) => {
+  const [formData, setFormData] = useState({
+    roleName: "",
+    allowedRoutes: [],
+  });
+
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["role-detail", roleId],
+    queryFn: () => fetchSingleRole(roleId, navigate),
+    enabled: isOpen,
+  });
+
+  useEffect(() => {
+    data && setFormData(data);
+  }, [data]);
+
+  const handleAllowedOptionsChange = (selectedOptions) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      allowedRoutes: selectedOptions
+        ? selectedOptions.map((option) => ({
+            label: option.label,
+            route: option.value,
+          }))
+        : [],
+    }));
+  };
+
+  const handleEditRole = useMutation({
+    mutationKey: ["edit-role"],
+    mutationFn: () => editRole(roleId, formData, navigate),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["all-role"]);
+      onClose();
+      toaster.create({
+        title: "Success",
+        description: "Role updated successfully.",
+        type: "success",
+      });
+    },
+    onError: (error) => {
+      toaster.create({
+        title: "Error",
+        description: error || "Error in updating role.",
+        type: "error",
+      });
+    },
+  });
+
+  if (isLoading) return <ModalLoader />;
+  if (isError) return <Error />;
+
   return (
     <DialogRoot
       open={isOpen}
@@ -31,15 +92,35 @@ const EditRole = ({ isOpen, onClose, selectedId }) => {
           <div className="flex flex-col gap-[20px]">
             <div className="flex items-center justify-between">
               <label className="w-1/3 text-[16px]">Name</label>
+
               <input
                 type="text"
                 className="border w-2/3 p-2 rounded-md outline-none focus:outline-none"
+                value={formData.roleName}
+                name="roleName"
+                onChange={(e) =>
+                  setFormData({ ...formData, roleName: e.target.value })
+                }
               />
             </div>
 
             <div className="flex items-center justify-between">
               <label className="w-1/3 text-[16px]">Allowed Options</label>
-              <Select className="w-2/3" placeholder="Select roles" isMulti />
+
+              <Select
+                className="w-2/3 outline-none focus:outline-none"
+                value={formData.allowedRoutes.map((route) => ({
+                  label: route.label,
+                  value: route.route,
+                }))}
+                onChange={handleAllowedOptionsChange}
+                options={allowedRoutesOption}
+                name="allowedRoutes"
+                placeholder="Select roles"
+                isClearable
+                isSearchable
+                isMulti
+              />
             </div>
           </div>
         </DialogBody>
@@ -54,10 +135,10 @@ const EditRole = ({ isOpen, onClose, selectedId }) => {
 
           <Button
             className="bg-teal-700 p-2 text-white"
-            onClick={() => {}}
-            disabled={false}
+            onClick={() => handleEditRole.mutate()}
+            disabled={handleEditRole.isPending}
           >
-            Save
+            {handleEditRole.isPending ? `Saving...` : `Save`}
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -59,7 +59,6 @@ const AddRole = ({ isOpen, onClose }) => {
       onClose();
     },
     onError: (error) => {
-      console.log(error);
       toaster.create({
         title: "Error",
         description: error || "Error in adding role.",
@@ -96,19 +95,20 @@ const AddRole = ({ isOpen, onClose }) => {
 
             <div className="flex items-center justify-between">
               <label className="w-1/3 text-[16px]">Allowed Routes</label>
+
               <Select
                 className="w-2/3 outline-none focus:outline-none"
                 value={role.allowedRoutes.map((route) => ({
                   label: route.label,
-                  value: route.route, // Map back to the expected `value` for `react-select`
+                  value: route.route,
                 }))}
                 name="allowedRoutes"
-                isMulti={true}
-                isSearchable={true}
+                isMulti
+                isSearchable
                 onChange={handleAllowedOptionsChange}
                 options={allowedRoutesOption}
                 placeholder="Select allowed routes"
-                isClearable={true}
+                isClearable
                 required
               />
             </div>

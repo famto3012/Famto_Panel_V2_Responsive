@@ -13,7 +13,7 @@ import EditManager from "@/models/general/manager/EditManager";
 import EditRole from "@/models/general/manager/EditRole";
 import { Button, HStack, Table } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 
@@ -31,6 +31,7 @@ const AllManager = () => {
     deleteRole: false,
   });
   const [selectedId, setSelectedId] = useState(null);
+  const [debounceName, setDebounceName] = useState("");
 
   const navigate = useNavigate();
 
@@ -48,7 +49,7 @@ const AllManager = () => {
     isLoading: managerLoading,
     isError: managerError,
   } = useQuery({
-    queryKey: ["all-managers"],
+    queryKey: ["all-managers", filter],
     queryFn: () => fetchAllManagers(filter, navigate),
   });
 
@@ -57,14 +58,32 @@ const AllManager = () => {
     isLoading: roleLoading,
     isError: roleError,
   } = useQuery({
-    queryKey: ["get-all-role"],
+    queryKey: ["all-role"],
     queryFn: () => fetchAllRoles(navigate),
   });
+
+  useEffect(() => {
+    const timeOut = setTimeout(() => {
+      setFilter({ ...filter, name: debounceName });
+    }, 500);
+
+    return () => clearTimeout(timeOut);
+  }, [debounceName]);
 
   const geofenceOptions = allGeofence?.map((geofence) => ({
     label: geofence.name,
     value: geofence._id,
   }));
+
+  const allGeofenceOptions = [
+    { label: "All", value: "all" },
+    ...(Array.isArray(allGeofence)
+      ? allGeofence.map((geofence) => ({
+          label: geofence.name,
+          value: geofence._id,
+        }))
+      : []),
+  ];
 
   const toggleModal = (type, id = null) => {
     setSelectedId(id);
@@ -83,11 +102,11 @@ const AllManager = () => {
     });
   };
 
-  const isLoading = geofenceLoading || managerLoading || roleLoading;
-  const isError = geofenceError || managerError || roleError;
+  const isManagerLoading = geofenceLoading || managerLoading;
+  const isRoleLoading = geofenceLoading || roleLoading;
 
-  if (isLoading) return <Loader />;
-  if (isError) return <Error />;
+  const isManagerError = geofenceError || managerError;
+  const isRoleError = geofenceLoading || roleError;
 
   return (
     <>
@@ -109,8 +128,8 @@ const AllManager = () => {
         <div className="bg-white p-5 mx-5 mb-5 mt-5 rounded-lg flex justify-between">
           <div className="flex gap-10">
             <Select
-              options={geofenceOptions}
-              value={geofenceOptions.find(
+              options={allGeofenceOptions}
+              value={allGeofenceOptions.find(
                 (option) => option.value === filter.geofence
               )}
               onChange={(option) =>
@@ -139,8 +158,8 @@ const AllManager = () => {
               name="search"
               placeholder="Search Manager Name"
               className="bg-gray-100 h-10 px-3 rounded-full text-sm outline-none focus:outline-none"
-              value={filter.name}
-              onChange={(e) => setFilter({ ...filter, name: e.target.value })}
+              value={debounceName}
+              onChange={(e) => setDebounceName(e.target.value)}
             />
           </div>
         </div>
@@ -163,7 +182,7 @@ const AllManager = () => {
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {isLoading ? (
+              {isManagerLoading ? (
                 <Table.Row className="h-[70px]">
                   <Table.Cell colSpan={10} textAlign="center">
                     <ShowSpinner /> Loading...
@@ -175,7 +194,7 @@ const AllManager = () => {
                     No Manager available
                   </Table.Cell>
                 </Table.Row>
-              ) : isError ? (
+              ) : isManagerError ? (
                 <Table.Row className="h-[70px]">
                   <Table.Cell colSpan={10} textAlign="center">
                     Error in fetching manager.
@@ -260,7 +279,7 @@ const AllManager = () => {
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {isLoading ? (
+              {isRoleLoading ? (
                 <Table.Row className="h-[70px]">
                   <Table.Cell colSpan={10} textAlign="center">
                     <ShowSpinner /> Loading...
@@ -272,7 +291,7 @@ const AllManager = () => {
                     No Roles Available
                   </Table.Cell>
                 </Table.Row>
-              ) : isError ? (
+              ) : isRoleError ? (
                 <Table.Row className="h-[70px]">
                   <Table.Cell colSpan={10} textAlign="center">
                     Error in roles.
@@ -283,7 +302,12 @@ const AllManager = () => {
                   <Table.Row className={`h-[70px]`} key={role.roleId}>
                     <Table.Cell textAlign="center">{role.roleName}</Table.Cell>
                     <Table.Cell textAlign="center">
-                      {role.allowedRoutes[0].label}
+                      {role?.allowedRoutes?.map((route, index) => (
+                        <span key={index} className="flex flex-col">
+                          {route.label}
+                          {index < role?.allowedRoutes.length - 1 && ", "}
+                        </span>
+                      ))}
                     </Table.Cell>
                     <Table.Cell textAlign="center">
                       <HStack
@@ -293,7 +317,7 @@ const AllManager = () => {
                         gap={5}
                       >
                         <Button
-                          onClick={() => toggleModal("editRole", 23)}
+                          onClick={() => toggleModal("editRole", role.roleId)}
                           className="text-gray-600"
                         >
                           <RenderIcon
@@ -304,7 +328,7 @@ const AllManager = () => {
                         </Button>
 
                         <span
-                          onClick={() => toggleModal("deleteRole", 23)}
+                          onClick={() => toggleModal("deleteRole", role.roleId)}
                           className="text-red-500"
                         >
                           <RenderIcon
@@ -337,12 +361,21 @@ const AllManager = () => {
       <DeleteManager
         isOpen={modal.deleteManager}
         onClose={closeModal}
-        managerId={12}
+        managerId={selectedId}
       />
 
       <AddRole isOpen={modal.addRole} onClose={closeModal} />
-      <EditRole isOpen={modal.editRole} onClose={closeModal} roleId={12} />
-      <DeleteRole isOpen={modal.deleteRole} onClose={closeModal} roleId={12} />
+      <EditRole
+        isOpen={modal.editRole}
+        onClose={closeModal}
+        roleId={selectedId}
+      />
+
+      <DeleteRole
+        isOpen={modal.deleteRole}
+        onClose={closeModal}
+        roleId={selectedId}
+      />
     </>
   );
 };

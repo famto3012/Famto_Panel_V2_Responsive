@@ -46,7 +46,7 @@ const AddManager = ({ isOpen, onClose, geofenceOptions }) => {
   } = useQuery({
     queryKey: ["all-roles"],
     queryFn: () => fetchAllRoles(navigate),
-    enabled: isOpen,
+    enabled: isOpen ? true : false,
   });
 
   const roleOptions = allRoles?.map((role) => ({
