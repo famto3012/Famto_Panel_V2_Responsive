@@ -101,6 +101,8 @@ export const fetchAllRoles = async (navigate) => {
     const api = useApiClient(navigate);
     const res = await api.get(`/admin/managers/manager-roles`);
 
+    console.log("Data", res.data);
+
     return res.status === 200 ? res.data : [];
   } catch (err) {
     throw new Error(
@@ -125,7 +127,7 @@ export const fetchSingleRole = async (roleId, navigate) => {
 export const deleteRole = async (roleId, navigate) => {
   try {
     const api = useApiClient(navigate);
-    const res = await api.delete(`/admin/managers/delete-role/${roleId}`);
+    const res = await api.delete(`/admin/managers/manager-roles/${roleId}`);
 
     return res.status === 200 ? res.data.message : null;
   } catch (err) {

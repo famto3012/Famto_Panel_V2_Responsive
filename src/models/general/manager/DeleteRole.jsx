@@ -9,8 +9,34 @@ import {
 } from "@/components/ui/dialog";
 import { toaster } from "@/components/ui/toaster";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteRole } from "@/hooks/manager/useManager";
 
-const DeleteRole = ({ isOpen, onClose, selectedId }) => {
+const DeleteRole = ({ isOpen, onClose, roleId }) => {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const handleDeleteRole = useMutation({
+    mutationKey: ["delete-manager"],
+    mutationFn: () => deleteRole(roleId, navigate),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["get-all-role"]);
+      onClose();
+      toaster.create({
+        title: "Success",
+        description: "Role deleted successfully",
+        type: "success",
+      });
+    },
+    onError: () => {
+      toaster.create({
+        title: "Error",
+        description: "Error while deleting role",
+        type: "error",
+      });
+    },
+  });
   return (
     <DialogRoot
       open={isOpen}
@@ -38,10 +64,10 @@ const DeleteRole = ({ isOpen, onClose, selectedId }) => {
 
           <Button
             className="bg-red-500 p-2 text-white"
-            onClick={() => {}}
-            disabled={false}
+            onClick={() => handleDeleteRole.mutate()}
+            disabled={handleDeleteRole.isPending}
           >
-            Delete
+            {handleDeleteRole.isPending ? `Deleting...` : `Delete`}
           </Button>
         </DialogFooter>
       </DialogContent>

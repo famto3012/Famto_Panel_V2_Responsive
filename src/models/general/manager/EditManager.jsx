@@ -26,8 +26,8 @@ const EditManager = ({ isOpen, onClose, managerId, geofenceOptions }) => {
     email: "",
     phone: "",
     password: "",
-    assignRole: "",
-    geofence: "",
+    role: "",
+    geofenceId: "",
   });
 
   const navigate = useNavigate();
@@ -47,7 +47,7 @@ const EditManager = ({ isOpen, onClose, managerId, geofenceOptions }) => {
     isLoading: managerLoading,
     isError: managerError,
   } = useQuery({
-    queryKey: ["all-roles"],
+    queryKey: ["manager-detail", managerId],
     queryFn: () => fetchSingleManager(managerId, navigate),
     enabled: isOpen,
   });
@@ -66,12 +66,10 @@ const EditManager = ({ isOpen, onClose, managerId, geofenceOptions }) => {
     enabled: isOpen,
   });
 
-  // const roleOptions = allRoles?.map((role) => ({
-  //   label: role.roleName,
-  //   value: role.roleId,
-  // }));
-
-  const roleOptions = [];
+  const roleOptions = allRoles?.map((role) => ({
+    label: role.roleName,
+    value: role.roleId,
+  }));
 
   const handleEditManager = useMutation({
     mutationKey: ["edit-manager"],
@@ -206,7 +204,7 @@ const EditManager = ({ isOpen, onClose, managerId, geofenceOptions }) => {
               <Select
                 className="w-2/3 outline-none focus:outline-none"
                 value={geofenceOptions?.find(
-                  (option) => option.value === formData.geofence
+                  (option) => option.value === formData.geofenceId
                 )}
                 isClearable
                 isSearchable
@@ -228,10 +226,10 @@ const EditManager = ({ isOpen, onClose, managerId, geofenceOptions }) => {
 
           <Button
             className="bg-teal-700 p-2 text-white"
-            onClick={() => {}}
-            disabled={false}
+            onClick={() => handleEditManager.mutate()}
+            disabled={handleEditManager.isPending}
           >
-            Save
+            {handleEditManager.isPending ? `Saving...` : `Save`}
           </Button>
         </DialogFooter>
       </DialogContent>
