@@ -817,7 +817,7 @@ const MainSideBar = ({ showClose = false, onClick }) => {
   const { data } = useQuery({
     queryKey: ["allowed-routes"],
     queryFn: () => fetchAllowedRoutes(navigate),
-    enabled: (token && role !== "Admin") || role !== "Merchant",
+    enabled: !!token && role !== "Admin" && role !== "Merchant",
   });
 
   useEffect(() => {

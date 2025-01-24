@@ -18,7 +18,7 @@ const CustomerRoutes = () => (
       <Route
         path=":customerId"
         element={
-          <ProtectedRoute requiredRole="Admin">
+          <ProtectedRoute route="/customer/:customerId">
             <CustomerDetail />
           </ProtectedRoute>
         }

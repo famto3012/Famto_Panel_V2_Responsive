@@ -19,7 +19,7 @@ const AccountRoutes = () => (
       <Route
         path="activity-logs"
         element={
-          <ProtectedRoute requiredRole="Admin">
+          <ProtectedRoute route="/account/activity-logs">
             <ActivityLog />
           </ProtectedRoute>
         }
@@ -27,7 +27,7 @@ const AccountRoutes = () => (
       <Route
         path="account-logs"
         element={
-          <ProtectedRoute requiredRole="Admin">
+          <ProtectedRoute route="/account/account-logs">
             <AccountLog />
           </ProtectedRoute>
         }

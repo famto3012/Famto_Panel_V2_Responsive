@@ -26,7 +26,7 @@ const NotificationRoutes = () => (
       <Route
         path="push-notification"
         element={
-          <ProtectedRoute requiredRole="Admin">
+          <ProtectedRoute route="/notification/push-notification">
             <PushNotification />
           </ProtectedRoute>
         }
@@ -34,7 +34,7 @@ const NotificationRoutes = () => (
       <Route
         path="settings"
         element={
-          <ProtectedRoute requiredRole="Admin">
+          <ProtectedRoute route="/notification/settings">
             <NotificationSetting />
           </ProtectedRoute>
         }
@@ -42,7 +42,7 @@ const NotificationRoutes = () => (
       <Route
         path="alert-notification"
         element={
-          <ProtectedRoute requiredRole="Admin">
+          <ProtectedRoute route="/notification/alert-notification">
             <AlertNotification />
           </ProtectedRoute>
         }
