@@ -8,6 +8,8 @@ const encryptStorage = new EncryptStorage(secretKey, {
   prefix: "FAMTO",
 });
 
+let isNavigating = false;
+
 const refreshAccessToken = async () => {
   try {
     const refreshToken = encryptStorage.getItem("refreshToken");
@@ -24,21 +26,23 @@ const refreshAccessToken = async () => {
     const { newToken } = response.data;
 
     encryptStorage.setItem("token", newToken);
-
+    isNavigating = false;
     return newToken;
   } catch (error) {
+    isNavigating = true;
     await clearStorage();
     return null;
   }
 };
 
 const clearStorage = async () => {
-  await encryptStorage.removeItem("token");
-  await encryptStorage.removeItem("role");
-  await encryptStorage.removeItem("userId");
-  await encryptStorage.removeItem("fcmToken");
-  await encryptStorage.removeItem("username");
-  await encryptStorage.removeItem("refreshToken");
+  // await encryptStorage.removeItem("token");
+  // await encryptStorage.removeItem("role");
+  // await encryptStorage.removeItem("userId");
+  // await encryptStorage.removeItem("fcmToken");
+  // await encryptStorage.removeItem("username");
+  // await encryptStorage.removeItem("refreshToken");
+  await encryptStorage.clear();
 };
 
 const useApiClient = (navigate) => {
@@ -63,22 +67,18 @@ const useApiClient = (navigate) => {
     (response) => response,
     async (error) => {
       if (error.response?.status === 401 && !error.config._retry) {
-        try {
-          error.config._retry = true;
-          const newAccessToken = await refreshAccessToken();
+        error.config._retry = true;
+        const newAccessToken = await refreshAccessToken();
 
-          if (newAccessToken) {
-            error.config.headers["Authorization"] = `Bearer ${newAccessToken}`;
-            return axiosInstance(error.config);
-          } else {
+        if (newAccessToken) {
+          error.config.headers["Authorization"] = `Bearer ${newAccessToken}`;
+          return axiosInstance(error.config);
+        } else {
+          if (!isNavigating) {
             await clearStorage();
+            isNavigating = true;
             navigate("/auth/sign-in");
-            return Promise.reject("Session expired. Please log in again.");
           }
-        } catch (refreshError) {
-          await clearStorage();
-          navigate("/auth/sign-in");
-          return Promise.reject(refreshError);
         }
       }
       return Promise.reject(error);

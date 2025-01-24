@@ -1,20 +1,75 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import RenderIcon from "@/icons/RenderIcon";
 
 import AuthContext from "@/context/AuthContext";
+import { useQuery } from "@tanstack/react-query";
+import { fetchAllowedRoutes } from "@/hooks/manager/useManager";
+import {
+  allowedMerchantRouteOptions,
+  smallSideBarMenuItems,
+} from "@/utils/defaultData";
 
 const SmallSideBar = () => {
   const [selectedLink, setSelectedLink] = useState("");
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [allowedRoutes, setAllowedRoutes] = useState([]);
+  const [menuItems, setMenuItems] = useState([]);
+  const [groupedMenuItems, setGroupedMenuItems] = useState([]);
 
-  const { role } = useContext(AuthContext);
+  const { token, role } = useContext(AuthContext);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setSelectedLink(location.pathname);
   }, [location.pathname]);
+
+  const { data } = useQuery({
+    queryKey: ["allowed-routes"],
+    queryFn: () => fetchAllowedRoutes(navigate),
+    enabled: !!token && role !== "Admin" && role !== "Merchant",
+  });
+
+  useEffect(() => {
+    if (role === "Merchant") {
+      setAllowedRoutes(allowedMerchantRouteOptions);
+    } else if (role !== "Admin" && role !== "Merchant" && data) {
+      console.log(data);
+      setAllowedRoutes(data);
+    }
+  }, [data, role]);
+
+  useEffect(() => {
+    const grouped = menuItems.reduce((acc, item) => {
+      if (item.dropDown) {
+        if (!acc[item.dropLabel]) acc[item.dropLabel] = [];
+        acc[item.dropLabel].push(item);
+      } else {
+        if (!acc["general"]) acc["general"] = [];
+        acc["general"].push(item);
+      }
+      return acc;
+    }, {});
+    setGroupedMenuItems(grouped); // Update state with grouped menu items
+  }, [menuItems]);
+
+  useEffect(() => {
+    // Update menuItems based on allowedRoutes and current user's role
+    const updatedMenuItems = smallSideBarMenuItems.map((item) => {
+      // Check if the route is in allowedRoutes
+      if (allowedRoutes.some((route) => route.value === item.to)) {
+        // Add the current user's role if it's not already in the roles array
+        if (!item.roles.includes(role)) {
+          return { ...item, roles: [...item.roles, role] };
+        }
+      }
+      return item;
+    });
+
+    setMenuItems(updatedMenuItems);
+  }, [role, allowedRoutes]);
 
   return (
     <div className="fixed w-[4rem] h-full bg-gradient-to-b from-[#016B6C] to-[#000] bg-[length:100%_150%] bg-top font-poppins overflow-y-auto">
@@ -34,76 +89,23 @@ const SmallSideBar = () => {
       <div className="dropside"></div>
 
       <ul className="ul-side">
-        <Link to="/home" className="side">
-          <span className="m-2">
-            <RenderIcon iconName="HomeIcon" size={22} loading={6} />
-          </span>
-        </Link>
-        <Link
-          to="/order"
-          className={`side ${selectedLink === "/order" || /^\/order\/[A-Za-z0-9]+$/.test(selectedLink) ? "selected-link" : ""}`}
-        >
-          <span className="m-2">
-            <RenderIcon iconName="BookIcon" size={22} loading={6} />
-          </span>
-        </Link>
-        <Link
-          to="/merchant"
-          className={`side ${
-            selectedLink === "/merchant/payout" ? "selected-link" : ""
-          }`}
-        >
-          <span className="m-2">
-            <RenderIcon iconName="ShopIcon" size={22} loading={6} />
-          </span>
-        </Link>
-        <Link to="/product" className="side">
-          <span className="m-2">
-            <RenderIcon iconName="ProductIcon" size={22} loading={6} />
-          </span>
-        </Link>
-        <Link to="/customer" className="side">
-          <span className="m-2">
-            <RenderIcon iconName="UsersIcon" size={22} loading={6} />
-          </span>
-        </Link>
-        <Link
-          to="/agent"
-          className={`side ${
-            selectedLink === "/agent/payout" ? "selected-link" : ""
-          }`}
-        >
-          <span className="m-2">
-            <RenderIcon iconName="AgentIcon" size={22} loading={6} />
-          </span>
-        </Link>
-        <Link
-          to="/delivery-management"
-          className={` side ${
-            selectedLink === "/delivery-management" ? "selected-link" : ""
-          }`}
-        >
-          <span className="m-2">
-            <RenderIcon iconName="BikeIcon" size={22} loading={6} />
-          </span>
-        </Link>
-        <Link to="/comm-and-subs" className="side">
-          <span className="m-2">
-            <RenderIcon iconName="PercentageIcon" size={22} loading={6} />
-          </span>
-        </Link>
-        {role === "Admin" && (
-          <Link
-            to="/chat"
-            className={` side ${
-              selectedLink === "/chat" ? "selected-link" : ""
-            }`}
-          >
-            <span className="m-2">
-              <RenderIcon iconName="WhatsappIcon" size={22} loading={6} />
-            </span>
-          </Link>
-        )}
+        {groupedMenuItems["general"]
+          ?.filter((item) => item.roles.includes(role))
+          .map(
+            (
+              item // Only show items for the current role
+            ) => (
+              <Link
+                to={item.to}
+                className={`ps-4 side ${selectedLink.startsWith(item.to) ? "selected-link" : ""}`}
+                key={item.to}
+              >
+                <span className="m-2">
+                  <RenderIcon iconName={item.iconName} size={22} loading={6} />
+                </span>
+              </Link>
+            )
+          )}
       </ul>
     </div>
   );
