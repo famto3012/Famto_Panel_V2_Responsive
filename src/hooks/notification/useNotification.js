@@ -5,9 +5,9 @@ export const getNotificationLog = async ({ role, page, limit, navigate }) => {
     const api = useApiClient(navigate);
 
     const route =
-      role === "Admin"
-        ? "/admin/notification/get-admin-notification-log"
-        : "/admin/notification/get-merchant-notification-log";
+      role === "Merchant"
+        ? "/admin/notification/get-merchant-notification-log"
+        : "/admin/notification/get-admin-notification-log";
     const res = await api.get(route, {
       params: {
         page,
@@ -171,10 +171,7 @@ export const addPushNotifications = async ({
   }
 };
 
-export const deletePushNotification = async ({
-  navigate,
-  selectedId,
-}) => {
+export const deletePushNotification = async ({ navigate, selectedId }) => {
   try {
     const api = useApiClient(navigate);
     const res = await api.delete(
@@ -224,10 +221,7 @@ export const addAlertNotifications = async ({
   }
 };
 
-export const deleteAlertNotification = async ({
-  navigate,
-  selectedId,
-}) => {
+export const deleteAlertNotification = async ({ navigate, selectedId }) => {
   try {
     const api = useApiClient(navigate);
     const res = await api.delete(

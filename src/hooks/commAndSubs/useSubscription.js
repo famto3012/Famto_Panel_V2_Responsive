@@ -108,9 +108,9 @@ export const initiateSubscriptionPaymentForMerchant = async (
 ) => {
   try {
     const endPoint =
-      role === "Admin"
-        ? `/admin/subscription-payment/merchant-subscription-payment`
-        : `/admin/subscription-payment/merchant-subscription-payment-user`;
+      role === "Merchant"
+        ? `/admin/subscription-payment/merchant-subscription-payment-user`
+        : `/admin/subscription-payment/merchant-subscription-payment`;
 
     const api = useApiClient(navigate);
     const res = await api.post(endPoint, data);

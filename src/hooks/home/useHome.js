@@ -10,9 +10,9 @@ export const fetchGraphData = async ({
     const api = useApiClient(navigate);
 
     const route =
-      role === "Admin"
-        ? `/admin/home/home-screen-sale-data`
-        : `/admin/home/home-screen-sale-data-merchant`;
+      role === "Merchant"
+        ? `/admin/home/home-screen-sale-data-merchant`
+        : `/admin/home/home-screen-sale-data`;
 
     const formattedStartDate = startDate
       ? startDate.toLocaleDateString("en-CA")

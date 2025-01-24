@@ -8,9 +8,9 @@ export const fetchAllCategoriesOfMerchant = async (
 ) => {
   try {
     const route =
-      role === "Admin"
-        ? `/categories/admin/${merchantId}`
-        : `/categories/all-categories`;
+      role === "Merchant"
+        ? `/categories/all-categories`
+        : `/categories/admin/${merchantId}`;
 
     const api = useApiClient(navigate);
     const res = await api.get(route);
@@ -32,9 +32,9 @@ export const updateCategoryStatus = async (
 ) => {
   try {
     const route =
-      role === "Admin"
-        ? `/categories/admin/change-status/${merchantId}/${categoryId}`
-        : `/categories/change-status/${categoryId}`;
+      role === "Merchant"
+        ? `/categories/change-status/${categoryId}`
+        : `/categories/admin/change-status/${merchantId}/${categoryId}`;
 
     const api = useApiClient(navigate);
     const res = await api.patch(route, {});
@@ -59,9 +59,9 @@ export const updateCategoryOrder = async (categories, navigate) => {
 export const createNewCategory = async (role, data, navigate) => {
   try {
     const route =
-      role === "Admin"
-        ? `/categories/admin/add-category`
-        : `/categories/add-category`;
+      role === "Merchant"
+        ? `/categories/add-category`
+        : `/categories/admin/add-category`;
 
     const api = useApiClient(navigate);
     const res = await api.post(route, data);
@@ -84,9 +84,9 @@ export const fetchSingleCategoryDetail = async (
 ) => {
   try {
     const route =
-      role === "Admin"
-        ? `/categories/admin/${merchantId}/${categoryId}`
-        : `/categories/${categoryId}`;
+      role === "Merchant"
+        ? `/categories/${categoryId}`
+        : `/categories/admin/${merchantId}/${categoryId}`;
 
     const api = useApiClient(navigate);
     const res = await api.get(route);
@@ -110,9 +110,9 @@ export const updateCategoryDetail = async (
 ) => {
   try {
     const route =
-      role === "Admin"
-        ? `/categories/admin/edit-category/${merchantId}/${categoryId}`
-        : `/categories/${categoryId}`;
+      role === "Merchant"
+        ? `/categories/${categoryId}`
+        : `/categories/admin/edit-category/${merchantId}/${categoryId}`;
 
     const api = useApiClient(navigate);
     const res = await api.put(route, data);
@@ -135,9 +135,9 @@ export const deleteCategory = async (
 ) => {
   try {
     const route =
-      role === "Admin"
-        ? `/categories/admin/delete-category/${merchantId}/${categoryId}`
-        : `/categories/${categoryId}`;
+      role === "Merchant"
+        ? `/categories/${categoryId}`
+        : `/categories/admin/delete-category/${merchantId}/${categoryId}`;
 
     const api = useApiClient(navigate);
     const res = await api.delete(route);

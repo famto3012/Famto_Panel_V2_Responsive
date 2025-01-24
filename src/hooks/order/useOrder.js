@@ -6,11 +6,17 @@ export const fetchAllOrders = async (role, filter, page, limit, navigate) => {
 
     let route;
 
-    if (filter.selectedOption === "order" && role === "Admin") {
+    if (
+      filter.selectedOption === "order" &&
+      (role === "Admin" || role !== "Merchant")
+    ) {
       route = `/orders/admin/get-orders`;
     } else if (filter.selectedOption === "order" && role === "Merchant") {
       route = `/orders/get-orders`;
-    } else if (filter.selectedOption !== "order" && role === "Admin") {
+    } else if (
+      filter.selectedOption !== "order" &&
+      (role === "Admin" || role !== "Merchant")
+    ) {
       route = `/orders/admin/get-scheduled-orders`;
     } else if (filter.selectedOption !== "order" && role === "Merchant") {
       route = `/orders/get-scheduled-orders`;
@@ -43,9 +49,9 @@ export const fetchAllOrders = async (role, filter, page, limit, navigate) => {
 export const acceptOrder = async (orderId, role, navigate) => {
   try {
     const route =
-      role === "Admin"
-        ? `/orders/admin/confirm-order/${orderId}`
-        : `/orders/confirm-order/${orderId}`;
+      role === "Merchant"
+        ? `/orders/confirm-order/${orderId}`
+        : `/orders/admin/confirm-order/${orderId}`;
 
     const api = useApiClient(navigate);
     const res = await api.patch(route, {});
@@ -59,9 +65,9 @@ export const acceptOrder = async (orderId, role, navigate) => {
 export const rejectOrder = async (orderId, role, navigate) => {
   try {
     const route =
-      role === "Admin"
-        ? `/orders/admin/reject-order/${orderId}`
-        : `/orders/reject-order/${orderId}`;
+      role === "Merchant"
+        ? `/orders/reject-order/${orderId}`
+        : `/orders/admin/reject-order/${orderId}`;
 
     const api = useApiClient(navigate);
     const res = await api.put(route, {});
@@ -100,12 +106,14 @@ export const getOrderDetail = async (orderId, role, navigate) => {
 
     // Dynamically set the route based on the order type and role
     const route = isStandardOrder
-      ? role === "Admin"
-        ? `/orders/admin/${orderId}`
-        : `/orders/${orderId}`
-      : role === "Admin"
-        ? `/orders/admin/scheduled-order/${orderId}`
-        : `/orders/scheduled-order/${orderId}`;
+      ? role === "Merchant"
+        ? `/orders/${orderId}`
+        : `/orders/admin/${orderId}`
+      : role === "Merchant"
+        ? `/orders/scheduled-order/${orderId}`
+        : `/orders/admin/scheduled-order/${orderId}`;
+
+    console.log(route);
 
     const api = useApiClient(navigate);
     const res = await api.get(route);
@@ -124,9 +132,9 @@ export const searchCustomerForOrder = async (role, query, navigate) => {
     const api = useApiClient(navigate);
 
     const route =
-      role === "Admin"
-        ? `/admin/customers/search-for-order?query=${query}`
-        : `/admin/customers/search-customer-of-merchant-for-order?query=${query}`;
+      role === "Merchant"
+        ? `/admin/customers/search-customer-of-merchant-for-order?query=${query}`
+        : `/admin/customers/search-for-order?query=${query}`;
 
     const res = await api.get(route);
 
@@ -174,9 +182,9 @@ export const searchProductToOrder = async (
 export const createInvoice = async (role, data, navigate) => {
   try {
     const route =
-      role === "Admin"
-        ? `/orders/admin/create-order-invoice`
-        : `/orders/create-order-invoice`;
+      role === "Merchant"
+        ? `/orders/create-order-invoice`
+        : `/orders/admin/create-order-invoice`;
 
     const api = useApiClient(navigate);
     const res = await api.post(route, data);
@@ -190,7 +198,9 @@ export const createInvoice = async (role, data, navigate) => {
 export const createOrder = async (role, data, navigate) => {
   try {
     const route =
-      role === "Admin" ? `/orders/admin/create-order` : `/orders/create-order`;
+      role === "Merchant"
+        ? `/orders/create-order`
+        : `/orders/admin/create-order`;
 
     const api = useApiClient(navigate);
     const res = await api.post(route, data);
@@ -217,9 +227,9 @@ export const fetchMapplsAuthToken = async (navigate) => {
 export const downloadOrderCSV = async (role, filter, navigate) => {
   try {
     const route =
-      role === "Admin"
-        ? `/orders/admin/download-csv`
-        : `/orders/download-order-csv`;
+      role === "Merchant"
+        ? `/orders/download-order-csv`
+        : `/orders/admin/download-csv`;
 
     const api = useApiClient(navigate);
     const res = await api.get(route, {
