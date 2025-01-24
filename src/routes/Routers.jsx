@@ -188,7 +188,7 @@ const Routers = () => {
   const { data } = useQuery({
     queryKey: ["allowed-routes"],
     queryFn: () => fetchAllowedRoutes(navigate),
-    enabled: token && (role !== "Admin" || role !== "Merchant") ? true : false,
+    enabled: !!token && role !== "Admin" && role !== "Merchant",
   });
 
   useEffect(() => {

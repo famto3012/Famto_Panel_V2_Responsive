@@ -21,7 +21,7 @@ const MarketingRoutes = () => (
       <Route
         path="ad-banner"
         element={
-          <ProtectedRoute requiredRole="Admin">
+          <ProtectedRoute role="/marketing/ad-banner">
             <AdBanner />
           </ProtectedRoute>
         }
@@ -29,7 +29,7 @@ const MarketingRoutes = () => (
       <Route
         path="loyalty-point"
         element={
-          <ProtectedRoute requiredRole="Admin">
+          <ProtectedRoute role="/marketing/loyalty-point">
             <LoyaltyPoint />
           </ProtectedRoute>
         }
@@ -37,7 +37,7 @@ const MarketingRoutes = () => (
       <Route
         path="promo-code"
         element={
-          <ProtectedRoute requiredRole="Admin">
+          <ProtectedRoute role="/marketing/promo-code">
             <PromoCode />
           </ProtectedRoute>
         }
@@ -45,7 +45,7 @@ const MarketingRoutes = () => (
       <Route
         path="referral"
         element={
-          <ProtectedRoute requiredRole="Admin">
+          <ProtectedRoute role="/marketing/referral">
             <Referral />
           </ProtectedRoute>
         }
