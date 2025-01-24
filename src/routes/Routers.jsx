@@ -177,12 +177,12 @@ const Routers = () => {
 
   useEffect(() => {
     if (!token && !location.pathname.startsWith("/auth")) {
-      navigate("/auth/sign-in");
+      // Redirect only if not already on an auth page
+      navigate("/auth/sign-in", { replace: true });
     } else if (token && location.pathname.startsWith("/auth")) {
-      navigate("/home");
+      // Redirect to home if logged in and on an auth page
+      navigate("/home", { replace: true });
     }
-
-    // navigate("/maintenance");
   }, [token, location.pathname, navigate]);
 
   const { data } = useQuery({
@@ -224,7 +224,6 @@ const Routers = () => {
           const matches = allowedRoutes.some((allowed) =>
             route.path.startsWith(`/${allowed.value.split("/")[1]}`)
           );
-          console.log(`Checking route: ${route.path}, Matches: ${matches}`);
           return matches;
         });
 
