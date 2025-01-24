@@ -18,38 +18,10 @@ const MarketingRoutes = () => (
   <Suspense fallback={<Loader />}>
     <Routes>
       <Route path="discount" element={<Discount />} />
-      <Route
-        path="ad-banner"
-        element={
-          <ProtectedRoute role="/marketing/ad-banner">
-            <AdBanner />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="loyalty-point"
-        element={
-          <ProtectedRoute role="/marketing/loyalty-point">
-            <LoyaltyPoint />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="promo-code"
-        element={
-          <ProtectedRoute role="/marketing/promo-code">
-            <PromoCode />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="referral"
-        element={
-          <ProtectedRoute role="/marketing/referral">
-            <Referral />
-          </ProtectedRoute>
-        }
-      />
+      <Route path="ad-banner" element={<AdBanner />} />
+      <Route path="loyalty-point" element={<LoyaltyPoint />} />
+      <Route path="promo-code" element={<PromoCode />} />
+      <Route path="referral" element={<Referral />} />
     </Routes>
   </Suspense>
 );

@@ -16,22 +16,8 @@ const Setting = lazy(() => import("../screens/account/setting/Setting"));
 const AccountRoutes = () => (
   <Suspense fallback={<Loader />}>
     <Routes>
-      <Route
-        path="activity-logs"
-        element={
-          <ProtectedRoute route="/account/activity-logs">
-            <ActivityLog />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="account-logs"
-        element={
-          <ProtectedRoute route="/account/account-logs">
-            <AccountLog />
-          </ProtectedRoute>
-        }
-      />
+      <Route path="activity-logs" element={<ActivityLog />} />
+      <Route path="account-logs" element={<AccountLog />} />
       <Route path="settings" element={<Setting />} />
     </Routes>
   </Suspense>

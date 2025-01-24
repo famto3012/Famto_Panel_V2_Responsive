@@ -23,30 +23,9 @@ const NotificationRoutes = () => (
   <Suspense fallback={<Loader />}>
     <Routes>
       <Route path="logs" element={<NotificationLog />} />
-      <Route
-        path="push-notification"
-        element={
-          <ProtectedRoute route="/notification/push-notification">
-            <PushNotification />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="settings"
-        element={
-          <ProtectedRoute route="/notification/settings">
-            <NotificationSetting />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="alert-notification"
-        element={
-          <ProtectedRoute route="/notification/alert-notification">
-            <AlertNotification />
-          </ProtectedRoute>
-        }
-      />
+      <Route path="push-notification" element={<PushNotification />} />
+      <Route path="settings" element={<NotificationSetting />} />
+      <Route path="alert-notification" element={<AlertNotification />} />
     </Routes>
   </Suspense>
 );
