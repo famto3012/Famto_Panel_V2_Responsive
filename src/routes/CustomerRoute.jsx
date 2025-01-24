@@ -15,14 +15,7 @@ const CustomerRoutes = () => (
   <Suspense fallback={<Loader />}>
     <Routes>
       <Route path="" element={<AllCustomer />} />
-      <Route
-        path=":customerId"
-        element={
-          <ProtectedRoute route="/customer/:customerId">
-            <CustomerDetail />
-          </ProtectedRoute>
-        }
-      />
+      <Route path=":customerId" element={<CustomerDetail />} />
     </Routes>
   </Suspense>
 );
