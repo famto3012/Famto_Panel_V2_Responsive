@@ -36,13 +36,12 @@ const refreshAccessToken = async () => {
 };
 
 const clearStorage = async () => {
-  // await encryptStorage.removeItem("token");
-  // await encryptStorage.removeItem("role");
-  // await encryptStorage.removeItem("userId");
-  // await encryptStorage.removeItem("fcmToken");
-  // await encryptStorage.removeItem("username");
-  // await encryptStorage.removeItem("refreshToken");
-  await encryptStorage.clear();
+  await encryptStorage.removeItem("token");
+  await encryptStorage.removeItem("role");
+  await encryptStorage.removeItem("userId");
+  await encryptStorage.removeItem("fcmToken");
+  await encryptStorage.removeItem("username");
+  await encryptStorage.removeItem("refreshToken");
 };
 
 const useApiClient = (navigate) => {
