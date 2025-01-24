@@ -188,7 +188,7 @@ const Routers = () => {
   const { data } = useQuery({
     queryKey: ["allowed-routes"],
     queryFn: () => fetchAllowedRoutes(navigate),
-    enabled: (token && role !== "Admin") || role !== "Merchant",
+    enabled: token && (role !== "Admin" || role !== "Merchant") ? true : false,
   });
 
   useEffect(() => {
@@ -219,12 +219,14 @@ const Routers = () => {
   // Filter routes based on allowedRoutes
   const filteredRoutes =
     role === "Admin"
-      ? allRoutes // Admin gets access to all routes
-      : allRoutes.filter((route) =>
-          allowedRoutes.some((allowed) => {
-            route.path.startsWith(allowed.value);
-          })
-        );
+      ? allRoutes
+      : allRoutes.filter((route) => {
+          const matches = allowedRoutes.some((allowed) =>
+            route.path.startsWith(`/${allowed.value.split("/")[1]}`)
+          );
+          console.log(`Checking route: ${route.path}, Matches: ${matches}`);
+          return matches;
+        });
 
   return (
     <Suspense fallback={<Loader />}>
