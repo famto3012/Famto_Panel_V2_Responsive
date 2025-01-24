@@ -98,7 +98,6 @@ const EditCategory = ({ isOpen, onClose, merchantId }) => {
         navigate
       ),
     onSuccess: () => {
-      console.log("New name", formData.categoryName);
       queryClient.invalidateQueries(["all-category", merchantId]);
       setSelectedCategory({
         ...selectedCategory,

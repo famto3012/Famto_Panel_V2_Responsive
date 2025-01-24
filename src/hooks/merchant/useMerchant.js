@@ -86,9 +86,9 @@ export const createNewMerchant = async (data, navigate) => {
 export const fetchSingleMerchantDetail = async (role, merchantId, navigate) => {
   try {
     const route =
-      role === "Admin"
-        ? `/merchants/admin/${merchantId}`
-        : `/merchants/profile`;
+      role === "Merchant"
+        ? `/merchants/profile`
+        : `/merchants/admin/${merchantId}`;
 
     const api = useApiClient(navigate);
     const res = await api.get(route);
@@ -110,9 +110,9 @@ export const updateMerchantDetail = async (
 ) => {
   try {
     const route =
-      role === "Admin"
-        ? `/merchants/admin/update-merchant-details/${merchantId}`
-        : `/merchants/update-merchant-details`;
+      role === "Merchant"
+        ? `/merchants/update-merchant-details`
+        : `/merchants/admin/update-merchant-details/${merchantId}`;
 
     const api = useApiClient(navigate);
     const res = await api.put(route, data);
@@ -174,9 +174,9 @@ export const updateStatusMutation = async (merchantId, navigate) => {
 export const updateMerchant = async (role, merchantId, data, navigate) => {
   try {
     const route =
-      role === "Admin"
-        ? `/merchants/admin/edit-merchant/${merchantId}`
-        : `/merchants/edit-profile`;
+      role === "Merchant"
+        ? `/merchants/edit-profile`
+        : `/merchants/admin/edit-merchant/${merchantId}`;
 
     const api = useApiClient(navigate);
     const res = await api.put(route, data);

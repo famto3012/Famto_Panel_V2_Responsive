@@ -12,9 +12,11 @@ import {
 import { Button } from "@/components/ui/button";
 
 import AuthContext from "@/context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Logout = ({ isOpen, onClose }) => {
   const { clearStorage } = useContext(AuthContext);
+  const navigate = useNavigate();
   return (
     <DialogRoot
       open={isOpen}

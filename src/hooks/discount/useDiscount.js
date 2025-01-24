@@ -5,9 +5,9 @@ import useApiClient from "@/api/apiClient";
 export const fetchAllMerchantDiscount = async (role, merchantId, navigate) => {
   try {
     const endPoint =
-      role === "Admin"
-        ? `/admin/shop-discount/get-merchant-discount-admin/${merchantId}`
-        : `/merchant/shop-discount/get-merchant-discount`;
+      role === "Merchant"
+        ? `/merchant/shop-discount/get-merchant-discount`
+        : `/admin/shop-discount/get-merchant-discount-admin/${merchantId}`;
 
     const api = useApiClient(navigate);
     const res = await api.get(endPoint);
@@ -24,9 +24,9 @@ export const fetchAllMerchantDiscount = async (role, merchantId, navigate) => {
 export const createMerchantDiscount = async (role, data, navigate) => {
   try {
     const endPoint =
-      role === "Admin"
-        ? `/admin/shop-discount/add-merchant-discount-admin`
-        : `/merchant/shop-discount/add-merchant-discount`;
+      role === "Merchant"
+        ? `/merchant/shop-discount/add-merchant-discount`
+        : `/admin/shop-discount/add-merchant-discount-admin`;
 
     console.log("data: ", data);
 
@@ -49,9 +49,9 @@ export const updateMerchantDiscountStatus = async (
 ) => {
   try {
     const endPoint =
-      role === "Admin"
-        ? `/admin/shop-discount/merchant-status-admin/${discountId}`
-        : `/merchant/shop-discount/merchant-status/${discountId}`;
+      role === "Merchant"
+        ? `/merchant/shop-discount/merchant-status/${discountId}`
+        : `/admin/shop-discount/merchant-status-admin/${discountId}`;
 
     const api = useApiClient(navigate);
     const res = await api.put(endPoint, {});
@@ -89,9 +89,9 @@ export const updateMerchantDiscount = async (
 ) => {
   try {
     const endPoint =
-      role === "Admin"
-        ? `/admin/shop-discount/edit-merchant-discount-admin/${discountId}`
-        : `/admin/shop-discount/edit-merchant-discount/${discountId}`;
+      role === "Merchant"
+        ? `/admin/shop-discount/edit-merchant-discount/${discountId}`
+        : `/admin/shop-discount/edit-merchant-discount-admin/${discountId}`;
 
     const api = useApiClient(navigate);
     const res = await api.put(endPoint, data);
@@ -108,9 +108,9 @@ export const updateMerchantDiscount = async (
 export const deleteMerchantDiscount = async (role, discountId, navigate) => {
   try {
     const endPoint =
-      role === "Admin"
-        ? `/admin/shop-discount/delete-merchant-discount-admin/${discountId}`
-        : `/admin/shop-discount/delete-merchant-discount/${discountId}`;
+      role === "Merchant"
+        ? `/admin/shop-discount/delete-merchant-discount/${discountId}`
+        : `/admin/shop-discount/delete-merchant-discount-admin/${discountId}`;
 
     const api = useApiClient(navigate);
     const res = await api.delete(endPoint);
@@ -129,9 +129,9 @@ export const deleteMerchantDiscount = async (role, discountId, navigate) => {
 export const fetchAllProductDiscount = async (role, merchantId, navigate) => {
   try {
     const endPoint =
-      role === "Admin"
-        ? `/admin/product-discount/get-product-discount-admin/${merchantId}`
-        : `/merchant/product-discount/get-product-discount`;
+      role === "Merchant"
+        ? `/merchant/product-discount/get-product-discount`
+        : `/admin/product-discount/get-product-discount-admin/${merchantId}`;
 
     const api = useApiClient(navigate);
     const res = await api.get(endPoint);
@@ -148,9 +148,9 @@ export const fetchAllProductDiscount = async (role, merchantId, navigate) => {
 export const createProductDiscount = async (role, data, navigate) => {
   try {
     const endPoint =
-      role === "Admin"
-        ? `/admin/product-discount/add-product-discount-admin`
-        : `/merchant/product-discount/add-product-discount`;
+      role === "Merchant"
+        ? `/merchant/product-discount/add-product-discount`
+        : `/admin/product-discount/add-product-discount-admin`;
 
     console.log("data: ", data);
 
@@ -173,9 +173,9 @@ export const updateProductDiscountStatus = async (
 ) => {
   try {
     const endPoint =
-      role === "Admin"
-        ? `/admin/product-discount/product-status-admin/${discountId}`
-        : `/merchant/product-discount/product-status/${discountId}`;
+      role === "Merchant"
+        ? `/merchant/product-discount/product-status/${discountId}`
+        : `/admin/product-discount/product-status-admin/${discountId}`;
 
     const api = useApiClient(navigate);
     const res = await api.put(endPoint, {});
@@ -213,9 +213,9 @@ export const updateProductDiscount = async (
 ) => {
   try {
     const endPoint =
-      role === "Admin"
-        ? `/admin/product-discount/edit-product-discount-admin/${discountId}`
-        : `/admin/product-discount/edit-product-discount/${discountId}`;
+      role === "Merchant"
+        ? `/admin/product-discount/edit-product-discount/${discountId}`
+        : `/admin/product-discount/edit-product-discount-admin/${discountId}`;
 
     const api = useApiClient(navigate);
     const res = await api.put(endPoint, data);
@@ -232,9 +232,9 @@ export const updateProductDiscount = async (
 export const deleteProductDiscount = async (role, discountId, navigate) => {
   try {
     const endPoint =
-      role === "Admin"
-        ? `/admin/product-discount/delete-product-discount-admin/${discountId}`
-        : `/merchant/product-discount/delete-product-discount/${discountId}`;
+      role === "Merchant"
+        ? `/merchant/product-discount/delete-product-discount/${discountId}`
+        : `/admin/product-discount/delete-product-discount-admin/${discountId}`;
 
     const api = useApiClient(navigate);
     const res = await api.delete(endPoint);

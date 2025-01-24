@@ -3,9 +3,9 @@ import useApiClient from "@/api/apiClient";
 export const fetchCustomer = async (role, filter, page, limit, navigate) => {
   try {
     const route =
-      role === "Admin"
-        ? `/admin/customers/fetch-customer`
-        : `/admin/customers/fetch-customer-of-merchant`;
+      role === "Merchant"
+        ? `/admin/customers/fetch-customer-of-merchant`
+        : `/admin/customers/fetch-customer`;
 
     const api = useApiClient(navigate);
     const res = await api.get(route, {

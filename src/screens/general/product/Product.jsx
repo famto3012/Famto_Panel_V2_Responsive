@@ -43,11 +43,11 @@ const Product = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["merchant-dropdown"],
     queryFn: () => fetchMerchantsForDropDown(navigate),
-    enabled: role && role === "Admin",
+    enabled: role && role !== "Merchant",
   });
 
   useEffect(() => {
-    if (role === "Admin" && data && data.length > 0) {
+    if ((role === "Admin" || role !== "Merchant") && data && data.length > 0) {
       setSelectedMerchant(data[0]._id);
     }
 
@@ -112,7 +112,7 @@ const Product = () => {
         <GlobalSearch />
 
         <div className="flex justify-between bg-white p-5 mx-[20px] mt-5 rounded-md">
-          {role === "Admin" && (
+          {role !== "Merchant" && (
             <Select
               className="w-[200px] outline-none focus:outline-none"
               value={merchantOptions?.find(
