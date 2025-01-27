@@ -71,7 +71,7 @@ const CommissionLog = () => {
   } = useQuery({
     queryKey: ["merchant-dropdown"],
     queryFn: () => fetchMerchantsForDropDown(navigate),
-    enabled: role === "Admin" ? true : false,
+    enabled: role !== "Merchant" ? true : false,
   });
 
   const merchantOptions = [
@@ -132,10 +132,10 @@ const CommissionLog = () => {
 
         <div
           className={`mx-[20px] rounded-lg mt-[30px] flex items-center bg-white p-5 ${
-            role === "Admin" ? "justify-between" : "justify-end"
+            role !== "Merchant" ? "justify-between" : "justify-end"
           } `}
         >
-          {role === "Admin" && (
+          {role !== "Merchant" && (
             <Select
               className="w-[200px] px-2 py-2 rounded-lg outline-none focus:outline-none hidden lg:block"
               value={merchantOptions?.find(
@@ -164,7 +164,7 @@ const CommissionLog = () => {
               }
             />
 
-            {role === "Admin" && (
+            {role !== "Merchant" && (
               <input
                 type="search"
                 name="search"
@@ -261,7 +261,7 @@ const CommissionLog = () => {
                     <Table.Cell textAlign="center">{log.logDate}</Table.Cell>
                     <Table.Cell textAlign="center">
                       {log.status === "Unpaid" ? (
-                        role === "Admin" ? (
+                        role !== "Merchant" ? (
                           <button
                             className="bg-teal-700 text-white px-3 py-2 rounded-md text-sm"
                             onClick={() => toggleModal(log?.logId)}

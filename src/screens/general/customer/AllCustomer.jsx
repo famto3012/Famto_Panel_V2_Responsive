@@ -76,7 +76,7 @@ const AllCustomer = () => {
       <>
         <div className="flex items-center justify-between mx-8 mt-5">
           <h1 className="text-lg font-bold">Customers</h1>
-          {role === "Admin" && (
+          {role !== "Merchant" && (
             <button
               className="bg-cyan-100 text-black rounded-md px-4 py-2 font-semibold flex items-center space-x-2"
               onClick={() => setShowModal(true)}

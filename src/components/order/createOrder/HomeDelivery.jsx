@@ -130,7 +130,7 @@ const HomeDelivery = ({ data, address }) => {
   return (
     <div className="bg-white  mt-5 rounded">
       <div className="flex flex-col gap-6">
-        {role === "Admin" && (
+        {role !== "Merchant" && (
           <SelectMerchant onMerchantSelect={handleMerchantSelect} />
         )}
 
@@ -166,7 +166,7 @@ const HomeDelivery = ({ data, address }) => {
           onProductSelect={handleSelectProduct}
         />
 
-        {role === "Admin" && (
+        {role !== "Merchant" && (
           <div className="flex flex-col md:flex-row md:items-start gap-[20px] md:gap-0">
             <label
               className="md:w-1/3 md:px-6 text-gray-700"

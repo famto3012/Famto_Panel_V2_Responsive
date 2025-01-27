@@ -228,7 +228,7 @@ const AddProduct = ({ isOpen, onClose, merchantId }) => {
                   onChange={handleInputChange}
                 />
               </div>
-              {role === "Admin" && (
+              {role !== "Merchant" && (
                 <div className="flex items-center">
                   <label className="w-1/3 text-gray-500" htmlFor="price">
                     Price <span className="text-red-600">*</span>
@@ -311,14 +311,14 @@ const AddProduct = ({ isOpen, onClose, merchantId }) => {
               </div>
               <div className="flex items-center">
                 <label className="w-1/3 text-gray-500" htmlFor="costPrice">
-                  {role === "Admin" ? "Cost Price" : "Price"}
+                  {role !== "Merchant" ? "Cost Price" : "Price"}
                   <span className="text-red-600 ml-1">*</span>
                 </label>
                 <input
                   className="border-2 border-gray-100 rounded p-2 w-2/3 focus:outline-none"
                   type="text"
                   name="costPrice"
-                  placeholder={role === "Admin" ? "Cost Price" : "Price"}
+                  placeholder={role !== "Merchant" ? "Cost Price" : "Price"}
                   value={formData.costPrice}
                   onChange={handleInputChange}
                   onKeyDown={handleInputNumberValidation}

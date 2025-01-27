@@ -91,7 +91,7 @@ const MerchantSubLog = ({ selected, filter }) => {
                 <Table.Cell textAlign="center">{item.paymentMode}</Table.Cell>
                 <Table.Cell textAlign="center">{item.startDate}</Table.Cell>
                 <Table.Cell textAlign="center">
-                  {item.status === "Unpaid" && role === "Admin" ? (
+                  {item.status === "Unpaid" && role !== "Merchant" ? (
                     <button
                       onClick={() => toggleModal(item.logId)}
                       className="bg-teal-700 text-white p-3 rounded-md"

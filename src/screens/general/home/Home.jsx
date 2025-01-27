@@ -507,7 +507,7 @@ const Home = () => {
               >
                 Sales (in ₹)
               </Radio>
-              {role === "Admin" && (
+              {role !== "Merchant" && (
                 <Radio
                   value="merchants"
                   className="text-black text-[16px] cursor-pointer w-[110px] md:w-fit"
@@ -527,7 +527,7 @@ const Home = () => {
               >
                 Commission (in ₹)
               </Radio>
-              {role === "Admin" && (
+              {role !== "Merchant" && (
                 <Radio
                   value="subscription"
                   className="text-black text-[16px] cursor-pointer w-[160px] md:w-fit"

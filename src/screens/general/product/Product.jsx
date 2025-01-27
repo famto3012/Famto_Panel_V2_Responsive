@@ -47,7 +47,11 @@ const Product = () => {
   });
 
   useEffect(() => {
-    if ((role === "Admin" || role !== "Merchant") && data && data.length > 0) {
+    if (
+      (role !== "Merchant" || role !== "Merchant") &&
+      data &&
+      data.length > 0
+    ) {
       setSelectedMerchant(data[0]._id);
     }
 

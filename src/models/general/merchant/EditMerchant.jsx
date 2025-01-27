@@ -54,7 +54,7 @@
 //       onClose();
 //       toaster.create({
 //         title: "Success",
-//         description: `${role === "Admin" ? `Merchant profile` : `Profile`} updated successfully`,
+//         description: `${role !== "Merchant" ? `Merchant profile` : `Profile`} updated successfully`,
 //         type: "success",
 //       });
 //     },
@@ -89,7 +89,7 @@
 //         <DialogCloseTrigger onClick={onClose} />
 //         <DialogHeader>
 //           <DialogTitle className="font-[600] text-[18px]">
-//             {role === "Admin" ? `Edit Merchant` : `Change password`}
+//             {role !== "Merchant" ? `Edit Merchant` : `Change password`}
 //           </DialogTitle>
 //         </DialogHeader>
 
@@ -197,7 +197,7 @@ const EditMerchant = ({ isOpen, onClose, data }) => {
       onClose();
       toaster.create({
         title: "Success",
-        description: `${role === "Admin" ? `Merchant profile` : `Password`} updated successfully`,
+        description: `${role !== "Merchant" ? `Merchant profile` : `Password`} updated successfully`,
         type: "success",
       });
     },
@@ -220,7 +220,7 @@ const EditMerchant = ({ isOpen, onClose, data }) => {
   };
 
   const formFields =
-    role === "Admin"
+    role !== "Merchant"
       ? [
           { label: "Full Name of owner", name: "fullName", type: "text" },
           { label: "Email", name: "email", type: "email" },
@@ -244,7 +244,7 @@ const EditMerchant = ({ isOpen, onClose, data }) => {
         <DialogCloseTrigger onClick={onClose} />
         <DialogHeader>
           <DialogTitle className="font-[600] text-[18px]">
-            {role === "Admin" ? `Edit Merchant` : `Change Password`}
+            {role !== "Merchant" ? `Edit Merchant` : `Change Password`}
           </DialogTitle>
         </DialogHeader>
 

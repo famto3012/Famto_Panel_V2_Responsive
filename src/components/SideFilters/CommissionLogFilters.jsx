@@ -10,7 +10,7 @@ const CommissionLogFilters = ({
 }) => {
   return (
     <div className="flex flex-col gap-[20px]">
-      {role === "Admin" && (
+      {role !== "Merchant" && (
         <Select
           className="py-2 rounded-lg outline-none focus:outline-none"
           value={merchantOptions?.find(

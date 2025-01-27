@@ -14,7 +14,7 @@ const RealTimeDataCount = () => {
       }, 1000);
     });
 
-    if (role === "Admin") {
+    if (role !== "Merchant") {
       socket?.emit("getRealTimeDataOnRefresh", "");
     } else if (role === "Merchant") {
       const data = {
@@ -68,7 +68,7 @@ const RealTimeDataCount = () => {
           </div>
         </div>
 
-        {role === "Admin" && (
+        {role !== "Merchant" && (
           <>
             <div className="flex flex-col md:flex-row mx-5 py-5 px-5 md:px-0 justify-start md:justify-between md:items-center bg-white mt-5 rounded-lg gap-[30px] md:gap-0">
               <div className="font-bold md:mx-10 text-[32px] w-full md:w-[30%]">

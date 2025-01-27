@@ -60,7 +60,7 @@ const AllOrders = () => {
   const { data: allMerchants } = useQuery({
     queryKey: ["merchant-dropdown"],
     queryFn: () => fetchMerchantsForDropDown(navigate),
-    enabled: role ? role === "Admin" : false,
+    enabled: role ? role !== "Merchant" : false,
   });
 
   const merchantOptions = [
@@ -250,7 +250,7 @@ const AllOrders = () => {
             }}
           />
 
-          {role === "Admin" && (
+          {role !== "Merchant" && (
             <Select
               options={merchantOptions}
               value={merchantOptions.find(
