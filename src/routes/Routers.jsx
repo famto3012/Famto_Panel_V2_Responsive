@@ -218,7 +218,7 @@ const Routers = () => {
 
   // Filter routes based on allowedRoutes
   const filteredRoutes =
-    role === "Admin"
+    role !== "Merchant"
       ? allRoutes
       : allRoutes.filter((route) => {
           const matches = allowedRoutes.some((allowed) =>

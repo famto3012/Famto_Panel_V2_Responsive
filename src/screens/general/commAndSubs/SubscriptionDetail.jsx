@@ -8,7 +8,7 @@ import MerchantSubscription from "@/components/commAndSubs/MerchantSubscription"
 const SubscriptionDetail = () => {
   const { role } = useContext(AuthContext);
 
-  if (role === "Admin") {
+  if (role !== "Merchant") {
     return <AdminSubscription />;
   } else {
     return <MerchantSubscription />;

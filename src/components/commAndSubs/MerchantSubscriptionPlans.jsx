@@ -54,7 +54,7 @@ const MerchantSubscriptionPlans = () => {
   } = useQuery({
     queryKey: ["merchant-dropdown"],
     queryFn: () => fetchMerchantsForDropDown(navigate),
-    enabled: role === "Admin",
+    enabled: role !== "Merchant",
   });
 
   const {
@@ -146,7 +146,7 @@ const MerchantSubscriptionPlans = () => {
 
   return (
     <>
-      {role === "Admin" && (
+      {role !== "Merchant" && (
         <div className="bg-white mx-5 p-5 rounded-lg my-5">
           <div className="flex flex-col lg:flex-row items-center">
             <label className="hidden lg:block w-1/3">
@@ -249,7 +249,7 @@ const MerchantSubscriptionPlans = () => {
                         <span className="font-[700]">{plan.duration}</span>
                       </p>
 
-                      {role === "Admin" && (
+                      {role !== "Merchant" && (
                         <>
                           <p>
                             Remainder:{" "}
@@ -269,7 +269,7 @@ const MerchantSubscriptionPlans = () => {
                       )}
                     </div>
 
-                    {role === "Admin" && (
+                    {role !== "Merchant" && (
                       <div className="flex my-4 items-center gap-[20px]">
                         <button
                           className="bg-blue-50 flex flex-1 items-center justify-center rounded-3xl p-3"
@@ -307,7 +307,7 @@ const MerchantSubscriptionPlans = () => {
           </div>
         </div>
 
-        {role === "Admin" && (
+        {role !== "Merchant" && (
           <div className="flex gap-[20px] md:gap-0 mt-5 items-center">
             <label className="w-1/3 text-gray-800">Merchant Id</label>
 

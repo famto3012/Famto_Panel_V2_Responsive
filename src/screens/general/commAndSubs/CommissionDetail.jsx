@@ -8,7 +8,7 @@ import MerchantCommission from "@/components/commAndSubs/MerchantCommission";
 const CommissionDetail = () => {
   const { role } = useContext(AuthContext);
 
-  if (role === "Admin") {
+  if (role !== "Merchant") {
     return <AdminCommission />;
   } else {
     return <MerchantCommission />;

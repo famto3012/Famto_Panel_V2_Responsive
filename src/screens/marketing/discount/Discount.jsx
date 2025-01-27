@@ -54,7 +54,7 @@ const Discount = () => {
       <GlobalSearch />
 
       <div className="flex justify-between mx-5 mt-[30px] focus:outline-none">
-        {role === "Admin" && (
+        {role !== "Merchant" && (
           <Select
             className="w-[200px] outline-none focus:outline-none"
             value={merchantOptions?.find(

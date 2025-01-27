@@ -60,7 +60,7 @@ const MerchantDetail = () => {
       queryClient.invalidateQueries(["merchant-detail", merchantId]);
       toaster.create({
         title: "Success",
-        description: `${role === "Admin" ? "Merchant" : "Profile"} status updated successfully`,
+        description: `${role !== "Merchant" ? "Merchant" : "Profile"} status updated successfully`,
         type: "success",
       });
     },
@@ -69,7 +69,7 @@ const MerchantDetail = () => {
         title: "Error",
         description:
           data.message ||
-          `Error in updating ${role === "Admin" ? "merchant" : "profile"} status, `,
+          `Error in updating ${role !== "Merchant" ? "merchant" : "profile"} status, `,
         type: "error",
       });
     },
@@ -83,14 +83,14 @@ const MerchantDetail = () => {
       queryClient.invalidateQueries(["merchant-detail", merchantId]);
       toaster.create({
         title: "Success",
-        description: `${role === "Admin" ? "Merchant" : "Profile"} detail updated successfully`,
+        description: `${role !== "Merchant" ? "Merchant" : "Profile"} detail updated successfully`,
         type: "success",
       });
     },
     onError: () => {
       toaster.create({
         title: "Error",
-        description: `Error in updating ${role === "Admin" ? "merchant" : "profile"} detail`,
+        description: `Error in updating ${role !== "Merchant" ? "merchant" : "profile"} detail`,
         type: "error",
       });
     },
@@ -159,7 +159,7 @@ const MerchantDetail = () => {
         </div>
 
         <div className="flex items-center justify-between lg:justify-end md:gap-[15px]">
-          {role === "Admin" && !formData.isBlocked && (
+          {role !== "Merchant" && !formData.isBlocked && (
             <Link
               onClick={() => toggleModal("block")}
               className="flex gap-2 items-center bg-yellow-100 py-2 px-5 rounded-md"
@@ -178,11 +178,11 @@ const MerchantDetail = () => {
             >
               <RenderIcon iconName="EditIcon" size={16} loading={6} />
               <p className="hidden sm:block">
-                {role === "Admin" ? `Edit Merchant` : `Change password`}
+                {role !== "Merchant" ? `Edit Merchant` : `Change password`}
               </p>
             </button>
 
-            {role === "Admin" && (
+            {role !== "Merchant" && (
               <>
                 <button
                   onClick={() => toggleModal("delete")}

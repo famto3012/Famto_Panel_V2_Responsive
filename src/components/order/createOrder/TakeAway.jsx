@@ -91,7 +91,7 @@ const TakeAway = ({ data }) => {
     <div className="bg-white mt-5 rounded">
       <div>
         <div className="flex flex-col gap-6">
-          {role === "Admin" && (
+          {role !== "Merchant" && (
             <SelectMerchant onMerchantSelect={handleMerchantSelect} />
           )}
 
@@ -123,7 +123,7 @@ const TakeAway = ({ data }) => {
             onProductSelect={handleSelectProduct}
           />
 
-          {role === "Admin" && (
+          {role !== "Merchant" && (
             <div className="flex flex-col md:flex-row md:items-start gap-[20px] md:gap-0">
               <label
                 className="md:w-1/3 md:px-6 text-gray-500 text-[16px]"

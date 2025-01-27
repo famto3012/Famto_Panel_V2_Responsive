@@ -6,17 +6,11 @@ export const fetchAllOrders = async (role, filter, page, limit, navigate) => {
 
     let route;
 
-    if (
-      filter.selectedOption === "order" &&
-      (role === "Admin" || role !== "Merchant")
-    ) {
+    if (filter.selectedOption === "order" && role !== "Merchant") {
       route = `/orders/admin/get-orders`;
     } else if (filter.selectedOption === "order" && role === "Merchant") {
       route = `/orders/get-orders`;
-    } else if (
-      filter.selectedOption !== "order" &&
-      (role === "Admin" || role !== "Merchant")
-    ) {
+    } else if (filter.selectedOption !== "order" && role !== "Merchant") {
       route = `/orders/admin/get-scheduled-orders`;
     } else if (filter.selectedOption !== "order" && role === "Merchant") {
       route = `/orders/get-scheduled-orders`;

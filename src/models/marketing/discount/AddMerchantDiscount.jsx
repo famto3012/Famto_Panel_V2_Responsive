@@ -134,7 +134,7 @@ const AddMerchantDiscount = ({ isOpen, onClose, selectedMerchant }) => {
             <Error />
           ) : (
             <div className="flex flex-col gap-4 max-h-[25rem] overflow-auto justify-between">
-              {role === "Admin" && (
+              {role !== "Merchant" && (
                 <div className="flex gap-4 ">
                   <label className="w-1/2 text-gray-500">
                     Assign Merchant <span className="text-red-600">*</span>

@@ -88,7 +88,7 @@ const ConfigureMerchant = ({ detail, onDataChange }) => {
       <div className="mb-4 flex flex-col gap-[10px]">
         <h3 className="text-gray-700 font-bold mb-2">Configuration</h3>
 
-        {role === "Admin" && (
+        {role !== "Merchant" && (
           <div className="mb-4 flex flex-col md:flex-row gap-[15px] md:gap-0 md:w-[800px]">
             <label className="block mt-3 text-gray-700 md:w-1/3">
               Business category

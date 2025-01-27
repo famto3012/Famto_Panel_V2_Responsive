@@ -138,7 +138,7 @@ const OrderDetail = () => {
 
         <div className="flex gap-[20px] justify-center md:justify-end">
           {orderId.charAt(0) === "O" &&
-            role === "Admin" &&
+            role !== "Merchant" &&
             orderDetail?.orderStatus === "On-going" &&
             orderDetail?.deliveryAgentDetail?._id && (
               <Button

@@ -29,7 +29,7 @@ const ProtectedRoute = ({ children, route }) => {
   }, [data, role]);
 
   useEffect(() => {
-    if (role === "Admin") {
+    if (role !== "Merchant") {
       // Admin can access everything
       setCanAccess(true);
     } else if (role === "Merchant") {

@@ -75,7 +75,7 @@ const OrderFilter = ({
         }}
       />
 
-      {role === "Admin" && (
+      {role !== "Merchant" && (
         <Select
           options={merchantOptions}
           value={merchantOptions.find(

@@ -224,7 +224,7 @@ const AdditionalProductDetail = ({ data }) => {
         <input
           type="text"
           name="price"
-          value={role === "Admin" ? data?.price : data?.costPrice}
+          value={role !== "Merchant" ? data?.price : data?.costPrice}
           readOnly
           className="bg-gray-200 rounded-md outline-none focus:outline-none w-2/3 p-2"
         />
@@ -337,7 +337,7 @@ const AdditionalProductDetail = ({ data }) => {
                 }
                 className="w-full p-2 border border-gray-300 rounded-md mr-2 outline-none focus:outline-none"
               />
-              {role === "Admin" && (
+              {role !== "Merchant" && (
                 <input
                   type="text"
                   placeholder="Price"
@@ -359,7 +359,7 @@ const AdditionalProductDetail = ({ data }) => {
               )}
               <input
                 type="text"
-                placeholder={role === "Admin" ? "Cost Price" : "Price"}
+                placeholder={role !== "Merchant" ? "Cost Price" : "Price"}
                 value={type?.costPrice || ""}
                 onChange={(e) =>
                   handleInputChange(index, "costPrice", e.target.value)
@@ -446,7 +446,7 @@ const AdditionalProductDetail = ({ data }) => {
                       }
                       className="w-full p-2 border border-gray-300 rounded-md mr-2 outline-none focus:outline-none"
                     />
-                    {role === "Admin" && (
+                    {role !== "Merchant" && (
                       <input
                         type="text"
                         placeholder="Price"
@@ -472,7 +472,7 @@ const AdditionalProductDetail = ({ data }) => {
                     )}
                     <input
                       type="text"
-                      placeholder={role === "Admin" ? "Cost price" : "Price"}
+                      placeholder={role !== "Merchant" ? "Cost price" : "Price"}
                       value={type?.costPrice || ""}
                       onChange={(e) =>
                         handleChangeExistingVariant(

@@ -282,7 +282,7 @@ const MerchantData = ({ detail, onDataChange }) => {
           />
         </div>
 
-        {role === "Admin" && (
+        {role !== "Merchant" && (
           <div className="mb-[20px] flex items-center justify-between gap-[30px]">
             <label className="text-gray-700 text-[16px] md:w-1/3">
               Geofence
@@ -339,7 +339,7 @@ const MerchantData = ({ detail, onDataChange }) => {
                 className="h-10 ps-3 py-2 text-sm border-2 outline-none focus:outline-none rounded-md flex-1"
                 placeholder="Latitude"
                 name="latitude"
-                value={detail?.merchantDetail?.location[0] || ""}
+                value={detail?.merchantDetail?.location?.[0] || ""}
                 onChange={(e) =>
                   onDataChange({
                     ...detail,
@@ -347,7 +347,7 @@ const MerchantData = ({ detail, onDataChange }) => {
                       ...detail.merchantDetail,
                       location: [
                         e.target.value, // Update latitude (index 0)
-                        detail?.merchantDetail?.location[1] || "", // Keep longitude (index 1) unchanged
+                        detail?.merchantDetail?.location?.[1] || "", // Keep longitude (index 1) unchanged
                       ],
                     },
                   })

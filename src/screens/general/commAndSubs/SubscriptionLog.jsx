@@ -99,10 +99,10 @@ const SubscriptionLog = () => {
       <div className="mx-[20px] lg:mx-[30px] my-5">
         <div
           className={`flex flex-col lg:flex-row gap-[20px] lg:gap-0 items-center bg-white p-4 rounded-md ${
-            role === "Admin" ? "justify-between" : "justify-end pe-4"
+            role !== "Merchant" ? "justify-between" : "justify-end pe-4"
           }`}
         >
-          {role === "Admin" && (
+          {role !== "Merchant" && (
             <label className="flex outline-none cursor-pointer bg-transparent border border-black p-1 rounded-full w-full lg:w-fit">
               <span
                 onClick={() => setSelected("Merchant")}
@@ -153,7 +153,7 @@ const SubscriptionLog = () => {
             </div>
           ) : (
             <div className="flex flex-col lg:flex-row items-center justify-between lg:justify-end gap:[25px] lg:gap-[30px]">
-              {role === "Admin" && (
+              {role !== "Merchant" && (
                 <Select
                   className="w-[200px] hidden lg:block"
                   value={merchantOptions?.find(
@@ -186,7 +186,7 @@ const SubscriptionLog = () => {
                 }
               />
 
-              {role === "Admin" && (
+              {role !== "Merchant" && (
                 <input
                   type="search"
                   placeholder="Search merchant name"
