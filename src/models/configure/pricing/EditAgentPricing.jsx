@@ -12,6 +12,8 @@ import {
   DialogBody,
 } from "@/components/ui/dialog";
 import { toaster } from "@/components/ui/toaster";
+import { HStack } from "@chakra-ui/react";
+import { Radio, RadioGroup } from "@/components/ui/radio";
 
 import ModalLoader from "@/components/others/ModalLoader";
 
@@ -26,6 +28,7 @@ const EditAgentPricing = ({ isOpen, onClose, pricingId }) => {
   const queryClient = useQueryClient();
 
   const [formData, setFormData] = useState({
+    type: "",
     ruleName: "",
     baseFare: "",
     baseDistanceFarePerKM: "",
@@ -135,6 +138,44 @@ const EditAgentPricing = ({ isOpen, onClose, pricingId }) => {
           ) : (
             <>
               <div className="flex flex-col max-h-[30rem] overflow-auto gap-4">
+                <div className="flex gap-4">
+                  <label className="w-1/2 text-gray-500">Rule Type</label>
+
+                  <RadioGroup
+                    value={formData.taxType}
+                    onValueChange={(e) =>
+                      setFormData({ ...formData, type: e.value })
+                    }
+                    className="w-full "
+                    size="sm"
+                    colorPalette="teal"
+                    variant="solid"
+                  >
+                    <HStack direction="row">
+                      <Radio value="Daily-Full-Time" className="cursor-pointer">
+                        Daily Full Time
+                      </Radio>
+                      <Radio value="Daily-Part-Time" className="cursor-pointer">
+                        Daily Part Time
+                      </Radio>
+                    </HStack>
+                    <HStack direction="row" className="mt-[20px]">
+                      <Radio
+                        value="Monthly-Full-Time"
+                        className="cursor-pointer"
+                      >
+                        Monthly Full Time
+                      </Radio>
+                      <Radio
+                        value="Monthly-Part-Time"
+                        className="cursor-pointer"
+                      >
+                        Monthly Part Time
+                      </Radio>
+                    </HStack>
+                  </RadioGroup>
+                </div>
+
                 <div className="flex items-center">
                   <label className="w-1/3 text-gray-500" htmlFor="ruleName">
                     Rule Name <span className="text-red-500">*</span>
