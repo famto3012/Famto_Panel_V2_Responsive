@@ -6,10 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { formatDate, formatTime } from "@/utils/formatter";
 import { getTaskAccordingToFilter } from "@/hooks/deliveryManagement/useDeliveryManagement";
 import { taskStatusOptions } from "@/utils/defaultData";
-import AssignAgent from "@/models/general/deliverymanagement/AssignAgent";
+import AssignAgent from "@/models/general/deliveryManagement/AssignAgent";
 import { Card } from "@chakra-ui/react";
 import ShowSpinner from "@/components/others/ShowSpinner";
-import TaskDetails from "@/models/general/deliverymanagement/TaskDetails";
+import TaskDetails from "@/models/general/deliveryManagement/TaskDetails";
 
 const AllTask = ({ onShowShopLocationOnMap, onDate }) => {
   const [taskFilter, setTaskFilter] = useState({

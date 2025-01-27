@@ -1,4 +1,4 @@
-import AutoAllocation from "@/models/general/deliverymanagement/AutoAllocation";
+import AutoAllocation from "@/models/general/deliveryManagement/AutoAllocation";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";

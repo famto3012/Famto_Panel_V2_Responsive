@@ -6,7 +6,7 @@ import {
   StepsNextTrigger,
   StepsRoot,
 } from "@/components/ui/steps";
-import { getAuthTokenForDeliveryManagementMap } from "@/hooks/deliverymanagement/useDeliveryManagement";
+import { getAuthTokenForDeliveryManagementMap } from "@/hooks/deliveryManagement/useDeliveryManagement";
 import { fetchPolylineFromPickupToDelivery } from "@/hooks/order/useOrder";
 
 import { formatDate, formatTime } from "@/utils/formatter";
