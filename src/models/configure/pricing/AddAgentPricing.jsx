@@ -123,7 +123,7 @@ const AddAgentPricing = ({ isOpen, onClose }) => {
                   <label className="w-1/2 text-gray-500">Rule Type</label>
 
                   <RadioGroup
-                    value={formData.taxType}
+                    value={formData.type}
                     onValueChange={(e) =>
                       setFormData({ ...formData, type: e.value })
                     }
