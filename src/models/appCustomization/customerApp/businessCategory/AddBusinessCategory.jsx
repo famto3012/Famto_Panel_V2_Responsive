@@ -28,6 +28,7 @@ const AddBusinessCategory = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
     title: "",
     geofenceId: [],
+    increasedPercentage: 0,
   });
   const [selectedFile, setSelectedFile] = useState(null);
   const [croppedFile, setCroppedFile] = useState(null);
@@ -54,6 +55,7 @@ const AddBusinessCategory = ({ isOpen, onClose }) => {
       setFormData({
         title: "",
         geofenceId: [],
+        increasedPercentage: 0,
       });
       setCroppedFile(null);
       onClose();
@@ -150,6 +152,24 @@ const AddBusinessCategory = ({ isOpen, onClose }) => {
                   value={formData?.title}
                   onChange={(e) =>
                     setFormData({ ...formData, title: e.target.value })
+                  }
+                />
+              </div>
+
+              <div className="flex items-center justify-between">
+                <label className="w-1/2 text-gray-500">
+                  Percentage increase
+                </label>
+                <input
+                  type="number"
+                  className="border-2 border-gray-300 rounded p-2 focus:outline-none w-2/3"
+                  name="increasedPercentage"
+                  value={formData?.increasedPercentage}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      increasedPercentage: e.target.value,
+                    }))
                   }
                 />
               </div>
