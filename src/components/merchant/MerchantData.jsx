@@ -380,14 +380,14 @@ const MerchantData = ({ detail, onDataChange }) => {
                 className="h-10 ps-3 py-2 text-sm border-2 outline-none focus:outline-none rounded-md flex-1"
                 placeholder="Longitude"
                 name="longitude"
-                value={detail?.merchantDetail?.location[1] || ""}
+                value={detail?.merchantDetail?.location?.[1] || ""}
                 onChange={(e) =>
                   onDataChange({
                     ...detail,
                     merchantDetail: {
                       ...detail.merchantDetail,
                       location: [
-                        detail?.merchantDetail?.location[0] || "", // Keep latitude (index 0) unchanged
+                        detail?.merchantDetail?.location?.[0] || "", // Keep latitude (index 0) unchanged
                         e.target.value, // Update longitude (index 1)
                       ],
                     },
