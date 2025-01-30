@@ -216,7 +216,7 @@ const AddAgent = ({ isOpen, onClose }) => {
 
   const managerOptions = allManager?.map((manager) => ({
     label: manager.name,
-    value: manager._id,
+    value: manager.managerId,
   }));
 
   const pricingOptions = allPricing?.map((pricing) => ({
