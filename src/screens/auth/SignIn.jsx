@@ -146,7 +146,7 @@ const SignIn = () => {
                 <button
                   type="button"
                   onClick={togglePasswordVisibility}
-                  className="absolute right-2 text-teal-700"
+                  className="absolute right-1 z-20 text-teal-700"
                 >
                   {showPassword ? (
                     <RenderIcon iconName="EyeOpenIcon" size={24} loading={6} />
