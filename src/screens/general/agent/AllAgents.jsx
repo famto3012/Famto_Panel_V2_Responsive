@@ -76,10 +76,10 @@ const AllAgents = () => {
         type: "success",
       });
     },
-    onError: () => {
+    onError: (data) => {
       toaster.create({
         title: "Error",
-        description: "Error in updating agent status",
+        description: data.message || "Error in updating agent status",
         type: "error",
       });
     },
