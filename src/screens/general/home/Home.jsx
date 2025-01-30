@@ -15,7 +15,6 @@ import GlobalSearch from "@/components/others/GlobalSearch";
 import RealTimeDataCount from "@/components/home/RealTimeDataCount";
 import { Switch } from "@/components/ui/switch";
 import { Radio, RadioGroup } from "@/components/ui/radio";
-
 import "react-datepicker/dist/react-datepicker.css";
 import { fetchGraphData } from "@/hooks/home/useHome";
 import { useNavigate } from "react-router-dom";
@@ -28,9 +27,7 @@ import { toaster } from "@/components/ui/toaster";
 import {
   fetchSingleMerchantDetail,
   updateMerchantStatusForMerchant,
-  updateMerchantStatusForMerchantToggle,
 } from "@/hooks/merchant/useMerchant";
-import { useInterval } from "react-use";
 import { useSocket } from "@/context/SocketContext";
 
 // Register Chart.js components
@@ -53,8 +50,6 @@ const Home = () => {
     new Date(),
   ]);
   const [merchantId, setMerchantId] = useState(null);
-  const [statusManualToggle, setStatusManualToggle] = useState(false);
-  const [merchantAvailability, setMerchantAvailability] = useState();
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
   const [startDate, endDate] = dateRange;
@@ -126,23 +121,6 @@ const Home = () => {
         description: "Merchant status updated successfully",
         type: "success",
       });
-    },
-    onError: (data) => {
-      toaster.create({
-        title: "Error",
-        description: data?.message || "Error while updating customization",
-        type: "error",
-      });
-    },
-  });
-
-  const handleUpdateMerchantStatusToggleMutation = useMutation({
-    mutationKey: ["update-merchant-status"],
-    mutationFn: (status) =>
-      updateMerchantStatusForMerchantToggle(navigate, status),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["merchant-detail"]);
-      setStatus(status);
     },
     onError: (data) => {
       toaster.create({
@@ -241,77 +219,6 @@ const Home = () => {
         data: entry.subscription, // Assuming sales corresponds to the Revenue in your chart
       };
     });
-  };
-
-  const getCurrentDayAndTime = () => {
-    const currentDay = new Date()
-      .toLocaleString("en-us", { weekday: "long" })
-      .toLowerCase();
-    const currentTime = new Date().toLocaleTimeString("en-US", {
-      hour12: false, // 24-hour format
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-    return { currentDay, currentTime };
-  };
-
-  const checkAvailability = async () => {
-    try {
-      // Fetch the merchant's availability data
-      const { currentDay, currentTime } = getCurrentDayAndTime();
-      const todayAvailability = merchantAvailability?.specificDays[currentDay];
-      if (statusManualToggle) {
-        console.log("here");
-        return;
-      }
-      if (!todayAvailability) {
-        // setErrorMessage("No availability data found for today.");
-        console.log("Here 1");
-        setStatus(false);
-        return;
-      }
-
-      // Handle openAllDay
-      if (todayAvailability.openAllDay) {
-        setStatus(true);
-        handleUpdateMerchantStatusToggleMutation.mutate(true);
-        setStatusManualToggle(false);
-        return;
-      }
-
-      // Handle closedAllDay
-      if (todayAvailability.closedAllDay) {
-        setStatus(false);
-        handleUpdateMerchantStatusToggleMutation.mutate(false);
-        setStatusManualToggle(false);
-        // setErrorMessage("Merchant is closed all day.");
-        return;
-      }
-
-      // Handle specificTime
-      if (todayAvailability.specificTime) {
-        const { startTime, endTime } = todayAvailability;
-        if (currentTime >= startTime && currentTime <= endTime) {
-          console.log("Here 2");
-          setStatus(true);
-          handleUpdateMerchantStatusToggleMutation.mutate(true);
-          setStatusManualToggle(false);
-        } else {
-          console.log("Here 3");
-          setStatus(false);
-          handleUpdateMerchantStatusToggleMutation.mutate(false);
-          setStatusManualToggle(false);
-          // setErrorMessage("Merchant is not available at the current time.");
-        }
-        return;
-      }
-
-      // Default case: If no condition is met
-      setStatus(false);
-    } catch (error) {
-      console.error("Error fetching availability", error);
-      // setErrorMessage("Error fetching availability data.");
-    }
   };
 
   useEffect(() => {
@@ -444,17 +351,9 @@ const Home = () => {
     }
   };
 
-  useInterval(() => {
-    checkAvailability();
-  }, 60000);
-
   useEffect(() => {
     if (merchantProfileData) {
       setStatus(merchantProfileData?.status);
-      setStatusManualToggle(merchantProfileData?.statusManualToggle);
-      setMerchantAvailability(
-        merchantProfileData?.merchantDetail?.availability
-      );
     }
     if (role === "Merchant" && userId) {
       setMerchantId(userId);
