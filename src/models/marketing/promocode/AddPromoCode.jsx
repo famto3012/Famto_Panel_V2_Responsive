@@ -101,8 +101,6 @@ const AddPromoCode = ({ isOpen, onClose }) => {
   const handleSave = () => {
     const formDataObject = new FormData();
 
-    console.log(selectedFile);
-
     Object.entries(formData).forEach(([key, value]) => {
       formDataObject.append(key, value);
     });
