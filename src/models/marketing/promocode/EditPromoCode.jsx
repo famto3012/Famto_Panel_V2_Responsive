@@ -120,10 +120,21 @@ const EditPromoCode = ({ isOpen, onClose, promoCodeId }) => {
   const handleSave = () => {
     const formDataObject = new FormData();
 
+    function appendFormData(value, key) {
+      if (Array.isArray(value)) {
+        value.forEach((item, index) => {
+          appendFormData(item, `${key}[${index}]`);
+        });
+      } else if (value !== undefined && value !== null) {
+        formDataObject.append(key, value);
+      }
+    }
+
     Object.entries(formData).forEach(([key, value]) => {
-      formDataObject.append(key, value);
+      appendFormData(value, key);
     });
     croppedFile && formDataObject.append("promoImage", croppedFile);
+
     handleEditPromoCode.mutate({ promoCodeId, promoData: formDataObject });
   };
 
