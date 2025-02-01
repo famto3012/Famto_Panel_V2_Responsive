@@ -97,7 +97,8 @@ const EditPromoCode = ({ isOpen, onClose, promoCodeId }) => {
 
   const handleEditPromoCode = useMutation({
     mutationKey: ["edit-promo-code", promoCodeId],
-    mutationFn: () => updatePromoCodeDetail(promoCodeId, formData),
+    mutationFn: ({ promoCodeId, promoData }) =>
+      updatePromoCodeDetail(promoCodeId, promoData),
     onSuccess: () => {
       queryClient.invalidateQueries(["all-promo-codes"]);
       onClose();
@@ -123,8 +124,7 @@ const EditPromoCode = ({ isOpen, onClose, promoCodeId }) => {
       formDataObject.append(key, value);
     });
     croppedFile && formDataObject.append("promoImage", croppedFile);
-
-    handleEditPromoCode.mutate({ promoCodeId, formDataObject });
+    handleEditPromoCode.mutate({ promoCodeId, promoData: formDataObject });
   };
 
   const handleInputChange = (e) => {
