@@ -203,6 +203,7 @@ export const fetchMerchantSubscriptionLogs = async (
           merchantId: filter.merchantId,
           merchantName: filter.name,
           date: filter.date,
+          status: filter.status,
         },
       }
     );
