@@ -36,7 +36,7 @@ const EditProductDiscount = ({ isOpen, onClose, discountId }) => {
   const [formData, setFormData] = useState({
     discountName: "",
     discountType: "",
-    value: "",
+    discountValue: "",
     maxAmount: "",
     productId: [],
     validFrom: "",
@@ -91,7 +91,7 @@ const EditProductDiscount = ({ isOpen, onClose, discountId }) => {
       setFormData({
         discountName: "",
         discountType: "",
-        value: "",
+        discountValue: "",
         maxAmount: "",
         productId: [],
         validFrom: "",
