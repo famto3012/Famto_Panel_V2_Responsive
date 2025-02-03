@@ -120,6 +120,12 @@ const paymentOptions = [
   { value: "Cash-on-delivery", label: "Pay on delivery" },
 ];
 
+const subscriptionOptions = [
+  { value: "all", label: "All" },
+  { value: "active", label: "Active" },
+  { value: "expired", label: "Expired" },
+];
+
 const addNotificationSettingsOption = [
   { label: "New Order created", value: "newOrderCreated" },
   { label: "Order accepted", value: "orderAccepted" },
@@ -620,4 +626,5 @@ export {
   allowedMerchantRouteOptions,
   mainSideBarMenuItems,
   smallSideBarMenuItems,
+  subscriptionOptions,
 };

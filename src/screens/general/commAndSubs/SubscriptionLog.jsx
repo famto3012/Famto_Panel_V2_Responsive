@@ -16,6 +16,9 @@ import { fetchMerchantsForDropDown } from "@/hooks/merchant/useMerchant";
 
 import MerchantSubLog from "@/components/commAndSubs/MerchantSubLog";
 import CustomerSubLog from "@/components/commAndSubs/CustomerSubLog";
+import { subscriptionOptions } from "@/utils/defaultData";
+import FilterWrapper from "@/components/SideFilters/FilterWrapper";
+import MerchantSubscriptionLogFilters from "@/components/SideFilters/MerchantSubscriptionLogFilters";
 
 const SubscriptionLog = () => {
   const [selected, setSelected] = useState("Merchant");
@@ -27,9 +30,11 @@ const SubscriptionLog = () => {
     name: "",
     date: null,
     merchantId: null,
+    status: null,
   });
   const [customerDebounce, setCustomerDebounce] = useState("");
   const [merchantDebounce, setMerchantDebounce] = useState("");
+  const [filterOpen, setFilterOpen] = useState(false);
 
   const navigate = useNavigate();
   const { role, userId } = useContext(AuthContext);
@@ -82,6 +87,9 @@ const SubscriptionLog = () => {
     };
   }, [merchantDebounce]);
 
+  const setFilerFromDrawer = (type, value) => {
+    setMerchantFilter({ ...merchantFilter, [type]: value });
+  };
   return (
     <div className="bg-gray-100 h-full min-w-full">
       <GlobalSearch />
@@ -152,23 +160,39 @@ const SubscriptionLog = () => {
               </div>
             </div>
           ) : (
-            <div className="flex flex-col lg:flex-row items-center justify-between lg:justify-end gap:[25px] lg:gap-[30px]">
+            <div className="flex flex-row items-center justify-start lg:justify-end gap:[25px] lg:gap-[30px] w-full">
               {role !== "Merchant" && (
-                <Select
-                  className="w-[200px] hidden lg:block"
-                  value={merchantOptions?.find(
-                    (option) => option.value === merchantFilter
-                  )}
-                  isSearchable={true}
-                  options={merchantOptions}
-                  placeholder="Select Merchant"
-                  onChange={(option) =>
-                    setMerchantFilter({
-                      ...merchantFilter,
-                      merchantId: option.value,
-                    })
-                  }
-                />
+                <>
+                  <Select
+                    className="w-[200px] hidden lg:block"
+                    value={subscriptionOptions?.find(
+                      (option) => option.value === merchantFilter.status
+                    )}
+                    options={subscriptionOptions}
+                    placeholder="Select status"
+                    onChange={(option) =>
+                      setMerchantFilter({
+                        ...merchantFilter,
+                        status: option.value,
+                      })
+                    }
+                  />
+                  <Select
+                    className="w-[200px] hidden lg:block"
+                    value={merchantOptions?.find(
+                      (option) => option.value === merchantFilter.merchantId
+                    )}
+                    isSearchable={true}
+                    options={merchantOptions}
+                    placeholder="Select Merchant"
+                    onChange={(option) =>
+                      setMerchantFilter({
+                        ...merchantFilter,
+                        merchantId: option.value,
+                      })
+                    }
+                  />
+                </>
               )}
 
               <DatePicker
@@ -178,7 +202,7 @@ const SubscriptionLog = () => {
                 }
                 dateFormat="yyyy/MM/dd"
                 withPortal
-                className="cursor-pointer order-2"
+                className="cursor-pointer order-2 hidden lg:block"
                 customInput={
                   <span className="text-gray-400">
                     <RenderIcon iconName="CalendarIcon" size={24} loading={2} />
@@ -195,6 +219,25 @@ const SubscriptionLog = () => {
                   onChange={(e) => setMerchantDebounce(e.target.value)}
                 />
               )}
+
+              <span
+                onClick={() => setFilterOpen(true)}
+                className="order-2 text-gray-400 ms-auto lg:hidden"
+              >
+                <RenderIcon iconName="FilterIcon" size={24} loading={6} />
+              </span>
+
+              <FilterWrapper
+                filterOpen={filterOpen}
+                setFilterOpen={setFilterOpen}
+              >
+                <MerchantSubscriptionLogFilters
+                  merchantOptions={merchantOptions}
+                  onFilterChange={setFilerFromDrawer}
+                  currentValue={merchantFilter}
+                  onClose={() => setFilterOpen(false)}
+                />
+              </FilterWrapper>
             </div>
           )}
         </div>
