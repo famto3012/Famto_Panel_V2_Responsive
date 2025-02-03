@@ -29,6 +29,18 @@ const RealTimeDataCount = () => {
     };
   }, [token, socket, userId, role]);
 
+  useEffect(() => {
+    if (role !== "Merchant") {
+      socket?.emit("getRealTimeDataOnRefresh", "");
+    } else if (role === "Merchant") {
+      const data = {
+        id: userId,
+        role: role,
+      };
+      socket?.emit("getRealTimeDataOnRefreshMerchant", data);
+    }
+  }, []);
+
   return (
     <>
       <div className="w-full">
