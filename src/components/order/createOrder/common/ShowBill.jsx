@@ -75,7 +75,12 @@ const ShowBill = ({ data }) => {
 
   const handleCreateOrder = useMutation({
     mutationKey: ["create-order"],
-    mutationFn: () => createOrder(role, formData, navigate),
+    mutationFn: async () => {
+      if (!formData.paymentMode) {
+        throw new Error("Please select a payment mode");
+      }
+      return await createOrder(role, formData, navigate);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries(["all-orders"]);
       navigate("/order");
@@ -85,10 +90,10 @@ const ShowBill = ({ data }) => {
         type: "success",
       });
     },
-    onError: (data) => {
+    onError: (error) => {
       toaster.create({
         title: "Error",
-        description: data?.message || "Error while creating order",
+        description: error.message || "Error while creating order",
         type: "error",
       });
     },
