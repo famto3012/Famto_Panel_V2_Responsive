@@ -16,7 +16,6 @@ import { toaster } from "@/components/ui/toaster";
 import { Button } from "@/components/ui/button";
 
 import ModalLoader from "@/components/others/ModalLoader";
-import CropImage from "@/components/others/CropImage";
 import Error from "@/components/others/Error";
 
 import { getAllGeofence } from "@/hooks/geofence/useGeofence";
@@ -34,8 +33,6 @@ const EditIndividualBanner = ({ isOpen, onClose, bannerId }) => {
     geofenceId: "",
   });
   const [selectedFile, setSelectedFile] = useState(null);
-  const [croppedFile, setCroppedFile] = useState(null);
-  const [showCrop, setShowCrop] = useState(false);
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -62,7 +59,6 @@ const EditIndividualBanner = ({ isOpen, onClose, bannerId }) => {
 
   useEffect(() => {
     bannerData && setFormData(bannerData);
-    console.log(bannerData);
   }, [bannerData]);
 
   const handleEditBanner = useMutation({
@@ -76,7 +72,7 @@ const EditIndividualBanner = ({ isOpen, onClose, bannerId }) => {
         merchantId: "",
         geofenceId: "",
       });
-      setCroppedFile(null);
+      setSelectedFile(null);
       onClose();
       toaster.create({
         title: "Success",
@@ -99,7 +95,7 @@ const EditIndividualBanner = ({ isOpen, onClose, bannerId }) => {
     Object.entries(formData).forEach(([key, value]) => {
       formDataObject.append(key, value);
     });
-    croppedFile && formDataObject.append("bannerImage", croppedFile);
+    selectedFile && formDataObject.append("bannerImage", selectedFile);
 
     handleEditBanner.mutate({ bannerId, formDataObject });
   };
@@ -118,18 +114,7 @@ const EditIndividualBanner = ({ isOpen, onClose, bannerId }) => {
     const file = e.target.files[0];
     if (file) {
       setSelectedFile(file);
-      setShowCrop(true);
     }
-  };
-
-  const handleCropImage = (file) => {
-    setCroppedFile(file);
-    cancelCrop();
-  };
-
-  const cancelCrop = () => {
-    setSelectedFile(null);
-    setShowCrop(false);
   };
 
   const showLoading = geofenceLoading || bannerLoading;
@@ -222,8 +207,8 @@ const EditIndividualBanner = ({ isOpen, onClose, bannerId }) => {
                     <figure>
                       <img
                         src={
-                          croppedFile
-                            ? URL.createObjectURL(croppedFile)
+                          selectedFile
+                            ? URL.createObjectURL(selectedFile)
                             : formData?.imageUrl
                         }
                         alt={formData.name}
@@ -250,18 +235,6 @@ const EditIndividualBanner = ({ isOpen, onClose, bannerId }) => {
               </div>
             </>
           )}
-
-          {/* Crop Modal */}
-          <CropImage
-            isOpen={showCrop && selectedFile}
-            onClose={() => {
-              setSelectedFile(null);
-              setShowCrop(false);
-            }}
-            aspectRatio={16 / 9}
-            selectedImage={selectedFile}
-            onCropComplete={handleCropImage}
-          />
         </DialogBody>
 
         <DialogFooter>

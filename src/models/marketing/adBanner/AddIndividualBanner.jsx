@@ -16,7 +16,6 @@ import { toaster } from "@/components/ui/toaster";
 import { Button } from "@/components/ui/button";
 
 import ModalLoader from "@/components/others/ModalLoader";
-import CropImage from "@/components/others/CropImage";
 import Error from "@/components/others/Error";
 
 import { getAllGeofence } from "@/hooks/geofence/useGeofence";
@@ -31,8 +30,6 @@ const AddIndividualBanner = ({ isOpen, onClose }) => {
     geofenceId: "",
   });
   const [selectedFile, setSelectedFile] = useState(null);
-  const [croppedFile, setCroppedFile] = useState(null);
-  const [showCrop, setShowCrop] = useState(false);
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -56,7 +53,7 @@ const AddIndividualBanner = ({ isOpen, onClose }) => {
         merchantId: "",
         geofenceId: "",
       });
-      setCroppedFile(null);
+      setSelectedFile(null);
       onClose();
       toaster.create({
         title: "Success",
@@ -86,7 +83,7 @@ const AddIndividualBanner = ({ isOpen, onClose }) => {
       formDataObject.append(key, value);
     });
 
-    croppedFile && formDataObject.append("bannerImage", croppedFile);
+    selectedFile && formDataObject.append("bannerImage", selectedFile);
 
     handleAddBanner.mutate(formDataObject);
   };
@@ -105,18 +102,7 @@ const AddIndividualBanner = ({ isOpen, onClose }) => {
     const file = e.target.files[0];
     if (file) {
       setSelectedFile(file);
-      setShowCrop(true);
     }
-  };
-
-  const handleCropImage = (file) => {
-    setCroppedFile(file);
-    cancelCrop();
-  };
-
-  const cancelCrop = () => {
-    setSelectedFile(null);
-    setShowCrop(false);
   };
 
   const showLoading = geofenceLoading;
@@ -206,12 +192,12 @@ const AddIndividualBanner = ({ isOpen, onClose }) => {
                   </label>
 
                   <div className="flex items-center gap-[30px]">
-                    {!croppedFile ? (
+                    {!selectedFile ? (
                       <div className="h-[80px] w-[175px] bg-gray-200 rounded-md"></div>
                     ) : (
                       <figure>
                         <img
-                          src={URL.createObjectURL(croppedFile)}
+                          src={URL.createObjectURL(selectedFile)}
                           alt={formData.name}
                           className="h-[80px] w-[175px] rounded-md object-cover"
                         />
@@ -237,18 +223,6 @@ const AddIndividualBanner = ({ isOpen, onClose }) => {
               </div>
             </>
           )}
-
-          {/* Crop Modal */}
-          <CropImage
-            isOpen={showCrop && selectedFile}
-            onClose={() => {
-              setSelectedFile(null);
-              setShowCrop(false);
-            }}
-            aspectRatio={16 / 9}
-            selectedImage={selectedFile}
-            onCropComplete={handleCropImage}
-          />
         </DialogBody>
 
         <DialogFooter>
