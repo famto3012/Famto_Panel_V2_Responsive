@@ -188,7 +188,7 @@ const AllCustomer = () => {
                     <Table.Cell textAlign="center">
                       {customer.phoneNumber}
                     </Table.Cell>
-                    <Table.Cell textAlign="center">
+                    <Table.Cell textAlign="center" textTransform="capitalize">
                       {customer.lastPlatformUsed}
                     </Table.Cell>
                     <Table.Cell textAlign="center">

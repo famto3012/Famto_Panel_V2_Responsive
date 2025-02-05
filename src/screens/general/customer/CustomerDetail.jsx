@@ -23,6 +23,7 @@ import BlockOperation from "@/models/general/customer/BlockOperation";
 import ShowRating from "@/models/general/customer/ShowRating";
 import EditAddress from "@/models/general/customer/EditAddress";
 import EnlargeImage from "@/models/common/EnlargeImage";
+import Map from "@/models/common/Map";
 
 const CustomerDetail = () => {
   const [customer, setCustomer] = useState({});
@@ -32,6 +33,7 @@ const CustomerDetail = () => {
     rating: false,
     enlarge: false,
     address: false,
+    map: false,
   });
   const [imageLink, setImageLink] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState({
@@ -101,6 +103,7 @@ const CustomerDetail = () => {
       rating: false,
       enlarge: false,
       address: false,
+      map: false,
     });
     setImageLink(null);
     setSelectedAddress({
@@ -345,6 +348,18 @@ const CustomerDetail = () => {
             </button>
           </div>
 
+          <div className="lg:w-[600px] flex flex-col md:flex-row md:items-center justify-start lg:justify-between gap-[30px] mt-10 mx-[20px]">
+            <label className="text-gray-700 md:mx-11 font-bold">Location</label>
+
+            <button
+              type="button"
+              onClick={() => toggleModal("map")}
+              className="bg-teal-700 text-white p-2 rounded-md md:w-[20rem]"
+            >
+              View Location
+            </button>
+          </div>
+
           <div className="mt-10">
             <h4 className="text-gray-700 mx-[20px] lg:mx-11 font-bold">
               Address
@@ -494,6 +509,12 @@ const CustomerDetail = () => {
         type={selectedAddress.type}
         address={selectedAddress.data}
         onNewAddress={handleUpdateAddress}
+      />
+
+      <Map
+        isOpen={modal.map}
+        onClose={closeModal}
+        oldLocation={customer.location}
       />
     </>
   );
