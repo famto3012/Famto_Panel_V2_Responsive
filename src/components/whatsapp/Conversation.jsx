@@ -1,46 +1,36 @@
-import React from "react";
+import { useQuery } from "@tanstack/react-query";
 import ConversationItem from "./ConversationItem";
+import { useNavigate } from "react-router-dom";
+import { fetchAllWhatsappConversation } from "@/hooks/whatsapp/useWhatsapp";
+import Error from "../others/Error";
+import ShowSpinner from "../others/ShowSpinner";
 
 const Conversation = () => {
-  const data = [
-    {
-      name: "Rey Jhon",
-      time: "just now",
-      message: "Hey there! Are you finish creating the chat app?",
-      active: true,
-    },
-    {
-      name: "Cherry Ann",
-      time: "12:00",
-      message: "Hello? Are you available tonight?",
-    },
-    {
-      name: "Lalaine",
-      time: "yesterday",
-      message: "I'm thingking of resigning",
-    },
-    { name: "Princess", time: "1 day ago", message: "I found a job :)" },
-    {
-      name: "Charm",
-      time: "1 day ago",
-      message: "Can you me some chocolates?",
-    },
-    {
-      name: "Garen",
-      time: "1 day ago",
-      message: "I'm the bravest of all kind",
-    },
-  ];
+  const navigate = useNavigate();
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["all-whatsapp-conversation"],
+    queryFn: () => fetchAllWhatsappConversation(navigate),
+  });
+
   return (
     <div className="p-1">
-      {data.map((item, index) => (
-        <ConversationItem
-          message={item.message}
-          time={item.time}
-          name={item.name}
-          active={item.active}
-        />
-      ))}
+      {isLoading ? (
+        <ShowSpinner />
+      ) : isError ? (
+        <Error />
+      ) : (
+        data?.map((item, index) => (
+          <ConversationItem
+            message={item?.lastMessage}
+            time={item?.timeAgo}
+            name={item?.name}
+            active={item?.active}
+            waId={item?.waId}
+            key={index}
+          />
+        ))
+      )}
     </div>
   );
 };
