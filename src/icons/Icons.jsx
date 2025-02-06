@@ -78,6 +78,11 @@ import {
   BiGridVertical as ReOrderIcon,
   BiSolidUserRectangle as AgentIcon,
 } from "react-icons/bi";
+import { FaPaperclip as PaperClipIcon } from "react-icons/fa6";
+import { FaMicrophone as MicroPhoneIcon } from "react-icons/fa6";
+import { RxPaperPlane as SendIcon } from "react-icons/rx";
+import { FaRegStopCircle as StopIcon } from "react-icons/fa";
+import { MdPermMedia as MediaIcon } from "react-icons/md";
 
 export {
   AccountIcon,
@@ -115,11 +120,14 @@ export {
   LogoutIcon,
   LoyaltyPointIcon,
   ManagerIcon,
+  MediaIcon,
   MenuIcon,
+  MicroPhoneIcon,
   MinusIcon,
   NotificationIcon,
   NotificationSettingsIcon,
   PaintPaletteIcon,
+  PaperClipIcon,
   PercentageIcon,
   ProductIcon,
   PromoCodeIcon,
@@ -129,9 +137,11 @@ export {
   ReferralIcon,
   ReOrderIcon,
   SearchIcon,
+  SendIcon,
   SettingsIcon,
   ShopIcon,
   SignInUserIcon,
+  StopIcon,
   ThreeDots,
   UploadIcon,
   UsersIcon,

@@ -5,6 +5,8 @@ const DataContext = createContext();
 export const DataProvider = ({ children }) => {
   const [pickAddressType, setPickAddressType] = useState(null);
   const [pickAddressId, setPickAddressId] = useState(null);
+  const [waId, setWaId] = useState(null);
+  const [name, setName] = useState(null);
   const [deliveryAddressType, setDeliveryAddressType] = useState(null);
   const [deliveryAddressId, setDeliveryAddressId] = useState(null);
 
@@ -26,6 +28,10 @@ export const DataProvider = ({ children }) => {
         setSelectedCategory,
         selectedProduct,
         setSelectedProduct,
+        waId,
+        setWaId,
+        name,
+        setName,
       }}
     >
       {children}
